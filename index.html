@@ -3,47 +3,114 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Atlantis Iterations</title>
+  <title>Atlantis Iteration Board</title>
   <style>
     :root { color-scheme: dark; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; background: #0b1020; color: #e8ecff; }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 24px; }
-    h1 { margin: 0 0 8px; }
-    p { color: #b9c0e6; }
-    .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 20px; }
-    .card { border: 1px solid #2a3567; border-radius: 14px; padding: 16px; background: #131a33; }
-    a { color: #7cc6ff; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    img { width: 100%; max-height: 580px; object-fit: contain; border-radius: 10px; border: 1px solid #2a3567; background: #0a0f1f; }
-    .meta { font-size: 13px; color: #9ea7d6; margin-top: 10px; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0b1020;
+      color: #e8ecff;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px; }
+    h1, h2, h3 { margin: 0 0 10px; }
+    p { margin: 0 0 12px; color: #b9c0e6; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+    .card {
+      border: 1px solid #2a3567;
+      border-radius: 14px;
+      padding: 16px;
+      background: #131a33;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    label { display: block; margin: 10px 0 6px; font-size: 14px; color: #c5ccf5; }
+    input[type="text"], textarea {
+      width: 100%;
+      background: #0d1530;
+      border: 1px solid #31407d;
+      border-radius: 10px;
+      color: #e8ecff;
+      padding: 10px;
+      font: inherit;
+    }
+    textarea { min-height: 95px; resize: vertical; }
+    .status { font-size: 13px; margin-top: 6px; }
+    .ok { color: #7ef29b; }
+    .bad { color: #ff8383; }
+    .checks { display: grid; gap: 8px; margin-top: 6px; }
+    .checks label { margin: 0; display: flex; gap: 8px; align-items: center; }
+    button {
+      margin-top: 12px;
+      background: #2f6bff;
+      color: white;
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+    .broadcast {
+      width: 100%;
+      min-height: 180px;
+      white-space: pre-wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: #091127;
+    }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .small { font-size: 12px; color: #9ea7d6; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Atlantis Iteration Board</h1>
-    <p>Public view of current concept iterations and planning artifacts.</p>
+    <h1>Atlantis Milestone Guardrails (v1.4)</h1>
+    <p>Operational dashboard with guardrails for naming, completion proof, and Discord-ready milestone broadcasts.</p>
 
     <div class="grid">
       <section class="card">
-        <h2>v1.4</h2>
-        <p><a href="./atlantis-ideas-v1.4.png" target="_blank">Open full image</a></p>
-        <img src="./atlantis-ideas-v1.4.png" alt="Atlantis ideas v1.4" />
+        <h2>1) Iteration Naming Guardrail</h2>
+        <label for="iterationLabel">Iteration label</label>
+        <input id="iterationLabel" type="text" placeholder="e.g. v1.4" value="v1.4" />
+        <div id="labelStatus" class="status"></div>
+        <p class="small">Rule: must match <code>v&lt;major&gt;.&lt;minor&gt;</code> and be non-empty (examples: v1.4, v2.0).</p>
       </section>
 
       <section class="card">
-        <h2>v1.5</h2>
-        <p><a href="./atlantis-ideas-v1.5.png" target="_blank">Open full image</a></p>
-        <img src="./atlantis-ideas-v1.5.png" alt="Atlantis ideas v1.5" />
+        <h2>2) Completion Gate</h2>
+        <p>Milestone can only be marked done when all checklist items + proof are present.</p>
+        <div class="checks">
+          <label><input type="checkbox" data-check="tests" /> Tests passed</label>
+          <label><input type="checkbox" data-check="docs" /> Docs updated</label>
+          <label><input type="checkbox" data-check="review" /> Reviewed / approved</label>
+        </div>
+
+        <label for="proofLinks">Proof links (PR, screenshots, logs)</label>
+        <textarea id="proofLinks" placeholder="https://github.com/scoobysteve0/atlantis/pull/...&#10;https://..."></textarea>
+
+        <label for="summary">Milestone summary</label>
+        <textarea id="summary" placeholder="What changed in this milestone?"></textarea>
+
+        <button id="markDoneBtn" disabled>Mark Milestone Done</button>
+        <div id="gateStatus" class="status bad">Gate blocked: complete checklist and add proof.</div>
       </section>
 
       <section class="card">
-        <h2>v1.6</h2>
-        <p><a href="./atlantis-ideas-v1.6.png" target="_blank">Open full image</a></p>
-        <img src="./atlantis-ideas-v1.6.png" alt="Atlantis ideas v1.6" />
+        <h2>3) Broadcast Summary (Discord-ready)</h2>
+        <p>Generated automatically when milestone is marked done.</p>
+        <textarea id="broadcastOutput" class="broadcast" readonly placeholder="Broadcast will appear here..."></textarea>
+        <div class="row">
+          <button id="copyBtn" disabled>Copy Broadcast</button>
+        </div>
       </section>
     </div>
 
-    <p class="meta">Hosted on GitHub Pages from <code>scoobysteve0/atlantis</code>.</p>
+    <p class="small" style="margin-top:16px">Hosted on GitHub Pages from <code>scoobysteve0/atlantis</code>.</p>
   </div>
+
+  <script src="./app.js"></script>
 </body>
 </html>
