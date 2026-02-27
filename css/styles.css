@@ -141,6 +141,8 @@ body {
 
 .ideas-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
 .ideas-list li { padding: 8px 10px; border-radius: 10px; border: 1px solid var(--line); background: rgba(16,26,42,.85); color: #c7d5ef; }
+.iteration-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 4px; }
+.ideas-list small { color: #9db0d2; }
 
 .project-detail .detail-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
 .detail-sub { color: #8ea1c2; font-size: .76rem; text-transform: uppercase; letter-spacing: .04em; }

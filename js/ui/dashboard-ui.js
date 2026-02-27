@@ -6,6 +6,8 @@ const statusToDot = {
 
 const projectWaveLabel = {
   active: "In Motion",
+  "in-progress": "In Motion",
+  planned: "Planned",
   future: "Future",
   idle: "Idle",
   blocked: "Blocked"
@@ -35,7 +37,7 @@ function renderTaskList(tasks) {
 export function mountDashboard(store) {
   const statusList = document.getElementById("agent-status-list");
   const board = document.getElementById("project-board");
-  const generalProjectsList = document.getElementById("general-projects-list");
+  const iterationsList = document.getElementById("iterations-list");
   const detail = document.getElementById("project-detail");
   const sidebar = document.getElementById("mission-sidebar");
   const toggleButton = document.getElementById("mission-sidebar-toggle");
@@ -85,10 +87,18 @@ export function mountDashboard(store) {
       `)
       .join("");
 
-    const generalProjects = state.projects.filter((project) => !project.active);
-    generalProjectsList.innerHTML = generalProjects
-      .map((project) => `<li>${project.name} · ${project.status}</li>`)
-      .join("") || "<li>No general projects queued.</li>";
+    const iterations = Array.isArray(state.iterations) ? state.iterations : [];
+    iterationsList.innerHTML = iterations
+      .map((iteration) => `
+        <li>
+          <div class="iteration-row">
+            <strong>${iteration.name}</strong>
+            <span>${projectWaveLabel[iteration.status] ?? iteration.status}</span>
+          </div>
+          <small>${iteration.focus ?? "Internal improvement initiative"}</small>
+        </li>
+      `)
+      .join("") || "<li>No iterations queued.</li>";
 
     const selected = state.projects.find((p) => p.id === state.selectedProjectId) ?? activeProjects[0] ?? state.projects[0];
     if (!selected) {

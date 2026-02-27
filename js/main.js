@@ -1,5 +1,4 @@
 import { createStore } from "./core/store.js";
-import { createMissionService } from "./core/mission-service.js";
 import { mountTabs } from "./ui/tabs.js";
 import { mountDashboard } from "./ui/dashboard-ui.js";
 import { mountMission } from "./ui/mission-ui.js";
@@ -18,11 +17,9 @@ async function loadLiveData(store) {
 
 function bootstrap() {
   const store = createStore();
-  const missionService = createMissionService(store);
-
   mountTabs(store);
   mountDashboard(store);
-  mountMission(store, missionService);
+  mountMission(store);
 
   const settingsButton = document.getElementById("settings-button");
   const modal = document.getElementById("app-modal");

@@ -7,8 +7,30 @@
   ],
   "projects": [
     { "id": "atlantis", "name": "Atlantis", "status": "active", "active": true },
-    { "id": "nebula-sync", "name": "Nebula Sync", "status": "active", "active": true },
-    { "id": "ideas", "name": "Ideas", "status": "future", "active": false }
+    { "id": "nebula-sync", "name": "Nebula Sync", "status": "active", "active": true }
+  ],
+  "iterations": [
+    {
+      "id": "core-memory-optimization",
+      "name": "Core Memory Optimization",
+      "status": "in-progress",
+      "focus": "Reduce context churn and improve recall precision.",
+      "visibility": "internal"
+    },
+    {
+      "id": "voice-interface-rnd",
+      "name": "Voice Interface R&D",
+      "status": "planned",
+      "focus": "Experiment with faster voice loop UX and response timing.",
+      "visibility": "internal"
+    },
+    {
+      "id": "self-correction-logic",
+      "name": "Self-Correction Logic",
+      "status": "active",
+      "focus": "Improve automatic error detection and recovery behavior.",
+      "visibility": "internal"
+    }
   ],
   "tasks": [
     {
@@ -41,14 +63,6 @@
       "description": "Prioritize migration backlog for next cycle.",
       "assignedTo": "Planner",
       "status": "blocked",
-      "completed": false
-    },
-    {
-      "projectId": "ideas",
-      "type": "user",
-      "description": "Capture future automation concepts for Atlantis.",
-      "assignedTo": "Publisher",
-      "status": "future",
       "completed": false
     }
   ]

@@ -1,11 +1,12 @@
 function normalizeData(data = {}) {
   const agents = Array.isArray(data.agents) ? data.agents : [];
   const projects = Array.isArray(data.projects) ? data.projects : [];
+  const iterations = Array.isArray(data.iterations) ? data.iterations : [];
   const tasks = Array.isArray(data.tasks)
     ? data.tasks.map((task, index) => ({ id: task.id ?? `task-${index + 1}`, ...task }))
     : [];
 
-  return { agents, projects, tasks };
+  return { agents, projects, iterations, tasks };
 }
 
 export function createStore() {
@@ -14,6 +15,7 @@ export function createStore() {
     missionSidebarCollapsed: false,
     agents: [],
     projects: [],
+    iterations: [],
     tasks: [],
     selectedProjectId: null,
     log: []
@@ -46,6 +48,7 @@ export function createStore() {
       const normalized = normalizeData(data);
       state.agents = normalized.agents;
       state.projects = normalized.projects;
+      state.iterations = normalized.iterations;
       state.tasks = normalized.tasks;
 
       const hasSelected = state.projects.some((project) => project.id === state.selectedProjectId);

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atlantis v3.1 - Live Projects + Agents</title>
+    <title>Atlantis v3.2 - Projects + Iterations</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -15,7 +15,7 @@
         <h1>Atlantis</h1>
         <div class="topbar-actions">
           <button id="settings-button" class="icon-button" type="button" aria-label="Settings" title="Settings">⚙</button>
-          <span class="version-pill">v3.1</span>
+          <span class="version-pill">v3.2</span>
         </div>
       </header>
 
@@ -39,8 +39,8 @@
             </section>
 
             <section class="ideas-panel">
-              <h3 class="section-title">General Projects</h3>
-              <ul id="general-projects-list" class="ideas-list"></ul>
+              <h3 class="section-title">Iterations <span class="detail-sub">Internal / Self-Driven</span></h3>
+              <ul id="iterations-list" class="ideas-list"></ul>
             </section>
 
             <section class="project-detail" id="project-detail"></section>
@@ -48,16 +48,10 @@
         </div>
       </section>
 
-      <section class="view panel is-hidden" id="mission-view" aria-label="Mission Activity">
-        <h2>Mission Activity</h2>
-        <div class="mission-toolbar">
-          <label class="switch-row" for="auto-advance-toggle">
-            <input id="auto-advance-toggle" type="checkbox" />
-            Auto-Advance
-          </label>
-          <button id="log-activity-button" type="button">Simulate Agent Activity</button>
-        </div>
-        <div class="live-log" id="live-log" aria-live="polite"></div>
+      <section class="view panel is-hidden" id="iterations-view" aria-label="Iterations Workspace">
+        <h2>Iterations</h2>
+        <p class="detail-sub">Internal / Self-Driven projects and lessons-learned improvements.</p>
+        <ul id="iterations-tab-list" class="ideas-list"></ul>
       </section>
     </main>
 
