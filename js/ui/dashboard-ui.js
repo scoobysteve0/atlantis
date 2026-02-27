@@ -1,8 +1,24 @@
 const statusToDot = {
   primed: "green",
   idle: "",
-  duty: "red"
+  duty: "red",
+  "working on v3.3": "red"
 };
+
+function formatAgentStatus(status = "idle") {
+  if (status === "primed") return "Primed";
+  if (status === "duty") return "Duty";
+  if (status === "idle") return "Idle";
+  return status;
+}
+
+function formatLastSynced(isoStamp) {
+  if (!isoStamp) return "Last Synced: Waiting for live data…";
+  const deltaSeconds = Math.max(0, Math.floor((Date.now() - new Date(isoStamp).getTime()) / 1000));
+  if (deltaSeconds < 5) return "Last Synced: Just now";
+  if (deltaSeconds < 60) return `Last Synced: ${deltaSeconds}s ago`;
+  return `Last Synced: ${Math.floor(deltaSeconds / 60)}m ago`;
+}
 
 const projectWaveLabel = {
   active: "In Motion",
@@ -38,6 +54,7 @@ export function mountDashboard(store) {
   const statusList = document.getElementById("agent-status-list");
   const board = document.getElementById("project-board");
   const iterationsList = document.getElementById("iterations-list");
+  const lastSynced = document.getElementById("last-synced");
   const detail = document.getElementById("project-detail");
   const sidebar = document.getElementById("mission-sidebar");
   const toggleButton = document.getElementById("mission-sidebar-toggle");
@@ -66,25 +83,35 @@ export function mountDashboard(store) {
 
   store.subscribe((state) => {
     statusList.innerHTML = state.agents
-      .map((agent) => `
+      .map((agent) => {
+        const normalizedStatus = String(agent.status ?? "idle").toLowerCase();
+        return `
         <li class="agent-card">
           <div class="agent-meta">
-            <span class="dot ${statusToDot[agent.status] ?? ""}"></span>
+            <span class="dot ${statusToDot[normalizedStatus] ?? ""}"></span>
             <span class="agent-role">${agent.role}</span>
           </div>
-          <span class="agent-copy">${agent.name} · ${agent.status === "primed" ? "Primed" : agent.status === "duty" ? "Duty" : "Idle"}</span>
+          <span class="agent-copy">${agent.name} · ${formatAgentStatus(agent.status)}</span>
         </li>
-      `)
+      `;
+      })
       .join("");
+
+    if (lastSynced) {
+      lastSynced.textContent = formatLastSynced(state.lastSyncedAt);
+    }
 
     const activeProjects = state.projects.filter((project) => project.active);
     board.innerHTML = activeProjects
-      .map((project) => `
-        <article class="project-card ${project.id === state.selectedProjectId ? "is-selected" : ""}" data-project-id="${project.id}">
+      .map((project) => {
+        const spotlightClass = ["atlantis", "nebula-sync"].includes(project.id) ? "is-spotlight" : "";
+        return `
+        <article class="project-card ${spotlightClass} ${project.id === state.selectedProjectId ? "is-selected" : ""}" data-project-id="${project.id}">
           <h4 class="project-name">${project.name}</h4>
           <span class="project-wave ${project.active ? "is-active" : "is-inactive"}">${projectWaveLabel[project.status] ?? project.status}</span>
         </article>
-      `)
+      `;
+      })
       .join("");
 
     const iterations = Array.isArray(state.iterations) ? state.iterations : [];

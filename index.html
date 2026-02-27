@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atlantis v3.2 - Projects + Iterations</title>
+    <title>Atlantis v3.3 - Projects + Iterations</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -15,14 +15,17 @@
         <h1>Atlantis</h1>
         <div class="topbar-actions">
           <button id="settings-button" class="icon-button" type="button" aria-label="Settings" title="Settings">⚙</button>
-          <span class="version-pill">v3.2</span>
+          <span class="version-pill">v3.3</span>
         </div>
       </header>
 
       <nav class="tabs" id="tabs"></nav>
 
       <section class="view panel" id="dashboard-view" aria-label="Projects Workspace">
-        <h2>Projects</h2>
+        <div class="view-head">
+          <h2>Projects</h2>
+          <span id="last-synced" class="sync-pill">Last Synced: Waiting for live data…</span>
+        </div>
         <div class="dashboard-grid">
           <aside class="agent-sidebar" id="mission-sidebar">
             <div class="sidebar-head">
@@ -33,12 +36,12 @@
           </aside>
 
           <div class="projects-shell">
-            <section>
+            <section class="projects-active-panel">
               <h3 class="section-title">Active Projects</h3>
               <div class="project-grid" id="project-board"></div>
             </section>
 
-            <section class="ideas-panel">
+            <section class="ideas-panel iterations-lab">
               <h3 class="section-title">Iterations <span class="detail-sub">Internal / Self-Driven</span></h3>
               <ul id="iterations-list" class="ideas-list"></ul>
             </section>

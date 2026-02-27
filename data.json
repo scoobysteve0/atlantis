@@ -1,7 +1,7 @@
 {
   "agents": [
     { "role": "Planner", "name": "Jarvis", "status": "primed" },
-    { "role": "Builder", "name": "Codex", "status": "duty" },
+    { "role": "Builder", "name": "Codex", "status": "Working on v3.3" },
     { "role": "Verifier", "name": "Grok", "status": "idle" },
     { "role": "Publisher", "name": "GitHub", "status": "idle" }
   ],
@@ -47,6 +47,14 @@
       "description": "Review live UI behavior after JSON updates.",
       "assignedTo": "Planner",
       "status": "queued",
+      "completed": false
+    },
+    {
+      "projectId": "atlantis",
+      "type": "agent",
+      "description": "Integrate Real-Time DB",
+      "assignedTo": "Builder",
+      "status": "in-progress",
       "completed": false
     },
     {

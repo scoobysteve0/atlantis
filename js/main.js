@@ -3,10 +3,10 @@ import { mountTabs } from "./ui/tabs.js";
 import { mountDashboard } from "./ui/dashboard-ui.js";
 import { mountMission } from "./ui/mission-ui.js";
 
-const POLL_INTERVAL_MS = 5000;
+const POLL_INTERVAL_MS = 2000;
 
 async function loadLiveData(store) {
-  const response = await fetch("./data.json", { cache: "no-store" });
+  const response = await fetch(`./data.json?t=${Date.now()}`, { cache: "no-store" });
   if (!response.ok) {
     throw new Error(`Failed to load data.json (${response.status})`);
   }

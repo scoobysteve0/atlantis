@@ -18,6 +18,7 @@ export function createStore() {
     iterations: [],
     tasks: [],
     selectedProjectId: null,
+    lastSyncedAt: null,
     log: []
   };
 
@@ -50,6 +51,7 @@ export function createStore() {
       state.projects = normalized.projects;
       state.iterations = normalized.iterations;
       state.tasks = normalized.tasks;
+      state.lastSyncedAt = new Date().toISOString();
 
       const hasSelected = state.projects.some((project) => project.id === state.selectedProjectId);
       if (!hasSelected) {
