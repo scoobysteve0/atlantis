@@ -3,37 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atlantis v1.4 - Guardrails</title>
+    <title>Atlantis v1.5 - Dashboard</title>
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
     <main class="app-shell">
       <header class="topbar">
         <h1>Atlantis</h1>
-        <span class="version-pill">v1.4</span>
+        <span class="version-pill" id="version-pill">v1.5</span>
       </header>
 
-      <section class="panel" id="guardrails-view" aria-label="Guardrails">
-        <h2>Guardrails</h2>
+      <nav class="tabs">
+        <button class="tab is-active" data-view="guardrails">Guardrails</button>
+        <button class="tab" data-view="dashboard">Dashboard</button>
+      </nav>
 
+      <section class="view panel" id="guardrails-view" aria-label="Guardrails">
+        <h2>Guardrails</h2>
         <div class="guardrail-card">
           <h3>1) Naming Validation</h3>
           <label for="task-name">Task name</label>
           <input id="task-name" type="text" placeholder="format: TEAM-ACTION-SCOPE" />
           <p id="name-status" class="status-text">Waiting for input…</p>
         </div>
-
         <div class="guardrail-card">
           <h3>2) Checklist</h3>
           <ul id="checklist" class="checklist"></ul>
         </div>
-
         <div class="guardrail-card">
           <h3>3) Proof Gate</h3>
           <label for="proof-link">Proof URL</label>
           <input id="proof-link" type="url" placeholder="https://..." />
           <button id="proof-button" type="button">Validate Guardrails</button>
           <p id="proof-status" class="status-text">Blocked until all checks pass.</p>
+        </div>
+      </section>
+
+      <section class="view panel is-hidden" id="dashboard-view" aria-label="Project Board Dashboard">
+        <h2>Project Board</h2>
+        <div class="dashboard-grid">
+          <aside class="agent-sidebar">
+            <h3>Agent Status</h3>
+            <ul id="agent-status-list"></ul>
+          </aside>
+
+          <div class="board" id="project-board"></div>
         </div>
       </section>
     </main>
