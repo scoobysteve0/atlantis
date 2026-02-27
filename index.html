@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atlantis v1.8 - Desktop Polish</title>
+    <title>Atlantis v1.9 - Native Interactions</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -13,7 +13,7 @@
     <main class="app-shell">
       <header class="topbar">
         <h1>Atlantis</h1>
-        <span class="version-pill">v1.8</span>
+        <span class="version-pill">v1.9</span>
       </header>
 
       <nav class="tabs" id="tabs"></nav>
@@ -62,6 +62,14 @@
         <div class="live-log" id="live-log" aria-live="polite"></div>
       </section>
     </main>
+
+    <div class="modal-backdrop is-hidden" id="app-modal" role="dialog" aria-modal="true" aria-labelledby="app-modal-title">
+      <div class="modal-panel" id="app-modal-panel">
+        <h3 id="app-modal-title">Status</h3>
+        <p id="app-modal-message">Action complete.</p>
+        <button id="app-modal-close" type="button">Close</button>
+      </div>
+    </div>
 
     <script type="module" src="js/main.js"></script>
   </body>
