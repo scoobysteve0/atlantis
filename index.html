@@ -17,7 +17,7 @@
     h1, h2, h3 { margin: 0 0 10px; }
     p { margin: 0 0 12px; color: #b9c0e6; }
 
-    .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 20px; }
     .controls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 16px; }
 
     .card {
@@ -33,7 +33,7 @@
 
     .iteration-image {
       width: 100%;
-      max-height: 640px;
+      height: auto;
       object-fit: contain;
       border-radius: 10px;
       border: 1px solid #2a3567;
@@ -41,26 +41,30 @@
     }
 
     .section-label {
-      margin-top: 24px;
-      font-size: 13px;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 600;
       text-transform: uppercase;
       letter-spacing: .08em;
-      color: #9ea7d6;
+      color: #7cc6ff;
+      border-bottom: 1px solid #2a3567;
+      padding-bottom: 8px;
     }
 
     .agent-list {
       margin: 0;
-      padding-left: 18px;
+      padding-left: 20px;
       color: #c5ccf5;
-      line-height: 1.65;
+      line-height: 1.6;
     }
 
-    label { display: block; margin: 10px 0 6px; font-size: 14px; color: #c5ccf5; }
+    label { display: block; margin: 12px 0 6px; font-size: 14px; color: #c5ccf5; font-weight: 500; }
     input[type="text"], textarea {
       width: 100%;
       background: #0d1530;
       border: 1px solid #31407d;
-      border-radius: 10px;
+      border-radius: 8px;
       color: #e8ecff;
       padding: 10px;
       font: inherit;
@@ -70,110 +74,108 @@
     .ok { color: #7ef29b; }
     .bad { color: #ff8383; }
     .checks { display: grid; gap: 8px; margin-top: 6px; }
-    .checks label { margin: 0; display: flex; gap: 8px; align-items: center; }
+    .checks label { margin: 0; display: flex; gap: 8px; align-items: center; font-weight: normal; }
 
     button {
-      margin-top: 12px;
+      margin-top: 16px;
       background: #2f6bff;
       color: white;
       border: 0;
-      border-radius: 10px;
-      padding: 10px 12px;
+      border-radius: 8px;
+      padding: 10px 16px;
       font-weight: 600;
       cursor: pointer;
+      transition: background 0.2s;
     }
-    button:disabled {
-      opacity: .55;
-      cursor: not-allowed;
-    }
+    button:hover:not(:disabled) { background: #4b80ff; }
+    button:disabled { opacity: .55; cursor: not-allowed; }
+    
     .broadcast {
       width: 100%;
       min-height: 180px;
       white-space: pre-wrap;
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       background: #091127;
+      border: 1px solid #31407d;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 8px;
     }
-    .row { display: flex; gap: 8px; flex-wrap: wrap; }
-    .small { font-size: 12px; color: #9ea7d6; }
-    .meta { font-size: 13px; color: #9ea7d6; margin-top: 16px; }
+    .meta { font-size: 13px; color: #5c6690; margin-top: 32px; text-align: center; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Atlantis Iteration Board</h1>
-    <p>Visual board restored for context, with milestone guardrails and broadcast controls retained below.</p>
+    <p>Visual status of agent iterations and operational controls.</p>
 
+    <!-- Visual Dashboard (Restored) -->
+    <div class="section-label">Active Iterations</div>
     <div class="grid">
       <section class="card">
-        <h2>v1.4</h2>
-        <p><a href="./atlantis-ideas-v1.4.png" target="_blank" rel="noopener noreferrer">Open full image</a></p>
-        <img class="iteration-image" src="./atlantis-ideas-v1.4.png" alt="Atlantis ideas v1.4" />
+        <h3>v1.4</h3>
+        <a href="./atlantis-ideas-v1.4.png" target="_blank"><img class="iteration-image" src="./atlantis-ideas-v1.4.png" alt="v1.4 Status"></a>
       </section>
-
       <section class="card">
-        <h2>v1.5</h2>
-        <p><a href="./atlantis-ideas-v1.5.png" target="_blank" rel="noopener noreferrer">Open full image</a></p>
-        <img class="iteration-image" src="./atlantis-ideas-v1.5.png" alt="Atlantis ideas v1.5" />
+        <h3>v1.5</h3>
+        <a href="./atlantis-ideas-v1.5.png" target="_blank"><img class="iteration-image" src="./atlantis-ideas-v1.5.png" alt="v1.5 Status"></a>
       </section>
-
       <section class="card">
-        <h2>v1.6</h2>
-        <p><a href="./atlantis-ideas-v1.6.png" target="_blank" rel="noopener noreferrer">Open full image</a></p>
-        <img class="iteration-image" src="./atlantis-ideas-v1.6.png" alt="Atlantis ideas v1.6" />
+        <h3>v1.6</h3>
+        <a href="./atlantis-ideas-v1.6.png" target="_blank"><img class="iteration-image" src="./atlantis-ideas-v1.6.png" alt="v1.6 Status"></a>
       </section>
     </div>
 
-    <p class="section-label">Agent Status</p>
+    <!-- Agent Status (Restored) -->
+    <div class="section-label">Agent Status</div>
     <section class="card">
-      <h2>Active Agents</h2>
-      <p>Live status is represented in the iteration visuals above. Placeholder list retained for quick scan:</p>
       <ul class="agent-list">
-        <li><strong>@clawhub</strong> — Idle (skill/package operations)</li>
-        <li><strong>@github</strong> — Monitoring PR/checks</li>
-        <li><strong>@atlantis-core</strong> — Building next milestone scope</li>
+        <li>🟢 <strong>Gemini</strong> — Active (v1.4 Implementation)</li>
+        <li>🔵 <strong>Jarvis</strong> — Orchestrating / Reporting</li>
+        <li>⚪ <strong>Grok</strong> — Standby (Naming Guardrails)</li>
       </ul>
     </section>
 
-    <p class="section-label">Operational Guardrails</p>
+    <!-- Operational Guardrails (New Features) -->
+    <div class="section-label">Operational Controls (v1.4)</div>
     <div class="controls-grid">
+      <!-- Guardrail 1: Naming -->
       <section class="card">
-        <h2>1) Iteration Naming Guardrail</h2>
-        <label for="iterationLabel">Iteration label</label>
+        <h3>1. Iteration Naming</h3>
+        <label for="iterationLabel">Iteration Label</label>
         <input id="iterationLabel" type="text" placeholder="e.g. v1.4" value="v1.4" />
         <div id="labelStatus" class="status"></div>
-        <p class="small">Rule: must match <code>v&lt;major&gt;.&lt;minor&gt;</code> and be non-empty (examples: v1.4, v2.0).</p>
+        <p style="font-size:12px; margin-top:8px; opacity:0.7">Format: <code>v&lt;major&gt;.&lt;minor&gt;</code></p>
       </section>
 
+      <!-- Guardrail 2: Completion Gate -->
       <section class="card">
-        <h2>2) Completion Gate</h2>
-        <p>Milestone can only be marked done when all checklist items + proof are present.</p>
+        <h3>2. Completion Gate</h3>
         <div class="checks">
           <label><input type="checkbox" data-check="tests" /> Tests passed</label>
           <label><input type="checkbox" data-check="docs" /> Docs updated</label>
           <label><input type="checkbox" data-check="review" /> Reviewed / approved</label>
         </div>
 
-        <label for="proofLinks">Proof links (PR, screenshots, logs)</label>
-        <textarea id="proofLinks" placeholder="https://github.com/scoobysteve0/atlantis/pull/...&#10;https://..."></textarea>
+        <label for="proofLinks">Proof Links</label>
+        <textarea id="proofLinks" placeholder="PR links, screenshots..."></textarea>
 
-        <label for="summary">Milestone summary</label>
-        <textarea id="summary" placeholder="What changed in this milestone?"></textarea>
-
-        <button id="markDoneBtn" disabled>Mark Milestone Done</button>
-        <div id="gateStatus" class="status bad">Gate blocked: complete checklist and add proof.</div>
+        <label for="summary">Summary</label>
+        <textarea id="summary" placeholder="Brief summary of changes..."></textarea>
       </section>
 
+      <!-- Guardrail 3: Broadcast -->
       <section class="card">
-        <h2>3) Broadcast Summary (Discord-ready)</h2>
-        <p>Generated automatically when milestone is marked done.</p>
-        <textarea id="broadcastOutput" class="broadcast" readonly placeholder="Broadcast will appear here..."></textarea>
-        <div class="row">
-          <button id="copyBtn" disabled>Copy Broadcast</button>
-        </div>
+        <h3>3. Broadcast Generator</h3>
+        <button id="markDoneBtn" disabled>Generate Broadcast</button>
+        <div id="gateStatus" class="status bad">Gate blocked: complete checklist.</div>
+        
+        <textarea id="broadcastOutput" class="broadcast" readonly placeholder="Output will appear here..."></textarea>
+        <button id="copyBtn" disabled>Copy to Clipboard</button>
       </section>
     </div>
 
-    <p class="meta">Hosted on GitHub Pages from <code>scoobysteve0/atlantis</code>.</p>
+    <p class="meta">Atlantis Project • Hosted on GitHub Pages</p>
   </div>
 
   <script src="./app.js"></script>
