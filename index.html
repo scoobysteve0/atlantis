@@ -3,21 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atlantis v1.6 - Mission Control</title>
+    <title>Atlantis v1.7 - Desktop Ready</title>
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
     <main class="app-shell">
       <header class="topbar">
         <h1>Atlantis</h1>
-        <span class="version-pill" id="version-pill">v1.6</span>
+        <span class="version-pill">v1.7</span>
       </header>
 
-      <nav class="tabs">
-        <button class="tab is-active" data-view="guardrails">Guardrails</button>
-        <button class="tab" data-view="dashboard">Dashboard</button>
-        <button class="tab" data-view="mission">Mission Control</button>
-      </nav>
+      <nav class="tabs" id="tabs"></nav>
 
       <section class="view panel" id="guardrails-view" aria-label="Guardrails">
         <h2>Guardrails</h2>
@@ -60,11 +56,10 @@
           </label>
           <button id="log-activity-button" type="button">Simulate Agent Activity</button>
         </div>
-
         <div class="live-log" id="live-log" aria-live="polite"></div>
       </section>
     </main>
 
-    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/main.js"></script>
   </body>
 </html>
