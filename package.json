@@ -1,0 +1,42 @@
+{
+  "name": "atlantis",
+  "version": "4.0.0",
+  "description": "Atlantis v4.0 - Production-Ready macOS Electron Application",
+  "main": "src/main/index.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scoobysteve0/atlantis.git"
+  },
+  "author": "Steve",
+  "license": "ISC",
+  "build": {
+    "appId": "com.scoobysteve0.atlantis",
+    "productName": "Atlantis",
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": ["dmg", "zip"],
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^28.2.0",
+    "electron-builder": "^24.9.1"
+  },
+  "dependencies": {
+    "electron-is-dev": "^3.0.1"
+  }
+}

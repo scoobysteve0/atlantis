@@ -14,6 +14,8 @@
   --radius-sm: 10px;
   --radius-md: 14px;
   --radius-lg: 18px;
+  /* Electron Draggable Area */
+  --title-bar-height: 40px;
 }
 
 * { box-sizing: border-box; }
@@ -28,6 +30,8 @@ body {
     radial-gradient(900px 600px at 120% 0%, rgba(80, 227, 194, 0.08), transparent 50%),
     linear-gradient(180deg, #0c1322 0%, var(--bg) 100%);
   color: var(--text);
+  /* Use a safe area for the traffic lights */
+  padding-top: env(safe-area-inset-top); 
 }
 
 .app-shell {
@@ -41,14 +45,22 @@ body {
 }
 
 .topbar, .topbar-actions { display: flex; align-items: center; }
-.topbar { justify-content: space-between; padding: 4px 2px; }
-.topbar-actions { gap: 8px; }
+.topbar { 
+  justify-content: space-between; 
+  padding: 14px 2px 4px 80px; /* Added padding-left for traffic lights */
+  -webkit-app-region: drag; /* Allow dragging */
+}
+.topbar-actions { 
+  gap: 8px; 
+  -webkit-app-region: no-drag; /* Buttons must be clickable */
+}
 .topbar h1 { margin: 0; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.03em; }
 
 .icon-button {
   width: 30px; height: 30px; min-width: 30px; margin: 0; border-radius: 8px; padding: 0;
   display: grid; place-items: center; border: 1px solid var(--line-strong); color: #d3dff5;
   background: linear-gradient(180deg, #1d2a45 0%, #141f34 100%);
+  -webkit-app-region: no-drag;
 }
 .icon-button:hover { filter: brightness(1.12); }
 

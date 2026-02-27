@@ -6,13 +6,23 @@ import { mountMission } from "./ui/mission-ui.js";
 const POLL_INTERVAL_MS = 2000;
 
 async function loadLiveData(store) {
-  const response = await fetch(`./data.json?t=${Date.now()}`, { cache: "no-store" });
-  if (!response.ok) {
-    throw new Error(`Failed to load data.json (${response.status})`);
+  try {
+    let payload;
+    if (window.electronAPI && window.electronAPI.readData) {
+      payload = await window.electronAPI.readData();
+    } else {
+      // Fallback for non-Electron environments (dev/browser testing)
+      const response = await fetch(`./data.json?t=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) {
+        throw new Error(`Failed to load data.json (${response.status})`);
+      }
+      payload = await response.json();
+    }
+    store.setData(payload);
+  } catch (error) {
+    console.error("Data load error:", error);
+    throw error;
   }
-
-  const payload = await response.json();
-  store.setData(payload);
 }
 
 function bootstrap() {
