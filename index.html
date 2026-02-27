@@ -3,234 +3,428 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Atlantis Iteration Board</title>
+  <title>Atlantis Mission Board v1.6</title>
   <style>
-    :root { color-scheme: dark; }
+    :root {
+      color-scheme: dark;
+      --bg: #090d1a;
+      --panel: #111833;
+      --panel-2: #0f1530;
+      --panel-3: #0b1125;
+      --line: #28376f;
+      --text: #e7ecff;
+      --muted: #95a1d4;
+      --blue: #4d83ff;
+      --blue-2: #6ea5ff;
+      --green: #2fd17b;
+      --red: #ff5858;
+      --amber: #f5bf4f;
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      --radius: 14px;
+    }
+
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0b1020;
-      color: #e8ecff;
-    }
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px; }
-    h1, h2, h3 { margin: 0 0 10px; }
-    p { margin: 0 0 12px; color: #b9c0e6; }
-
-    .topbar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    .last-updated {
-      font-size: 13px;
-      color: #9ba7dd;
-      background: #111a36;
-      border: 1px solid #2a3567;
-      border-radius: 999px;
-      padding: 6px 12px;
-      white-space: nowrap;
+      color: var(--text);
+      background: radial-gradient(1200px 500px at 20% -10%, #1b2e69 0, transparent 40%), var(--bg);
+      min-height: 100vh;
     }
 
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 20px; }
-    .controls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 16px; }
-
-    .card {
-      border: 1px solid #2a3567;
-      border-radius: 14px;
-      padding: 16px;
-      background: #131a33;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-
-    a { color: #7cc6ff; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    .iteration-image {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      border-radius: 10px;
-      border: 1px solid #2a3567;
-      background: #0a0f1f;
-    }
-
-    .section-label {
-      margin-top: 32px;
-      margin-bottom: 12px;
-      font-size: 14px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      color: #7cc6ff;
-      border-bottom: 1px solid #2a3567;
-      padding-bottom: 8px;
-    }
-
-    .agent-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      color: #c5ccf5;
+    .app {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
       display: grid;
-      gap: 10px;
-      line-height: 1.4;
+      grid-template-columns: 300px 1fr;
+      gap: 16px;
+      min-height: 100vh;
     }
+
+    .sidebar, .board-shell {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+    .title { margin: 0; font-size: 20px; }
+    .subtle { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+
+    .agent-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
     .agent-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      border: 1px solid #2a3567;
-      border-radius: 10px;
+      justify-content: space-between;
+      gap: 8px;
       padding: 10px 12px;
-      background: #101a39;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(0,0,0,.16);
     }
-    .status-dot {
-      width: 12px;
-      height: 12px;
+    .agent-meta { display: flex; align-items: center; gap: 10px; color: #ccd5fb; }
+    .dot {
+      width: 11px;
+      height: 11px;
       border-radius: 50%;
-      flex: 0 0 12px;
-      box-shadow: 0 0 0 3px rgba(255,255,255,0.04);
+      box-shadow: 0 0 0 3px rgba(255,255,255,.05);
     }
-    .status-red {
-      background: #ff4d4d;
-      box-shadow: 0 0 0 3px rgba(255,77,77,0.2), 0 0 10px rgba(255,77,77,0.35);
-    }
-    .status-green {
-      background: #34d17a;
-      box-shadow: 0 0 0 3px rgba(52,209,122,0.2), 0 0 10px rgba(52,209,122,0.35);
+    .dot.green { background: var(--green); box-shadow: 0 0 0 3px rgba(47,209,123,.2), 0 0 10px rgba(47,209,123,.35); }
+    .dot.red { background: var(--red); box-shadow: 0 0 0 3px rgba(255,88,88,.2), 0 0 10px rgba(255,88,88,.35); }
+
+    .toggle-row {
+      margin-top: 4px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      background: rgba(0,0,0,.16);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
     }
 
-    label { display: block; margin: 12px 0 6px; font-size: 14px; color: #c5ccf5; font-weight: 500; }
-    input[type="text"], textarea {
-      width: 100%;
-      background: #0d1530;
-      border: 1px solid #31407d;
-      border-radius: 8px;
-      color: #e8ecff;
+    .switch { position: relative; width: 54px; height: 30px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: #3c4f93;
+      cursor: pointer;
+      transition: .2s;
+      border: 1px solid #5f74bd;
+    }
+    .slider::before {
+      content: '';
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      left: 3px;
+      top: 3px;
+      border-radius: 50%;
+      background: white;
+      transition: .2s;
+    }
+    .switch input:checked + .slider { background: #2f6bff; }
+    .switch input:checked + .slider::before { transform: translateX(24px); }
+
+    .small-note { color: var(--muted); font-size: 12px; line-height: 1.4; }
+
+    .board-shell { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+    .topbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; }
+    .topbar h1 { margin: 0; font-size: 22px; }
+    .updated-pill {
+      font-size: 12px;
+      color: #b8c5ff;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(0,0,0,.2);
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(260px, 1fr));
+      gap: 14px;
+      align-items: start;
+    }
+
+    .column {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: linear-gradient(180deg, var(--panel-2), var(--panel-3));
+      min-height: 430px;
       padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .column-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: #c4cff7;
+      font-weight: 600;
+      letter-spacing: .02em;
+      padding: 2px 2px 6px;
+    }
+    .count {
+      min-width: 22px;
+      text-align: center;
+      border-radius: 999px;
+      border: 1px solid #4c5f9f;
+      padding: 2px 8px;
+      color: #d7e1ff;
+      font-size: 12px;
+    }
+
+    .card-list { min-height: 330px; display: grid; gap: 10px; align-content: start; }
+
+    .card {
+      border: 1px solid #304379;
+      border-radius: 10px;
+      background: #111a37;
+      padding: 12px;
+      cursor: pointer;
+      transition: border-color .18s, transform .18s, box-shadow .18s;
+    }
+    .card:hover {
+      border-color: var(--blue-2);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(0,0,0,.3);
+    }
+    .card.dragging { opacity: .55; }
+    .card.active {
+      border-color: var(--blue-2);
+      box-shadow: inset 0 0 0 1px rgba(110,165,255,.35);
+      background: linear-gradient(180deg, #15204a, #121a36);
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .card h3 { margin: 0; font-size: 15px; }
+    .badge {
+      font-size: 11px;
+      border-radius: 999px;
+      border: 1px solid #4462bf;
+      color: #bed0ff;
+      padding: 2px 8px;
+      white-space: nowrap;
+    }
+    .badge.done { border-color: #2f9b68; color: #9af0c3; }
+    .badge.queue { border-color: #705ec7; color: #c5b9ff; }
+
+    .meta { color: var(--muted); font-size: 12px; line-height: 1.45; }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3,7,16,.72);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 50;
+    }
+    .overlay.open { display: flex; }
+    .modal {
+      width: min(760px, 100%);
+      max-height: 88vh;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(180deg, #131c3d, #0f1632);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+
+    .modal-head { display: flex; justify-content: space-between; align-items: start; gap: 10px; margin-bottom: 8px; }
+    .modal-head h2 { margin: 0; font-size: 20px; }
+    .close {
+      appearance: none;
+      border: 1px solid #4f62a8;
+      background: #17224d;
+      color: #d9e4ff;
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .guardrails { display: grid; gap: 12px; margin-top: 8px; }
+    .g-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(0,0,0,.16);
+      padding: 12px;
+    }
+    .g-card h4 { margin: 0 0 8px; }
+    label { display: block; font-size: 13px; margin-bottom: 6px; color: #c9d4fb; }
+    input[type='text'], textarea {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #364983;
+      background: #0b1430;
+      color: var(--text);
+      padding: 9px 10px;
       font: inherit;
     }
-    textarea { min-height: 95px; resize: vertical; }
-    .status { font-size: 13px; margin-top: 6px; }
-    .ok { color: #7ef29b; }
-    .bad { color: #ff8383; }
-    .checks { display: grid; gap: 8px; margin-top: 6px; }
-    .checks label { margin: 0; display: flex; gap: 8px; align-items: center; font-weight: normal; }
+    textarea { min-height: 90px; resize: vertical; }
+    .checks { display: grid; gap: 8px; }
+    .checks label { margin: 0; display: flex; gap: 8px; align-items: center; }
 
-    button {
-      margin-top: 16px;
-      background: #2f6bff;
-      color: white;
+    .status { font-size: 13px; margin-top: 6px; }
+    .ok { color: #8aefb5; }
+    .bad { color: #ff9d9d; }
+
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    button.action {
       border: 0;
       border-radius: 8px;
-      padding: 10px 16px;
+      padding: 9px 12px;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s;
+      background: #2f6bff;
+      color: #fff;
     }
-    button:hover:not(:disabled) { background: #4b80ff; }
-    button:disabled { opacity: .55; cursor: not-allowed; }
+    button.secondary { background: #2a3768; }
+    button:disabled { opacity: .6; cursor: not-allowed; }
 
     .broadcast {
       width: 100%;
-      min-height: 180px;
-      white-space: pre-wrap;
+      min-height: 130px;
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      background: #091127;
-      border: 1px solid #31407d;
-      border-radius: 8px;
-      padding: 12px;
-      margin-top: 8px;
+      white-space: pre-wrap;
     }
-    .meta { font-size: 13px; color: #5c6690; margin-top: 32px; text-align: center; }
 
-    @media (max-width: 640px) {
-      .wrap { padding: 18px; }
-      .grid, .controls-grid { grid-template-columns: 1fr; }
-      .topbar { align-items: flex-start; }
-      .last-updated { width: 100%; text-align: center; }
+    @media (max-width: 980px) {
+      .app { grid-template-columns: 1fr; }
+      .board { grid-template-columns: 1fr; }
+      .column { min-height: 0; }
+      .card-list { min-height: 0; }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <h1>Atlantis Iteration Board</h1>
-      <div id="lastUpdated" class="last-updated">Last Updated: --</div>
-    </div>
-    <p>Visual status of agent iterations and operational controls.</p>
+  <div class="app">
+    <aside class="sidebar">
+      <div>
+        <h2 class="title">Mission Control</h2>
+        <p class="subtle">Agent roster + flow controls</p>
+      </div>
 
-    <!-- Visual Dashboard (Restored) -->
-    <div class="section-label">Active Iterations</div>
-    <div class="grid">
-      <section class="card">
-        <h3>v1.4</h3>
-        <a href="./atlantis-ideas-v1.4.png" target="_blank"><img class="iteration-image" src="./atlantis-ideas-v1.4.png" alt="v1.4 Status"></a>
-      </section>
-      <section class="card">
-        <h3>v1.5</h3>
-        <a href="./atlantis-ideas-v1.5.png" target="_blank"><img class="iteration-image" src="./atlantis-ideas-v1.5.png" alt="v1.5 Status"></a>
-      </section>
-      <section class="card">
-        <h3>v1.6</h3>
-        <a href="./atlantis-ideas-v1.6.png" target="_blank"><img class="iteration-image" src="./atlantis-ideas-v1.6.png" alt="v1.6 Status"></a>
-      </section>
-    </div>
-
-    <!-- Agent Status (v1.5 update) -->
-    <div class="section-label">Agent Status</div>
-    <section class="card">
       <ul class="agent-list">
-        <li class="agent-item"><span class="status-dot status-red" aria-label="Red status indicator"></span><strong>Gemini</strong> — Working (Busy)</li>
-        <li class="agent-item"><span class="status-dot status-green" aria-label="Green status indicator"></span><strong>Jarvis</strong> — Idle (Warmed Up)</li>
-        <li class="agent-item"><span class="status-dot status-red" aria-label="Red status indicator"></span><strong>Grok</strong> — Idle (Cold)</li>
+        <li class="agent-item">
+          <div class="agent-meta"><span class="dot red"></span><strong>Gemini</strong></div>
+          <span class="subtle">Working</span>
+        </li>
+        <li class="agent-item">
+          <div class="agent-meta"><span class="dot green"></span><strong>Jarvis</strong></div>
+          <span class="subtle">Idle</span>
+        </li>
+        <li class="agent-item">
+          <div class="agent-meta"><span class="dot red"></span><strong>Grok</strong></div>
+          <span class="subtle">Cold</span>
+        </li>
       </ul>
-    </section>
 
-    <!-- Operational Guardrails (New Features) -->
-    <div class="section-label">Operational Controls (v1.4)</div>
-    <div class="controls-grid">
-      <!-- Guardrail 1: Naming -->
-      <section class="card">
-        <h3>1. Iteration Naming</h3>
-        <label for="iterationLabel">Iteration Label</label>
-        <input id="iterationLabel" type="text" placeholder="e.g. v1.4" value="v1.4" />
-        <div id="labelStatus" class="status"></div>
-        <p style="font-size:12px; margin-top:8px; opacity:0.7">Format: <code>v&lt;major&gt;.&lt;minor&gt;</code></p>
+      <div class="toggle-row">
+        <div>
+          <div><strong>Auto-Advance</strong></div>
+          <div id="autoAdvanceLabel" class="subtle">OFF</div>
+        </div>
+        <label class="switch" aria-label="Auto-Advance toggle">
+          <input id="autoAdvance" type="checkbox" />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <p class="small-note">Tip: Drag cards between columns or click a card for details. The active milestone (v1.5) opens guardrails.</p>
+    </aside>
+
+    <main class="board-shell">
+      <div class="topbar">
+        <h1>Atlantis Delivery Board</h1>
+        <div id="lastUpdated" class="updated-pill">Last Updated: --</div>
+      </div>
+
+      <section class="board" aria-label="Kanban board">
+        <article class="column" data-column="queue">
+          <div class="column-head">Queue / Next Up <span class="count" data-count-for="queue">0</span></div>
+          <div class="card-list" data-dropzone="queue">
+            <div class="card" data-card="v1.6" draggable="true" tabindex="0">
+              <div class="card-top">
+                <h3>Atlantis v1.6</h3>
+                <span class="badge queue">Queued</span>
+              </div>
+              <div class="meta">Real board UI pivot, interaction polish, modal detail flow.</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="column" data-column="progress">
+          <div class="column-head">In Progress <span class="count" data-count-for="progress">0</span></div>
+          <div class="card-list" data-dropzone="progress">
+            <div class="card active" data-card="v1.5" draggable="true" tabindex="0">
+              <div class="card-top">
+                <h3>Atlantis v1.5</h3>
+                <span class="badge">Active</span>
+              </div>
+              <div class="meta">Guardrails + status dots + operational controls. Click to open checklist.</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="column" data-column="done">
+          <div class="column-head">Completed <span class="count" data-count-for="done">0</span></div>
+          <div class="card-list" data-dropzone="done">
+            <div class="card" data-card="v1.4" draggable="true" tabindex="0">
+              <div class="card-top">
+                <h3>Atlantis v1.4</h3>
+                <span class="badge done">Done</span>
+              </div>
+              <div class="meta">Checklist gate + broadcast generator baseline.</div>
+            </div>
+          </div>
+        </article>
       </section>
+    </main>
+  </div>
 
-      <!-- Guardrail 2: Completion Gate -->
-      <section class="card">
-        <h3>2. Completion Gate</h3>
-        <div class="checks">
-          <label><input type="checkbox" data-check="tests" /> Tests passed</label>
-          <label><input type="checkbox" data-check="docs" /> Docs updated</label>
-          <label><input type="checkbox" data-check="review" /> Reviewed / approved</label>
+  <div id="cardModal" class="overlay" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div>
+          <h2 id="modalTitle">Project Detail</h2>
+          <p id="modalSubtitle" class="subtle">Milestone information</p>
+        </div>
+        <button id="closeModal" class="close" type="button">Close</button>
+      </div>
+
+      <div id="guardrailsPanel" class="guardrails" hidden>
+        <div class="g-card">
+          <h4>1) Iteration Naming</h4>
+          <label for="iterationLabel">Iteration Label</label>
+          <input id="iterationLabel" type="text" value="v1.5" />
+          <div id="labelStatus" class="status"></div>
         </div>
 
-        <label for="proofLinks">Proof Links</label>
-        <textarea id="proofLinks" placeholder="PR links, screenshots..."></textarea>
+        <div class="g-card">
+          <h4>2) Completion Gate</h4>
+          <div class="checks">
+            <label><input type="checkbox" data-check="tests" /> Tests passed</label>
+            <label><input type="checkbox" data-check="docs" /> Docs updated</label>
+            <label><input type="checkbox" data-check="review" /> Reviewed / approved</label>
+          </div>
+          <label for="proofLinks" style="margin-top:10px">Proof Links</label>
+          <textarea id="proofLinks" placeholder="PR links, screenshots..."></textarea>
+          <label for="summary" style="margin-top:10px">Summary</label>
+          <textarea id="summary" placeholder="Brief summary of changes..."></textarea>
+          <div id="gateStatus" class="status bad">Gate blocked: complete checklist.</div>
+        </div>
 
-        <label for="summary">Summary</label>
-        <textarea id="summary" placeholder="Brief summary of changes..."></textarea>
-      </section>
+        <div class="g-card">
+          <h4>3) Broadcast Generator</h4>
+          <div class="actions">
+            <button id="markDoneBtn" class="action" type="button" disabled>Generate Broadcast</button>
+            <button id="copyBtn" class="action secondary" type="button" disabled>Copy Broadcast</button>
+          </div>
+          <textarea id="broadcastOutput" class="broadcast" readonly placeholder="Output appears here..."></textarea>
+        </div>
+      </div>
 
-      <!-- Guardrail 3: Broadcast -->
-      <section class="card">
-        <h3>3. Broadcast Generator</h3>
-        <button id="markDoneBtn" disabled>Generate Broadcast</button>
-        <div id="gateStatus" class="status bad">Gate blocked: complete checklist.</div>
-
-        <textarea id="broadcastOutput" class="broadcast" readonly placeholder="Output will appear here..."></textarea>
-        <button id="copyBtn" disabled>Copy Broadcast</button>
-      </section>
-    </div>
-
-    <p class="meta">Atlantis Project • Hosted on GitHub Pages</p>
+      <div id="genericPanel" class="g-card" hidden>
+        <h4>Milestone Overview</h4>
+        <p id="genericBody" class="subtle" style="line-height:1.6"></p>
+      </div>
+    </section>
   </div>
 
   <script src="./app.js"></script>
