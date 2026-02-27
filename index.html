@@ -16,7 +16,10 @@
     .wrap { max-width: 1100px; margin: 0 auto; padding: 24px; }
     h1, h2, h3 { margin: 0 0 10px; }
     p { margin: 0 0 12px; color: #b9c0e6; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+
+    .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 20px; }
+    .controls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 16px; }
+
     .card {
       border: 1px solid #2a3567;
       border-radius: 14px;
@@ -24,6 +27,34 @@
       background: #131a33;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
+
+    a { color: #7cc6ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .iteration-image {
+      width: 100%;
+      max-height: 640px;
+      object-fit: contain;
+      border-radius: 10px;
+      border: 1px solid #2a3567;
+      background: #0a0f1f;
+    }
+
+    .section-label {
+      margin-top: 24px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #9ea7d6;
+    }
+
+    .agent-list {
+      margin: 0;
+      padding-left: 18px;
+      color: #c5ccf5;
+      line-height: 1.65;
+    }
+
     label { display: block; margin: 10px 0 6px; font-size: 14px; color: #c5ccf5; }
     input[type="text"], textarea {
       width: 100%;
@@ -40,6 +71,7 @@
     .bad { color: #ff8383; }
     .checks { display: grid; gap: 8px; margin-top: 6px; }
     .checks label { margin: 0; display: flex; gap: 8px; align-items: center; }
+
     button {
       margin-top: 12px;
       background: #2f6bff;
@@ -63,14 +95,47 @@
     }
     .row { display: flex; gap: 8px; flex-wrap: wrap; }
     .small { font-size: 12px; color: #9ea7d6; }
+    .meta { font-size: 13px; color: #9ea7d6; margin-top: 16px; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Atlantis Milestone Guardrails (v1.4)</h1>
-    <p>Operational dashboard with guardrails for naming, completion proof, and Discord-ready milestone broadcasts.</p>
+    <h1>Atlantis Iteration Board</h1>
+    <p>Visual board restored for context, with milestone guardrails and broadcast controls retained below.</p>
 
     <div class="grid">
+      <section class="card">
+        <h2>v1.4</h2>
+        <p><a href="./atlantis-ideas-v1.4.png" target="_blank" rel="noopener noreferrer">Open full image</a></p>
+        <img class="iteration-image" src="./atlantis-ideas-v1.4.png" alt="Atlantis ideas v1.4" />
+      </section>
+
+      <section class="card">
+        <h2>v1.5</h2>
+        <p><a href="./atlantis-ideas-v1.5.png" target="_blank" rel="noopener noreferrer">Open full image</a></p>
+        <img class="iteration-image" src="./atlantis-ideas-v1.5.png" alt="Atlantis ideas v1.5" />
+      </section>
+
+      <section class="card">
+        <h2>v1.6</h2>
+        <p><a href="./atlantis-ideas-v1.6.png" target="_blank" rel="noopener noreferrer">Open full image</a></p>
+        <img class="iteration-image" src="./atlantis-ideas-v1.6.png" alt="Atlantis ideas v1.6" />
+      </section>
+    </div>
+
+    <p class="section-label">Agent Status</p>
+    <section class="card">
+      <h2>Active Agents</h2>
+      <p>Live status is represented in the iteration visuals above. Placeholder list retained for quick scan:</p>
+      <ul class="agent-list">
+        <li><strong>@clawhub</strong> — Idle (skill/package operations)</li>
+        <li><strong>@github</strong> — Monitoring PR/checks</li>
+        <li><strong>@atlantis-core</strong> — Building next milestone scope</li>
+      </ul>
+    </section>
+
+    <p class="section-label">Operational Guardrails</p>
+    <div class="controls-grid">
       <section class="card">
         <h2>1) Iteration Naming Guardrail</h2>
         <label for="iterationLabel">Iteration label</label>
@@ -108,7 +173,7 @@
       </section>
     </div>
 
-    <p class="small" style="margin-top:16px">Hosted on GitHub Pages from <code>scoobysteve0/atlantis</code>.</p>
+    <p class="meta">Hosted on GitHub Pages from <code>scoobysteve0/atlantis</code>.</p>
   </div>
 
   <script src="./app.js"></script>
