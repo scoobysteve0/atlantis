@@ -1,7 +1,6 @@
 export const VIEWS = [
-  ["guardrails", "Guardrails"],
-  ["dashboard", "Dashboard"],
-  ["mission", "Mission Control"]
+  ["dashboard", "Projects"],
+  ["mission", "Activity"]
 ];
 
 export const BOARD_COLUMNS = ["backlog", "active", "review", "done"];

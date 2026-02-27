@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atlantis v2.0 - Desktop Complete</title>
+    <title>Atlantis v3.0 - Projects + Agents</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -15,49 +15,41 @@
         <h1>Atlantis</h1>
         <div class="topbar-actions">
           <button id="settings-button" class="icon-button" type="button" aria-label="Settings" title="Settings">⚙</button>
-          <span class="version-pill">v2.0</span>
+          <span class="version-pill">v3.0</span>
         </div>
       </header>
 
       <nav class="tabs" id="tabs"></nav>
 
-      <section class="view panel" id="guardrails-view" aria-label="Guardrails">
-        <h2>Guardrails</h2>
-        <div class="guardrail-card">
-          <h3>1) Naming Validation</h3>
-          <label for="task-name">Task name</label>
-          <input id="task-name" type="text" placeholder="format: TEAM-ACTION-SCOPE" />
-          <p id="name-status" class="status-text">Waiting for input…</p>
-        </div>
-        <div class="guardrail-card">
-          <h3>2) Checklist</h3>
-          <ul id="checklist" class="checklist"></ul>
-        </div>
-        <div class="guardrail-card">
-          <h3>3) Proof Gate</h3>
-          <label for="proof-link">Proof URL</label>
-          <input id="proof-link" type="url" placeholder="https://..." />
-          <button id="proof-button" type="button">Validate Guardrails</button>
-          <p id="proof-status" class="status-text">Blocked until all checks pass.</p>
-        </div>
-      </section>
-
-      <section class="view panel is-hidden" id="dashboard-view" aria-label="Project Board Dashboard">
-        <h2>Project Board</h2>
+      <section class="view panel" id="dashboard-view" aria-label="Projects Workspace">
+        <h2>Projects</h2>
         <div class="dashboard-grid">
           <aside class="agent-sidebar" id="mission-sidebar">
             <div class="sidebar-head">
-              <h3>Mission Control</h3>
-              <button id="mission-sidebar-toggle" class="icon-button sidebar-toggle" type="button" aria-label="Collapse Mission Control" title="Collapse">◀</button>
+              <h3>Agents</h3>
+              <button id="mission-sidebar-toggle" class="icon-button sidebar-toggle" type="button" aria-label="Collapse Agents" title="Collapse">◀</button>
             </div>
             <ul id="agent-status-list"></ul>
           </aside>
-          <div class="board" id="project-board"></div>
+
+          <div class="projects-shell">
+            <section>
+              <h3 class="section-title">Active Projects</h3>
+              <div class="project-grid" id="project-board"></div>
+            </section>
+
+            <section class="ideas-panel">
+              <h3 class="section-title">Ideas</h3>
+              <ul id="ideas-list" class="ideas-list"></ul>
+            </section>
+
+            <section class="project-detail" id="project-detail"></section>
+          </div>
         </div>
       </section>
 
-      <section class="view panel is-hidden" id="mission-view" aria-label="Mission Control">
-        <h2>Mission Control</h2>
+      <section class="view panel is-hidden" id="mission-view" aria-label="Mission Activity">
+        <h2>Mission Activity</h2>
         <div class="mission-toolbar">
           <label class="switch-row" for="auto-advance-toggle">
             <input id="auto-advance-toggle" type="checkbox" />

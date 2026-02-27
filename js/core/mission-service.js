@@ -1,10 +1,8 @@
-import { BOARD_COLUMNS } from "../config/app-config.js";
-
 const events = [
-  "Planner validated scope",
-  "Builder advanced implementation",
-  "Verifier started checks",
-  "Publisher prepared release notes"
+  "Planner reprioritized project sequencing",
+  "Builder picked up implementation queue",
+  "Verifier initiated acceptance checks",
+  "Publisher staged release notes"
 ];
 
 export function createMissionService(store) {
@@ -13,7 +11,6 @@ export function createMissionService(store) {
 
   const runTick = () => {
     store.log(events[pointer % events.length]);
-    store.appendBoard(BOARD_COLUMNS[pointer % BOARD_COLUMNS.length], `Auto task @ ${new Date().toLocaleTimeString()}`);
     pointer += 1;
   };
 
