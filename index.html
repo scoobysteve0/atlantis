@@ -17,6 +17,24 @@
     h1, h2, h3 { margin: 0 0 10px; }
     p { margin: 0 0 12px; color: #b9c0e6; }
 
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .last-updated {
+      font-size: 13px;
+      color: #9ba7dd;
+      background: #111a36;
+      border: 1px solid #2a3567;
+      border-radius: 999px;
+      padding: 6px 12px;
+      white-space: nowrap;
+    }
+
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 20px; }
     .controls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 16px; }
 
@@ -54,9 +72,36 @@
 
     .agent-list {
       margin: 0;
-      padding-left: 20px;
+      padding: 0;
+      list-style: none;
       color: #c5ccf5;
-      line-height: 1.6;
+      display: grid;
+      gap: 10px;
+      line-height: 1.4;
+    }
+    .agent-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid #2a3567;
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #101a39;
+    }
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex: 0 0 12px;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.04);
+    }
+    .status-red {
+      background: #ff4d4d;
+      box-shadow: 0 0 0 3px rgba(255,77,77,0.2), 0 0 10px rgba(255,77,77,0.35);
+    }
+    .status-green {
+      background: #34d17a;
+      box-shadow: 0 0 0 3px rgba(52,209,122,0.2), 0 0 10px rgba(52,209,122,0.35);
     }
 
     label { display: block; margin: 12px 0 6px; font-size: 14px; color: #c5ccf5; font-weight: 500; }
@@ -89,7 +134,7 @@
     }
     button:hover:not(:disabled) { background: #4b80ff; }
     button:disabled { opacity: .55; cursor: not-allowed; }
-    
+
     .broadcast {
       width: 100%;
       min-height: 180px;
@@ -102,11 +147,21 @@
       margin-top: 8px;
     }
     .meta { font-size: 13px; color: #5c6690; margin-top: 32px; text-align: center; }
+
+    @media (max-width: 640px) {
+      .wrap { padding: 18px; }
+      .grid, .controls-grid { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; }
+      .last-updated { width: 100%; text-align: center; }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Atlantis Iteration Board</h1>
+    <div class="topbar">
+      <h1>Atlantis Iteration Board</h1>
+      <div id="lastUpdated" class="last-updated">Last Updated: --</div>
+    </div>
     <p>Visual status of agent iterations and operational controls.</p>
 
     <!-- Visual Dashboard (Restored) -->
@@ -126,13 +181,13 @@
       </section>
     </div>
 
-    <!-- Agent Status (Restored) -->
+    <!-- Agent Status (v1.5 update) -->
     <div class="section-label">Agent Status</div>
     <section class="card">
       <ul class="agent-list">
-        <li>🟢 <strong>Gemini</strong> — Active (v1.4 Implementation)</li>
-        <li>🔵 <strong>Jarvis</strong> — Orchestrating / Reporting</li>
-        <li>⚪ <strong>Grok</strong> — Standby (Naming Guardrails)</li>
+        <li class="agent-item"><span class="status-dot status-red" aria-label="Red status indicator"></span><strong>Gemini</strong> — Working (Busy)</li>
+        <li class="agent-item"><span class="status-dot status-green" aria-label="Green status indicator"></span><strong>Jarvis</strong> — Idle (Warmed Up)</li>
+        <li class="agent-item"><span class="status-dot status-red" aria-label="Red status indicator"></span><strong>Grok</strong> — Idle (Cold)</li>
       </ul>
     </section>
 
@@ -169,9 +224,9 @@
         <h3>3. Broadcast Generator</h3>
         <button id="markDoneBtn" disabled>Generate Broadcast</button>
         <div id="gateStatus" class="status bad">Gate blocked: complete checklist.</div>
-        
+
         <textarea id="broadcastOutput" class="broadcast" readonly placeholder="Output will appear here..."></textarea>
-        <button id="copyBtn" disabled>Copy to Clipboard</button>
+        <button id="copyBtn" disabled>Copy Broadcast</button>
       </section>
     </div>
 

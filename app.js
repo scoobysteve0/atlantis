@@ -1,5 +1,6 @@
 const state = {
   doneAt: null,
+  pageUpdatedAt: new Date(),
 };
 
 const els = {
@@ -12,6 +13,7 @@ const els = {
   gateStatus: document.getElementById('gateStatus'),
   broadcastOutput: document.getElementById('broadcastOutput'),
   copyBtn: document.getElementById('copyBtn'),
+  lastUpdated: document.getElementById('lastUpdated'),
 };
 
 /**
@@ -43,6 +45,23 @@ function summaryPresent() {
   return els.summary.value.trim().length > 0;
 }
 
+function formatTimestamp(date = new Date()) {
+  return date.toLocaleString([], {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    second: '2-digit',
+  });
+}
+
+function updateLastUpdated(date = new Date()) {
+  state.pageUpdatedAt = date;
+  if (!els.lastUpdated) return;
+  els.lastUpdated.textContent = `Last Updated: ${formatTimestamp(state.pageUpdatedAt)}`;
+}
+
 function evaluateGate() {
   const labelCheck = validateIterationLabel(els.iterationLabel.value);
   const ready = labelCheck.valid && checklistComplete() && proofPresent() && summaryPresent();
@@ -56,6 +75,7 @@ function evaluateGate() {
     : 'Gate blocked: validate naming, complete checklist, and add proof + summary.';
   els.gateStatus.className = `status ${ready ? 'ok' : 'bad'}`;
 
+  updateLastUpdated();
   return { ready, labelCheck };
 }
 
@@ -106,6 +126,7 @@ function onMarkDone() {
   els.copyBtn.disabled = false;
   els.gateStatus.textContent = 'Milestone marked done. Broadcast generated.';
   els.gateStatus.className = 'status ok';
+  updateLastUpdated(state.doneAt);
 }
 
 async function onCopy() {
@@ -125,6 +146,13 @@ function init() {
   els.checks.forEach((check) => check.addEventListener('change', evaluateGate));
   els.markDoneBtn.addEventListener('click', onMarkDone);
   els.copyBtn.addEventListener('click', onCopy);
+
+  updateLastUpdated();
+  setInterval(() => {
+    if (state.pageUpdatedAt && els.lastUpdated) {
+      els.lastUpdated.textContent = `Last Updated: ${formatTimestamp(state.pageUpdatedAt)}`;
+    }
+  }, 1000);
 
   evaluateGate();
 }
