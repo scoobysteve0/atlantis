@@ -21,10 +21,16 @@ npm start
 
 ## Live Bridge Notes
 
-- Frontend data service abstraction now supports mock JSON immediately and can be switched to API endpoints later.
+- Configure live OpenClaw polling by setting `window.__ATLANTIS_OPENCLAW_BASE__` (or localStorage key `atlantis.openclawBase`) to a reachable OpenClaw API host.
+- Runtime tries status/session endpoints, maps feed data into agent/project/task cards, and falls back to mock/cached data with a visible warning.
 - API contract: `docs/API_CONTRACT.md`
 
 ## Changelog
+
+### v3.5
+- Added Discord/OpenClaw live pipeline MVP via runtime polling of status/session sources.
+- Added feed-to-card mapping for agents/projects/tasks.
+- Added graceful fallback path (mock JSON, then cached snapshot) with visible warning and data-source health badge.
 
 ### v3.4
 - Restored stable web baseline at root `index.html` (pre-electron usability).
