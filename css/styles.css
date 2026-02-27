@@ -123,9 +123,16 @@ body {
 
 .project-wave {
   display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: .72rem; font-weight: 700;
+}
+.project-wave.is-active {
   color: #dff4ff; background: rgba(76, 174, 255, 0.24);
   box-shadow: 0 0 14px rgba(76,174,255,.52), inset 0 0 12px rgba(76,174,255,.25);
   animation: wave-glow 1800ms ease-in-out infinite;
+}
+.project-wave.is-inactive {
+  color: #f0e4cd;
+  background: rgba(255, 186, 87, 0.2);
+  box-shadow: 0 0 10px rgba(255,186,87,.28), inset 0 0 8px rgba(255,186,87,.18);
 }
 @keyframes wave-glow {
   0%,100% { box-shadow: 0 0 10px rgba(76,174,255,.46), inset 0 0 8px rgba(76,174,255,.2); transform: translateX(0); }

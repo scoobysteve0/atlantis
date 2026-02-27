@@ -4,6 +4,18 @@ import { mountTabs } from "./ui/tabs.js";
 import { mountDashboard } from "./ui/dashboard-ui.js";
 import { mountMission } from "./ui/mission-ui.js";
 
+const POLL_INTERVAL_MS = 5000;
+
+async function loadLiveData(store) {
+  const response = await fetch("./data.json", { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error(`Failed to load data.json (${response.status})`);
+  }
+
+  const payload = await response.json();
+  store.setData(payload);
+}
+
 function bootstrap() {
   const store = createStore();
   const missionService = createMissionService(store);
@@ -25,6 +37,17 @@ function bootstrap() {
   modalClose.addEventListener("click", () => {
     modal.classList.add("is-hidden");
   });
+
+  const refresh = async () => {
+    try {
+      await loadLiveData(store);
+    } catch (error) {
+      store.log(`Live data refresh failed: ${error.message}`);
+    }
+  };
+
+  refresh();
+  setInterval(refresh, POLL_INTERVAL_MS);
 
   store.setView("dashboard");
 }

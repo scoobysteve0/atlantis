@@ -1,0 +1,55 @@
+{
+  "agents": [
+    { "role": "Planner", "name": "Jarvis", "status": "primed" },
+    { "role": "Builder", "name": "Codex", "status": "duty" },
+    { "role": "Verifier", "name": "Grok", "status": "idle" },
+    { "role": "Publisher", "name": "GitHub", "status": "idle" }
+  ],
+  "projects": [
+    { "id": "atlantis", "name": "Atlantis", "status": "active", "active": true },
+    { "id": "nebula-sync", "name": "Nebula Sync", "status": "active", "active": true },
+    { "id": "ideas", "name": "Ideas", "status": "future", "active": false }
+  ],
+  "tasks": [
+    {
+      "projectId": "atlantis",
+      "type": "agent",
+      "description": "Connect dashboard modules to live data polling.",
+      "assignedTo": "Builder",
+      "status": "in-progress",
+      "completed": false
+    },
+    {
+      "projectId": "atlantis",
+      "type": "user",
+      "description": "Review live UI behavior after JSON updates.",
+      "assignedTo": "Planner",
+      "status": "queued",
+      "completed": false
+    },
+    {
+      "projectId": "nebula-sync",
+      "type": "agent",
+      "description": "Prepare cross-project sync heartbeat.",
+      "assignedTo": "Verifier",
+      "status": "queued",
+      "completed": false
+    },
+    {
+      "projectId": "nebula-sync",
+      "type": "user",
+      "description": "Prioritize migration backlog for next cycle.",
+      "assignedTo": "Planner",
+      "status": "blocked",
+      "completed": false
+    },
+    {
+      "projectId": "ideas",
+      "type": "user",
+      "description": "Capture future automation concepts for Atlantis.",
+      "assignedTo": "Publisher",
+      "status": "future",
+      "completed": false
+    }
+  ]
+}
