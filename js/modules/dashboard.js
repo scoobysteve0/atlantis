@@ -13,13 +13,25 @@ const agents = [
 ];
 
 export function initDashboard() {
-  const board = document.getElementById("project-board");
-  const statusList = document.getElementById("agent-status-list");
+  renderAgentStatus();
+  renderBoard();
+}
 
+export function advanceBoard(column) {
+  if (!boardData[column]) return;
+  boardData[column].push(`Auto task @ ${new Date().toLocaleTimeString()}`);
+  renderBoard();
+}
+
+function renderAgentStatus() {
+  const statusList = document.getElementById("agent-status-list");
   statusList.innerHTML = agents
     .map(([name, online]) => `<li class="agent-pill"><span class="dot ${online ? "green" : ""}"></span>${name}</li>`)
     .join("");
+}
 
+function renderBoard() {
+  const board = document.getElementById("project-board");
   board.innerHTML = Object.entries(boardData)
     .map(([column, items]) => {
       const cards = items.map((item) => `<article class="card">${item}</article>`).join("");

@@ -3,19 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atlantis v1.5 - Dashboard</title>
+    <title>Atlantis v1.6 - Mission Control</title>
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
     <main class="app-shell">
       <header class="topbar">
         <h1>Atlantis</h1>
-        <span class="version-pill" id="version-pill">v1.5</span>
+        <span class="version-pill" id="version-pill">v1.6</span>
       </header>
 
       <nav class="tabs">
         <button class="tab is-active" data-view="guardrails">Guardrails</button>
         <button class="tab" data-view="dashboard">Dashboard</button>
+        <button class="tab" data-view="mission">Mission Control</button>
       </nav>
 
       <section class="view panel" id="guardrails-view" aria-label="Guardrails">
@@ -46,9 +47,21 @@
             <h3>Agent Status</h3>
             <ul id="agent-status-list"></ul>
           </aside>
-
           <div class="board" id="project-board"></div>
         </div>
+      </section>
+
+      <section class="view panel is-hidden" id="mission-view" aria-label="Mission Control">
+        <h2>Mission Control</h2>
+        <div class="mission-toolbar">
+          <label class="switch-row" for="auto-advance-toggle">
+            <input id="auto-advance-toggle" type="checkbox" />
+            Auto-Advance
+          </label>
+          <button id="log-activity-button" type="button">Simulate Agent Activity</button>
+        </div>
+
+        <div class="live-log" id="live-log" aria-live="polite"></div>
       </section>
     </main>
 
