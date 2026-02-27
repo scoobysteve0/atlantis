@@ -1,0 +1,84 @@
+:root {
+  color-scheme: dark;
+  --bg: #0f172a;
+  --panel: #111827;
+  --card: #1f2937;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --ok: #22c55e;
+  --warn: #f59e0b;
+  --bad: #ef4444;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: radial-gradient(circle at top, #1e293b, var(--bg));
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.app-shell {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.version-pill {
+  background: #0ea5e9;
+  color: #082f49;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+.panel {
+  background: color-mix(in srgb, var(--panel), black 20%);
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.guardrail-card {
+  background: var(--card);
+  border: 1px solid #374151;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+input, button {
+  width: 100%;
+  margin-top: 8px;
+  border-radius: 10px;
+  border: 1px solid #4b5563;
+  background: #111827;
+  color: var(--text);
+  padding: 10px;
+}
+button {
+  margin-top: 12px;
+  cursor: pointer;
+  background: #0369a1;
+  border: none;
+  font-weight: 600;
+}
+
+.checklist { list-style: none; margin: 0; padding: 0; }
+.checklist li {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+.status-ok { color: var(--ok); }
+.status-warn { color: var(--warn); }
+.status-bad { color: var(--bad); }
+.status-text { margin: 8px 0 0; }

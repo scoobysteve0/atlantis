@@ -1,183 +1,43 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Atlantis Iteration Board</title>
-  <style>
-    :root { color-scheme: dark; }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0b1020;
-      color: #e8ecff;
-    }
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px; }
-    h1, h2, h3 { margin: 0 0 10px; }
-    p { margin: 0 0 12px; color: #b9c0e6; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atlantis v1.4 - Guardrails</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <h1>Atlantis</h1>
+        <span class="version-pill">v1.4</span>
+      </header>
 
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 20px; }
-    .controls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 16px; }
+      <section class="panel" id="guardrails-view" aria-label="Guardrails">
+        <h2>Guardrails</h2>
 
-    .card {
-      border: 1px solid #2a3567;
-      border-radius: 14px;
-      padding: 16px;
-      background: #131a33;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-
-    a { color: #7cc6ff; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    .iteration-image {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      border-radius: 10px;
-      border: 1px solid #2a3567;
-      background: #0a0f1f;
-    }
-
-    .section-label {
-      margin-top: 32px;
-      margin-bottom: 12px;
-      font-size: 14px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      color: #7cc6ff;
-      border-bottom: 1px solid #2a3567;
-      padding-bottom: 8px;
-    }
-
-    .agent-list {
-      margin: 0;
-      padding-left: 20px;
-      color: #c5ccf5;
-      line-height: 1.6;
-    }
-
-    label { display: block; margin: 12px 0 6px; font-size: 14px; color: #c5ccf5; font-weight: 500; }
-    input[type="text"], textarea {
-      width: 100%;
-      background: #0d1530;
-      border: 1px solid #31407d;
-      border-radius: 8px;
-      color: #e8ecff;
-      padding: 10px;
-      font: inherit;
-    }
-    textarea { min-height: 95px; resize: vertical; }
-    .status { font-size: 13px; margin-top: 6px; }
-    .ok { color: #7ef29b; }
-    .bad { color: #ff8383; }
-    .checks { display: grid; gap: 8px; margin-top: 6px; }
-    .checks label { margin: 0; display: flex; gap: 8px; align-items: center; font-weight: normal; }
-
-    button {
-      margin-top: 16px;
-      background: #2f6bff;
-      color: white;
-      border: 0;
-      border-radius: 8px;
-      padding: 10px 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    button:hover:not(:disabled) { background: #4b80ff; }
-    button:disabled { opacity: .55; cursor: not-allowed; }
-    
-    .broadcast {
-      width: 100%;
-      min-height: 180px;
-      white-space: pre-wrap;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      background: #091127;
-      border: 1px solid #31407d;
-      border-radius: 8px;
-      padding: 12px;
-      margin-top: 8px;
-    }
-    .meta { font-size: 13px; color: #5c6690; margin-top: 32px; text-align: center; }
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <h1>Atlantis Iteration Board</h1>
-    <p>Visual status of agent iterations and operational controls.</p>
-
-    <!-- Visual Dashboard (Restored) -->
-    <div class="section-label">Active Iterations</div>
-    <div class="grid">
-      <section class="card">
-        <h3>v1.4</h3>
-        <a href="./atlantis-ideas-v1.4.png" target="_blank"><img class="iteration-image" src="./atlantis-ideas-v1.4.png" alt="v1.4 Status"></a>
-      </section>
-      <section class="card">
-        <h3>v1.5</h3>
-        <a href="./atlantis-ideas-v1.5.png" target="_blank"><img class="iteration-image" src="./atlantis-ideas-v1.5.png" alt="v1.5 Status"></a>
-      </section>
-      <section class="card">
-        <h3>v1.6</h3>
-        <a href="./atlantis-ideas-v1.6.png" target="_blank"><img class="iteration-image" src="./atlantis-ideas-v1.6.png" alt="v1.6 Status"></a>
-      </section>
-    </div>
-
-    <!-- Agent Status (Restored) -->
-    <div class="section-label">Agent Status</div>
-    <section class="card">
-      <ul class="agent-list">
-        <li>🟢 <strong>Gemini</strong> — Active (v1.4 Implementation)</li>
-        <li>🔵 <strong>Jarvis</strong> — Orchestrating / Reporting</li>
-        <li>⚪ <strong>Grok</strong> — Standby (Naming Guardrails)</li>
-      </ul>
-    </section>
-
-    <!-- Operational Guardrails (New Features) -->
-    <div class="section-label">Operational Controls (v1.4)</div>
-    <div class="controls-grid">
-      <!-- Guardrail 1: Naming -->
-      <section class="card">
-        <h3>1. Iteration Naming</h3>
-        <label for="iterationLabel">Iteration Label</label>
-        <input id="iterationLabel" type="text" placeholder="e.g. v1.4" value="v1.4" />
-        <div id="labelStatus" class="status"></div>
-        <p style="font-size:12px; margin-top:8px; opacity:0.7">Format: <code>v&lt;major&gt;.&lt;minor&gt;</code></p>
-      </section>
-
-      <!-- Guardrail 2: Completion Gate -->
-      <section class="card">
-        <h3>2. Completion Gate</h3>
-        <div class="checks">
-          <label><input type="checkbox" data-check="tests" /> Tests passed</label>
-          <label><input type="checkbox" data-check="docs" /> Docs updated</label>
-          <label><input type="checkbox" data-check="review" /> Reviewed / approved</label>
+        <div class="guardrail-card">
+          <h3>1) Naming Validation</h3>
+          <label for="task-name">Task name</label>
+          <input id="task-name" type="text" placeholder="format: TEAM-ACTION-SCOPE" />
+          <p id="name-status" class="status-text">Waiting for input…</p>
         </div>
 
-        <label for="proofLinks">Proof Links</label>
-        <textarea id="proofLinks" placeholder="PR links, screenshots..."></textarea>
+        <div class="guardrail-card">
+          <h3>2) Checklist</h3>
+          <ul id="checklist" class="checklist"></ul>
+        </div>
 
-        <label for="summary">Summary</label>
-        <textarea id="summary" placeholder="Brief summary of changes..."></textarea>
+        <div class="guardrail-card">
+          <h3>3) Proof Gate</h3>
+          <label for="proof-link">Proof URL</label>
+          <input id="proof-link" type="url" placeholder="https://..." />
+          <button id="proof-button" type="button">Validate Guardrails</button>
+          <p id="proof-status" class="status-text">Blocked until all checks pass.</p>
+        </div>
       </section>
+    </main>
 
-      <!-- Guardrail 3: Broadcast -->
-      <section class="card">
-        <h3>3. Broadcast Generator</h3>
-        <button id="markDoneBtn" disabled>Generate Broadcast</button>
-        <div id="gateStatus" class="status bad">Gate blocked: complete checklist.</div>
-        
-        <textarea id="broadcastOutput" class="broadcast" readonly placeholder="Output will appear here..."></textarea>
-        <button id="copyBtn" disabled>Copy to Clipboard</button>
-      </section>
-    </div>
-
-    <p class="meta">Atlantis Project • Hosted on GitHub Pages</p>
-  </div>
-
-  <script src="./app.js"></script>
-</body>
+    <script type="module" src="js/app.js"></script>
+  </body>
 </html>
