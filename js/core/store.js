@@ -6,6 +6,7 @@ export function createStore() {
     taskName: "",
     checklist: { objective: false, owner: false, estimate: false },
     proofUrl: "",
+    missionSidebarCollapsed: false,
     board: {
       backlog: ["Define release criteria", "Create design tokens"],
       active: ["Implement Guardrails", "Wire board state"],
@@ -26,6 +27,10 @@ export function createStore() {
     setTaskName(value) { state.taskName = value; notify(); },
     setChecklist(key, value) { state.checklist[key] = value; notify(); },
     setProofUrl(value) { state.proofUrl = value; notify(); },
+    toggleMissionSidebar() {
+      state.missionSidebarCollapsed = !state.missionSidebarCollapsed;
+      notify();
+    },
     appendBoard(column, card) {
       if (!BOARD_COLUMNS.includes(column)) return;
       state.board[column].push(card);

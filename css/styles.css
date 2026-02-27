@@ -52,6 +52,31 @@ body {
   padding: 4px 2px;
 }
 
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-button {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  margin: 0;
+  border-radius: 8px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  color: #d3dff5;
+  background: linear-gradient(180deg, #1d2a45 0%, #141f34 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.icon-button:hover {
+  filter: brightness(1.12);
+}
+
 .topbar h1 {
   margin: 0;
   font-size: 1.1rem;
@@ -223,6 +248,36 @@ button:active {
   grid-template-columns: 228px 1fr;
   gap: 10px;
   min-height: 0;
+  transition: grid-template-columns 180ms ease;
+}
+
+.dashboard-grid.sidebar-collapsed {
+  grid-template-columns: 58px 1fr;
+}
+
+.sidebar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.sidebar-toggle {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border-radius: 7px;
+  font-size: 0.76rem;
+}
+
+.agent-sidebar.is-collapsed h3,
+.agent-sidebar.is-collapsed .agent-label {
+  display: none;
+}
+
+.agent-sidebar.is-collapsed .agent-pill {
+  justify-content: center;
 }
 
 .agent-sidebar ul {
@@ -255,8 +310,28 @@ button:active {
 
 .board {
   display: grid;
-  grid-template-columns: repeat(4, minmax(170px, 1fr));
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
   gap: 8px;
+  min-height: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  align-items: stretch;
+}
+
+.board-col {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.card-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  max-height: calc(100vh - 290px);
+  overflow-y: auto;
+  padding-right: 2px;
 }
 
 .card {
@@ -379,9 +454,15 @@ button:active {
   to { opacity: 0; }
 }
 
+.modal-backdrop.is-hidden {
+  display: none;
+}
+
 @media (max-width: 980px) {
   html, body { overflow: auto; }
   .app-shell { height: auto; }
-  .dashboard-grid { grid-template-columns: 1fr; }
-  .board { grid-template-columns: repeat(2, minmax(150px, 1fr)); }
+  .dashboard-grid,
+  .dashboard-grid.sidebar-collapsed { grid-template-columns: 1fr; }
+  .board { grid-template-columns: repeat(2, minmax(180px, 1fr)); }
+  .card-stack { max-height: 45vh; }
 }

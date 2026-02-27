@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atlantis v1.9 - Native Interactions</title>
+    <title>Atlantis v2.0 - Desktop Complete</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -13,7 +13,10 @@
     <main class="app-shell">
       <header class="topbar">
         <h1>Atlantis</h1>
-        <span class="version-pill">v1.9</span>
+        <div class="topbar-actions">
+          <button id="settings-button" class="icon-button" type="button" aria-label="Settings" title="Settings">⚙</button>
+          <span class="version-pill">v2.0</span>
+        </div>
       </header>
 
       <nav class="tabs" id="tabs"></nav>
@@ -42,8 +45,11 @@
       <section class="view panel is-hidden" id="dashboard-view" aria-label="Project Board Dashboard">
         <h2>Project Board</h2>
         <div class="dashboard-grid">
-          <aside class="agent-sidebar">
-            <h3>Agent Status</h3>
+          <aside class="agent-sidebar" id="mission-sidebar">
+            <div class="sidebar-head">
+              <h3>Mission Control</h3>
+              <button id="mission-sidebar-toggle" class="icon-button sidebar-toggle" type="button" aria-label="Collapse Mission Control" title="Collapse">◀</button>
+            </div>
             <ul id="agent-status-list"></ul>
           </aside>
           <div class="board" id="project-board"></div>

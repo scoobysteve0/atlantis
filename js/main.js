@@ -14,6 +14,15 @@ function bootstrap() {
   mountDashboard(store);
   mountMission(store, missionService);
 
+  const settingsButton = document.getElementById("settings-button");
+  const modal = document.getElementById("app-modal");
+  const modalMessage = document.getElementById("app-modal-message");
+
+  settingsButton.addEventListener("click", () => {
+    modalMessage.textContent = "Settings panel coming soon. Preferences and theme controls will live here.";
+    modal.classList.remove("is-hidden", "closing");
+  });
+
   // initial paint
   store.setView("guardrails");
 }
