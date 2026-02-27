@@ -13,11 +13,18 @@ function formatAgentStatus(status = "idle") {
 }
 
 function formatLastSynced(isoStamp) {
-  if (!isoStamp) return "Last Synced: Waiting for live data…";
+  if (!isoStamp) return "Waiting for live data…";
   const deltaSeconds = Math.max(0, Math.floor((Date.now() - new Date(isoStamp).getTime()) / 1000));
-  if (deltaSeconds < 5) return "Last Synced: Just now";
-  if (deltaSeconds < 60) return `Last Synced: ${deltaSeconds}s ago`;
-  return `Last Synced: ${Math.floor(deltaSeconds / 60)}m ago`;
+  if (deltaSeconds < 5) return "Just now";
+  if (deltaSeconds < 60) return `${deltaSeconds}s ago`;
+  return `${Math.floor(deltaSeconds / 60)}m ago`;
+}
+
+function formatDataSource(source = "boot") {
+  if (source === "openclaw-live") return "OpenClaw Live";
+  if (source === "mock-json") return "Mock JSON";
+  if (source === "cached") return "Cached Snapshot";
+  return "Booting";
 }
 
 const projectWaveLabel = {
@@ -55,6 +62,8 @@ export function mountDashboard(store) {
   const board = document.getElementById("project-board");
   const iterationsList = document.getElementById("iterations-list");
   const lastSynced = document.getElementById("last-synced");
+  const healthBadge = document.getElementById("data-health");
+  const syncWarning = document.getElementById("sync-warning");
   const detail = document.getElementById("project-detail");
   const sidebar = document.getElementById("mission-sidebar");
   const toggleButton = document.getElementById("mission-sidebar-toggle");
@@ -98,7 +107,16 @@ export function mountDashboard(store) {
       .join("");
 
     if (lastSynced) {
-      lastSynced.textContent = formatLastSynced(state.lastSyncedAt);
+      lastSynced.textContent = `Last Sync: ${formatLastSynced(state.lastSyncedAt)}`;
+    }
+    if (healthBadge) {
+      healthBadge.textContent = `Source: ${formatDataSource(state.dataSource)}`;
+      healthBadge.classList.toggle("is-live", state.dataSource === "openclaw-live");
+      healthBadge.classList.toggle("is-fallback", state.dataSource !== "openclaw-live");
+    }
+    if (syncWarning) {
+      syncWarning.textContent = state.syncWarning || "";
+      syncWarning.classList.toggle("is-hidden", !state.syncWarning);
     }
 
     const activeProjects = state.projects.filter((project) => project.active);

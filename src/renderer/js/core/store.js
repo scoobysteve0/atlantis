@@ -19,6 +19,8 @@ export function createStore() {
     tasks: [],
     selectedProjectId: null,
     lastSyncedAt: null,
+    dataSource: "boot",
+    syncWarning: null,
     log: []
   };
 
@@ -45,13 +47,15 @@ export function createStore() {
       state.log = state.log.slice(0, 200);
       notify();
     },
-    setData(data) {
+    setData(data, meta = {}) {
       const normalized = normalizeData(data);
       state.agents = normalized.agents;
       state.projects = normalized.projects;
       state.iterations = normalized.iterations;
       state.tasks = normalized.tasks;
       state.lastSyncedAt = new Date().toISOString();
+      state.dataSource = meta.source ?? state.dataSource;
+      state.syncWarning = meta.warning ?? null;
 
       const hasSelected = state.projects.some((project) => project.id === state.selectedProjectId);
       if (!hasSelected) {

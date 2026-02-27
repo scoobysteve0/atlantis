@@ -1,32 +1,15 @@
 import { createStore } from "./core/store.js";
+import { createDataService } from "./core/data-service.js";
 import { mountTabs } from "./ui/tabs.js";
 import { mountDashboard } from "./ui/dashboard-ui.js";
 import { mountMission } from "./ui/mission-ui.js";
 
-const POLL_INTERVAL_MS = 2000;
-
-async function loadLiveData(store) {
-  try {
-    let payload;
-    if (window.electronAPI && window.electronAPI.readData) {
-      payload = await window.electronAPI.readData();
-    } else {
-      // Fallback for non-Electron environments (dev/browser testing)
-      const response = await fetch(`./data.json?t=${Date.now()}`, { cache: "no-store" });
-      if (!response.ok) {
-        throw new Error(`Failed to load data.json (${response.status})`);
-      }
-      payload = await response.json();
-    }
-    store.setData(payload);
-  } catch (error) {
-    console.error("Data load error:", error);
-    throw error;
-  }
-}
+const POLL_INTERVAL_MS = 4000;
 
 function bootstrap() {
   const store = createStore();
+  const dataService = createDataService();
+
   mountTabs(store);
   mountDashboard(store);
   mountMission(store);
@@ -47,7 +30,8 @@ function bootstrap() {
 
   const refresh = async () => {
     try {
-      await loadLiveData(store);
+      const { payload, source, warning } = await dataService.load();
+      store.setData(payload, { source, warning });
     } catch (error) {
       store.log(`Live data refresh failed: ${error.message}`);
     }
