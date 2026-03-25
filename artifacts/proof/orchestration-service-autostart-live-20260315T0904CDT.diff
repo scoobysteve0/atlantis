@@ -1,0 +1,850 @@
+diff --git a/src/renderer/js/core/orchestration-service.js b/src/renderer/js/core/orchestration-service.js
+new file mode 100644
+index 0000000..e27b365
+--- /dev/null
++++ b/src/renderer/js/core/orchestration-service.js
+@@ -0,0 +1,844 @@
++const ORCHESTRATION_KEY = "atlantis.orchestration.v1";
++const ORCHESTRATION_KERNEL_VERSION = "2026-03-14.artifact-pass-authority.v2";
++const DEFAULT_PROJECT_ID = "atlantis-agent-monitoring";
++const STEP_ORDER = ["BUILDER", "REVIEWER", "AUDITOR", "SUPERVISOR"];
++const STEP_META = {
++  BUILDER: { step: 1, label: "Builder", model: "qwen3-next-coder:cloud", phaseHuman: "Build" },
++  REVIEWER: { step: 2, label: "Reviewer", model: "Gemini-3-preview", phaseHuman: "Review" },
++  AUDITOR: { step: 3, label: "Auditor", model: "grok-4-reasoning", phaseHuman: "Audit" },
++  SUPERVISOR: { step: 4, label: "Supervisor", model: "gpt5.3-codex", phaseHuman: "Supervise" }
++};
++const SCHEME_ORDER = [
++  "ARTIFACTS_REVIEWED",
++  "DELTA_PROOF",
++  "EXECUTION_PROOF",
++  "ACCEPTANCE_CHECK",
++  "FINAL_VERDICT"
++];
++const DEFAULT_PHASE = {
++  phaseNumber: 1,
++  phaseHuman: "Build",
++  step: 1,
++  owner: "BUILDER",
++  scheme: "ARTIFACTS_REVIEWED",
++  status: "IN_PROGRESS",
++  stopTarget: "REAL_ARTIFACT_REQUIRED_FOR_STEP_ADVANCE",
++  lastProofEvent: "STEP1_STARTED:ARTIFACTS_REVIEWED",
++  nextTrigger: "builder_execution"
++};
++
++const DEFAULT_TASKS = [
++  {
++    id: "persisted-state",
++    title: "Persist orchestration state",
++    detail: "Keep phase, owner, proof, and blockers durable across restarts.",
++    owner: "BUILDER",
++    dependsOn: "Ready",
++    status: "done"
++  },
++  {
++    id: "next-slice-selector",
++    title: "Select next slice automatically",
++    detail: "Choose unfinished implementation work from real state instead of waiting for chat prompts.",
++    owner: "SUPERVISOR",
++    dependsOn: "persisted-state",
++    status: "done"
++  },
++  {
++    id: "validator-gate",
++    title: "Advance only on proof",
++    detail: "Move owners and statuses from refresh/validation outcomes, not intention.",
++    owner: "REVIEWER",
++    dependsOn: "next-slice-selector",
++    status: "done"
++  },
++  {
++    id: "event-emission",
++    title: "Emit workflow updates from supervisor state",
++    detail: "Expose live workflow progress inside Atlantis project data.",
++    owner: "AUDITOR",
++    dependsOn: "validator-gate",
++    status: "done"
++  },
++  {
++    id: "blocker-escalation",
++    title: "Escalate on real blockers",
++    detail: "Mark BLOCKED when live sync degrades or no next slice exists.",
++    owner: "SUPERVISOR",
++    dependsOn: "event-emission",
++    status: "done"
++  },
++  {
++    id: "product-proof-surface",
++    title: "Show proof inside Atlantis product",
++    detail: "Expose changed files, validations, and artifacts in the project detail UI.",
++    owner: "BUILDER",
++    dependsOn: "event-emission",
++    status: "done"
++  }
++];
++
++const DEFAULT_PROOF = [
++  {
++    id: "proof-product-surface",
++    title: "In-product proof surface",
++    kind: "diff",
++    status: "done",
++    summary: "Atlantis project detail now has a Proof tab for changed files, validation, and artifacts.",
++    files: [
++      "src/renderer/js/ui/dashboard-ui.js",
++      "src/renderer/js/core/orchestration-service.js",
++      "src/renderer/css/styles.css"
++    ],
++    validations: [
++      "node --check src/renderer/js/ui/dashboard-ui.js",
++      "node --check src/renderer/js/core/orchestration-service.js"
++    ],
++    artifacts: [
++      "artifacts/product-proof-surface-20260314T1428CDT.md"
++    ]
++  },
++  {
++    id: "proof-orchestration-layer",
++    title: "Persisted supervisor / runner orchestration",
++    kind: "diff",
++    status: "done",
++    summary: "Added persisted orchestration state, supervisor ticks, and project decoration from real runtime state.",
++    files: [
++      "src/renderer/js/main.js",
++      "src/renderer/js/core/store.js",
++      "src/renderer/js/core/data-service.js",
++      "src/renderer/js/core/orchestration-service.js"
++    ],
++    validations: [
++      "node --check src/renderer/js/main.js",
++      "node --check src/renderer/js/core/store.js",
++      "node --check src/renderer/js/core/data-service.js",
++      "node --check src/renderer/js/core/orchestration-service.js"
++    ],
++    artifacts: [
++      "artifacts/orchestration-layer-proof-20260314T1324CDT.md"
++    ]
++  },
++  {
++    id: "proof-stall-escalation",
++    title: "Stall escalation notifications",
++    kind: "runtime",
++    status: "done",
++    summary: "Added repeated-failure and prolonged-fallback escalation notifications with cooldown behavior.",
++    files: [
++      "src/renderer/index.html",
++      "src/renderer/js/main.js"
++    ],
++    validations: [
++      "node --check src/renderer/js/main.js"
++    ],
++    artifacts: [
++      "artifacts/stall-escalation-proof-20260314T1219CDT.md"
++    ]
++  },
++  {
++    id: "proof-notification-controls",
++    title: "Notification controls",
++    kind: "diff",
++    status: "done",
++    summary: "Added settings toggles for live-feed and save/failure notifications with persisted preferences.",
++    files: [
++      "src/renderer/index.html",
++      "src/renderer/css/styles.css",
++      "src/renderer/js/main.js"
++    ],
++    validations: [
++      "node --check src/renderer/js/main.js"
++    ],
++    artifacts: [
++      "artifacts/notification-controls-proof-20260314T1131CDT.md"
++    ]
++  }
++];
++
++function createDefaultState() {
++  return {
++    kernelVersion: ORCHESTRATION_KERNEL_VERSION,
++    runtimeKernelVersion: ORCHESTRATION_KERNEL_VERSION,
++    projectId: DEFAULT_PROJECT_ID,
++    autoRun: true,
++    automationTargetScheme: "DELTA_PROOF",
++    queue: DEFAULT_TASKS,
++    phase: DEFAULT_PHASE,
++    metrics: {
++      refreshSuccesses: 0,
++      refreshFailures: 0,
++      lastHealthyAt: null,
++      lastSupervisorTickAt: null,
++      fallbackSince: null,
++      lastKernelRepairAt: null
++    },
++    blocker: null,
++    activeSlice: {
++      id: "product-proof-surface",
++      title: "In-product proof-of-work surface",
++      status: "running"
++    },
++    proofLog: DEFAULT_PROOF,
++    eventLog: [],
++    notificationQueue: [],
++    lastMovementAt: null,
++    transitionInFlight: null,
++    needsKernelReload: false
++  };
++}
++
++function hydrateState(parsed = {}) {
++  const fallback = createDefaultState();
++  return {
++    ...fallback,
++    ...parsed,
++    kernelVersion: ORCHESTRATION_KERNEL_VERSION,
++    runtimeKernelVersion: ORCHESTRATION_KERNEL_VERSION,
++    queue: Array.isArray(parsed.queue) && parsed.queue.length ? parsed.queue : fallback.queue,
++    phase: {
++      ...fallback.phase,
++      ...(parsed.phase || {})
++    },
++    metrics: {
++      ...fallback.metrics,
++      ...(parsed.metrics || {})
++    },
++    activeSlice: {
++      ...fallback.activeSlice,
++      ...(parsed.activeSlice || {})
++    },
++    proofLog: Array.isArray(parsed.proofLog) && parsed.proofLog.length ? parsed.proofLog : fallback.proofLog,
++    eventLog: Array.isArray(parsed.eventLog) ? parsed.eventLog : fallback.eventLog,
++    notificationQueue: Array.isArray(parsed.notificationQueue) ? parsed.notificationQueue : fallback.notificationQueue,
++    transitionInFlight: parsed.transitionInFlight || null,
++    needsKernelReload: false
++  };
++}
++
++function readState() {
++  try {
++    const parsed = JSON.parse(localStorage.getItem(ORCHESTRATION_KEY) || "null");
++    if (parsed && typeof parsed === "object") {
++      return hydrateState(parsed);
++    }
++  } catch {
++    // ignore corrupt persisted state
++  }
++
++  return createDefaultState();
++}
++
++function persistState(state) {
++  state.kernelVersion = ORCHESTRATION_KERNEL_VERSION;
++  state.runtimeKernelVersion = ORCHESTRATION_KERNEL_VERSION;
++  localStorage.setItem(ORCHESTRATION_KEY, JSON.stringify(state));
++}
++
++function hasKernelMismatch(state) {
++  return state?.kernelVersion !== ORCHESTRATION_KERNEL_VERSION || state?.runtimeKernelVersion !== ORCHESTRATION_KERNEL_VERSION;
++}
++
++function repairKernelState(state, reason = "kernel_mismatch_auto_rehydrate") {
++  const repaired = hydrateState(state);
++  repaired.metrics.lastKernelRepairAt = new Date().toISOString();
++  repaired.transitionInFlight = null;
++  repaired.needsKernelReload = false;
++  repaired.blocker = repaired.blocker?.code === "PASS_ARTIFACT_DID_NOT_ADVANCE"
++    ? null
++    : repaired.blocker;
++  repaired.phase.status = repaired.autoRun ? "IN_PROGRESS" : "PAUSED";
++  repaired.phase.nextTrigger = repaired.autoRun ? (repaired.phase.nextTrigger || "refresh_validation") : "manual_resume";
++  appendEvent(repaired, {
++    type: "KERNEL_STATE_REPAIRED",
++    detail: reason,
++    meta: {
++      kernelVersion: ORCHESTRATION_KERNEL_VERSION,
++      repairedAt: repaired.metrics.lastKernelRepairAt,
++      autoRun: repaired.autoRun
++    }
++  });
++  persistState(repaired);
++  return repaired;
++}
++
++function nextScheme(currentScheme) {
++  const index = SCHEME_ORDER.indexOf(currentScheme);
++  if (index === -1) return SCHEME_ORDER[0];
++  return SCHEME_ORDER[Math.min(index + 1, SCHEME_ORDER.length - 1)];
++}
++
++function hasOwnerProof(state, owner) {
++  return Array.isArray(state.proofLog) && state.proofLog.some((proof) => {
++    const proofOwner = proof?.owner || proof?.meta?.owner || null;
++    const proofModel = proof?.ownerModel || proof?.meta?.ownerModel || null;
++    const stepMeta = STEP_META[owner] || null;
++    return proofOwner === owner && (!stepMeta?.model || proofModel === stepMeta.model);
++  });
++}
++
++function builderHasProof(state) {
++  return hasOwnerProof(state, "BUILDER");
++}
++
++function ownerHasPassArtifact(state, owner) {
++  const stepMeta = STEP_META[owner] || null;
++  return Array.isArray(state.proofLog) && state.proofLog.some((proof) => {
++    const proofOwner = proof?.owner || proof?.meta?.owner || null;
++    const proofModel = proof?.ownerModel || proof?.meta?.ownerModel || null;
++    const validationResult = String(proof?.validationResult || proof?.meta?.validationResult || "").toUpperCase();
++    const validations = Array.isArray(proof?.validations) ? proof.validations.map((v) => String(v).toUpperCase()) : [];
++    const hasArtifact = Boolean(proof?.artifacts?.length || proof?.artifactPath || proof?.meta?.artifactPath);
++    const hasPass = validationResult.includes("PASS") || validations.some((entry) => entry.includes("PASS"));
++    return proofOwner === owner && (!stepMeta?.model || proofModel === stepMeta.model) && hasArtifact && hasPass;
++  });
++}
++
++function reviewerHasPassProof(state) {
++  return Array.isArray(state.eventLog) && state.eventLog.some((event) => event?.type === "REVIEWER_VALIDATION_PASS" && event?.meta?.owner === "REVIEWER" && event?.meta?.ownerModel === STEP_META.REVIEWER.model)
++    || ownerHasPassArtifact(state, "REVIEWER");
++}
++
++function auditorHasPassProof(state) {
++  return Array.isArray(state.eventLog) && state.eventLog.some((event) => event?.type === "AUDITOR_VALIDATION_PASS" && event?.meta?.owner === "AUDITOR" && event?.meta?.ownerModel === STEP_META.AUDITOR.model)
++    || ownerHasPassArtifact(state, "AUDITOR");
++}
++
++function supervisorHasFinalVerdictPass(state) {
++  return state.phase?.scheme === "FINAL_VERDICT" && ownerHasPassArtifact(state, "SUPERVISOR");
++}
++
++function markOwnerTasksDone(state, owner) {
++  if (!Array.isArray(state.queue)) return;
++  state.queue = state.queue.map((task) => task.owner === owner ? { ...task, status: "done" } : task);
++}
++
++function startNextCycle(state) {
++  const timestamp = new Date().toISOString();
++  state.phase = {
++    ...DEFAULT_PHASE,
++    phaseNumber: Number(state.phase?.phaseNumber || DEFAULT_PHASE.phaseNumber) + 1,
++    stepStartedAt: timestamp,
++    slaArmedAt: timestamp,
++    lastProofEvent: "STEP_STARTED:BUILDER"
++  };
++  state.activeSlice = {
++    id: "cycle-next-builder-step",
++    title: "Next Builder step",
++    status: "running",
++    owner: "BUILDER",
++    startedAt: timestamp,
++    slaArmedAt: timestamp
++  };
++  state.notificationQueue = [];
++  state.lastMovementAt = timestamp;
++  appendEvent(state, {
++    type: "CYCLE_RESTARTED",
++    detail: "Supervisor FINAL_VERDICT PASS closed the cycle and started the next Builder step.",
++    meta: { owner: "BUILDER", ownerModel: STEP_META.BUILDER.model, timestamp }
++  });
++}
++
++function queueToBuildTasks(queue = []) {
++  return queue.map((task) => ({
++    title: task.title,
++    detail: task.detail,
++    owner: task.owner,
++    dependsOn: task.dependsOn,
++    done: task.status === "done"
++  }));
++}
++
++function buildWorkflow(state) {
++  const activeOwner = state.phase?.owner || "BUILDER";
++  const activeStep = state.phase?.step || 1;
++  const roleTimer = state.blocker ? "Blocked" : state.autoRun ? "Execution active" : "Manual hold";
++
++  const roleMeta = {
++    BUILDER: { role: "Builder", health: "healthy" },
++    REVIEWER: { role: "Reviewer", health: "monitoring" },
++    AUDITOR: { role: "Auditor", health: "healthy" },
++    SUPERVISOR: { role: "Supervisor", health: "healthy" }
++  };
++
++  const steps = STEP_ORDER.map((ownerKey, index) => {
++    const meta = roleMeta[ownerKey];
++    const stepNumber = index + 1;
++    const isActive = stepNumber === activeStep;
++    const isComplete = stepNumber < activeStep;
++
++    return {
++      name: `Step ${stepNumber} — ${meta.role}`,
++      scheme: isActive ? state.phase?.scheme || "ARTIFACTS_REVIEWED" : "SCHEME_PENDING",
++      status: isComplete ? "Complete" : isActive ? state.phase?.status || "IN_PROGRESS" : "Queued",
++      complete: isComplete,
++      purpose: isActive
++        ? state.activeSlice?.title || `${meta.role} is executing the active Atlantis slice.`
++        : `${meta.role} takes over after the prior owner completes a real artifact-backed handoff.`,
++      ownerNotification: isActive ? state.phase?.nextTrigger || "handoff_pending" : "Await prior step completion",
++      sla: state.blocker ? "Needs intervention" : "Artifact-backed execution required",
++      watchdog: state.blocker ? state.blocker.code : "healthy",
++      doneWhen: [
++        `${meta.role} has touched the system before speaking`,
++        "A real artifact exists before step advancement",
++        `Scheme ladder progresses through ${SCHEME_ORDER.join(" → ")}`,
++        `${meta.role} completes with proof-backed handoff evidence`
++      ],
++      roles: STEP_ORDER.map((roleKey, roleIndex) => ({
++        role: roleMeta[roleKey].role,
++        owner: roleKey === activeOwner ? "Active" : roleIndex < index ? "Complete" : "Standby",
++        timer: roleKey === activeOwner && isActive ? roleTimer : roleIndex < index ? "done" : "queued",
++        health: roleKey === activeOwner && isActive ? (state.blocker ? "blocked" : roleMeta[roleKey].health) : roleMeta[roleKey].health,
++        done: roleIndex < index || (isComplete && roleKey === ownerKey)
++      }))
++    };
++  });
++
++  return [
++    {
++      name: state.phase?.phaseHuman || "Build",
++      objective: "Advance Atlantis through the standard engineering workflow with real artifacts at each step.",
++      status: state.phase?.status || "IN_PROGRESS",
++      active: true,
++      currentStep: `Step ${activeStep} — ${roleMeta[activeOwner]?.role || "Builder"}`,
++      schemeStandard: SCHEME_ORDER.join(" → "),
++      ownerNotification: "Post completion + next move to 1480062095348207648",
++      slaWatchdog: state.blocker ? `Blocked · ${state.blocker.code}` : "Execution proof required before speaking",
++      steps
++    }
++  ];
++}
++
++function appendEvent(state, event) {
++  state.eventLog = [
++    { at: new Date().toISOString(), ...event },
++    ...(state.eventLog || [])
++  ].slice(0, 40);
++}
++
++function latestProofSnapshot(state, owner = null) {
++  const proof = owner
++    ? (Array.isArray(state.proofLog) ? state.proofLog.find((entry) => (entry?.owner || entry?.meta?.owner) === owner) : null)
++    : (Array.isArray(state.proofLog) && state.proofLog.length ? state.proofLog[0] : null);
++  return {
++    filesChanged: proof?.files || [],
++    artifactPath: proof?.artifacts?.[0] || proof?.artifactPath || proof?.meta?.artifactPath || null,
++    validationResult: proof?.validationResult || proof?.meta?.validationResult || proof?.validations?.join(" | ") || "No validation recorded",
++    commandExecuted: proof?.summary || proof?.title || "Runtime proof gate advanced"
++  };
++}
++
++function hasReviewerPass(state) {
++  return reviewerHasPassProof(state);
++}
++
++function queueMovementNotification(state, fromScheme, toScheme, owner, trigger, timestamp = new Date().toISOString()) {
++  const snapshot = latestProofSnapshot(state, owner);
++  const meta = STEP_META[owner] || STEP_META.BUILDER;
++  const movement = {
++    type: "SCHEME_MOVEMENT",
++    phase: meta.phaseHuman,
++    step: meta.step,
++    owner,
++    scheme: toScheme,
++    status: state.phase?.status || "IN_PROGRESS",
++    lastProofEvent: state.phase?.lastProofEvent || null,
++    nextTrigger: state.phase?.nextTrigger || trigger,
++    stepOwner: owner,
++    schemeOwner: owner,
++    ownerModel: meta.model,
++    fromScheme,
++    toScheme,
++    commandExecuted: snapshot.commandExecuted,
++    filesChanged: snapshot.filesChanged,
++    artifactPath: snapshot.artifactPath,
++    validationResult: snapshot.validationResult,
++    trigger,
++    timestamp
++  };
++  state.notificationQueue = [movement, ...(state.notificationQueue || [])].slice(0, 20);
++  state.lastMovementAt = movement.timestamp;
++  appendEvent(state, {
++    type: "SCHEME_MOVEMENT",
++    detail: `${owner} ${fromScheme} → ${toScheme}`,
++    meta: movement
++  });
++}
++
++function transitionToOwner(state, { owner, toScheme, status = "IN_PROGRESS", trigger, phaseHuman, nextTrigger }) {
++  const meta = STEP_META[owner] || STEP_META.BUILDER;
++  const previousScheme = state.phase?.scheme || toScheme;
++  const timestamp = new Date().toISOString();
++
++  state.transitionInFlight = {
++    owner,
++    toScheme,
++    trigger,
++    startedAt: timestamp
++  };
++
++  state.phase.step = meta.step;
++  state.phase.owner = owner;
++  state.phase.phaseHuman = phaseHuman || meta.phaseHuman;
++  state.phase.scheme = toScheme;
++  state.phase.status = status;
++  state.phase.lastProofEvent = `STEP_STARTED:${owner}`;
++  state.phase.nextTrigger = nextTrigger || trigger;
++  state.phase.stepStartedAt = timestamp;
++  state.phase.slaArmedAt = timestamp;
++  state.activeSlice = {
++    ...(state.activeSlice || {}),
++    status: "running",
++    owner,
++    startedAt: timestamp,
++    slaArmedAt: timestamp
++  };
++  state.metrics = {
++    ...(state.metrics || {}),
++    lastSupervisorTickAt: timestamp,
++    slaArmedAt: timestamp
++  };
++
++  appendEvent(state, {
++    type: "STEP_STARTED",
++    detail: `${owner}`,
++    meta: { owner, step: meta.step, scheme: toScheme, trigger, timestamp }
++  });
++  appendEvent(state, {
++    type: "SLA_ARMED",
++    detail: `${owner}`,
++    meta: { owner, step: meta.step, scheme: toScheme, armedAt: timestamp, trigger }
++  });
++  appendEvent(state, {
++    type: "OWNER_EXECUTION_TRIGGERED",
++    detail: `${owner}`,
++    meta: { owner, step: meta.step, scheme: toScheme, trigger: nextTrigger || trigger, triggeredAt: timestamp }
++  });
++  queueMovementNotification(state, previousScheme, toScheme, owner, trigger, timestamp);
++  state.transitionInFlight = null;
++  return timestamp;
++}
++
++function consumePassArtifactAndAutoStartNextOwner(state, owner) {
++  if (state.blocker || !state.autoRun) return false;
++  if (!ownerHasPassArtifact(state, owner)) return false;
++
++  const transitions = {
++    BUILDER: {
++      nextOwner: "REVIEWER",
++      nextScheme: "DELTA_PROOF",
++      trigger: "builder_pass_artifact_consumed",
++      nextTrigger: "reviewer_execution"
++    },
++    REVIEWER: {
++      nextOwner: "AUDITOR",
++      nextScheme: "EXECUTION_PROOF",
++      trigger: "reviewer_pass_artifact_consumed",
++      nextTrigger: "auditor_execution"
++    },
++    AUDITOR: {
++      nextOwner: "SUPERVISOR",
++      nextScheme: "ACCEPTANCE_CHECK",
++      trigger: "auditor_pass_artifact_consumed",
++      nextTrigger: "supervisor_execution"
++    }
++  };
++
++  const transition = transitions[owner];
++  if (!transition) return false;
++
++  const previousOwner = state.phase?.owner || owner;
++  const previousStep = state.phase?.step || STEP_META[owner]?.step || null;
++  const consumedAt = new Date().toISOString();
++  state.phase.status = "COMPLETE";
++  state.phase.lastProofEvent = `PASS_CONSUMED:${owner}`;
++  appendEvent(state, {
++    type: "OWNER_COMPLETE",
++    detail: `${owner}`,
++    meta: { owner, step: previousStep, consumedAt }
++  });
++
++  markOwnerTasksDone(state, owner);
++  transitionToOwner(state, {
++    owner: transition.nextOwner,
++    toScheme: transition.nextScheme,
++    status: "IN_PROGRESS",
++    trigger: transition.trigger,
++    nextTrigger: transition.nextTrigger
++  });
++
++  if (state.phase?.owner !== transition.nextOwner || state.phase?.lastProofEvent !== `STEP_STARTED:${transition.nextOwner}`) {
++    state.phase.status = "HARD_BLOCKED";
++    state.phase.nextTrigger = "hard_blocked_manual_fix_required";
++    state.blocker = {
++      code: "HARD_BLOCKED",
++      detail: `Accepted PASS artifact for ${owner} but next owner ${transition.nextOwner} did not auto-start.`,
++      exactStateFieldPreventingAdvancement: state.phase?.owner !== transition.nextOwner ? "state.phase.owner" : "state.phase.lastProofEvent",
++      previousOwner,
++      expectedNextOwner: transition.nextOwner,
++      actualOwner: state.phase?.owner || "unknown",
++      since: state.blocker?.since || consumedAt
++    };
++    appendEvent(state, {
++      type: "HARD_BLOCKED",
++      detail: state.blocker.detail,
++      meta: state.blocker
++    });
++    return false;
++  }
++
++  return true;
++}
++
++function maybeAdvanceWorkflow(state) {
++  if (state.blocker || !state.autoRun) return false;
++  if (state.transitionInFlight) return false;
++
++  const activeOwner = state.phase?.owner || "BUILDER";
++  const hasCurrentOwnerPassArtifact = ownerHasPassArtifact(state, activeOwner);
++  const transitions = {
++    SUPERVISOR: {
++      ready: () => supervisorHasFinalVerdictPass(state),
++      run: () => {
++        markOwnerTasksDone(state, "SUPERVISOR");
++        transitionToOwner(state, {
++          owner: "SUPERVISOR",
++          toScheme: "FINAL_VERDICT",
++          status: "PASS",
++          trigger: "supervisor_final_verdict_pass_detected",
++          nextTrigger: "cycle_closeout"
++        });
++
++        if ((state.queue || []).some((task) => task.status !== "done")) {
++          startNextCycle(state);
++        } else {
++          state.phase.status = "PAUSED";
++          state.phase.lastProofEvent = "STOP_GATE_REACHED";
++          state.phase.nextTrigger = "manual_resume";
++          appendEvent(state, { type: "STOP_GATE_REACHED", detail: "Supervisor FINAL_VERDICT PASS reached the product stop gate." });
++        }
++      }
++    }
++  };
++
++  if (["BUILDER", "REVIEWER", "AUDITOR"].includes(activeOwner) && consumePassArtifactAndAutoStartNextOwner(state, activeOwner)) {
++    return true;
++  }
++
++  const transition = transitions[activeOwner];
++  if (transition?.ready()) {
++    transition.run();
++    return true;
++  }
++
++  if (hasCurrentOwnerPassArtifact) {
++    const proof = latestProofSnapshot(state, activeOwner);
++    state.phase.status = "BLOCKED";
++    state.phase.lastProofEvent = `BLOCKED:${activeOwner}_PASS_NO_TRANSITION`;
++    state.phase.nextTrigger = "manual_resume";
++    state.blocker = {
++      code: "PASS_ARTIFACT_DID_NOT_ADVANCE",
++      detail: `Proof exists but transition did not fire because state.phase.owner=${state.phase?.owner || "unknown"}`,
++      artifactPath: proof.artifactPath || "none",
++      validationResult: proof.validationResult,
++      exactStateFieldPreventingAdvancement: "state.phase.owner",
++      since: state.blocker?.since || new Date().toISOString()
++    };
++    appendEvent(state, {
++      type: "PASS_ARTIFACT_DID_NOT_ADVANCE",
++      detail: state.blocker.detail,
++      meta: state.blocker
++    });
++  }
++
++  return false;
++}
++
++export function createOrchestrationService({ pollIntervalMs = 4000 } = {}) {
++  let state = readState();
++  if (hasKernelMismatch(state)) {
++    state = repairKernelState(state, "create_service_kernel_mismatch");
++  }
++  persistState(state);
++
++  const touch = () => {
++    state.metrics.lastSupervisorTickAt = new Date().toISOString();
++    persistState(state);
++  };
++
++  const markTaskDone = (taskId) => {
++    const task = state.queue.find((item) => item.id === taskId);
++    if (task) task.status = "done";
++  };
++
++  const nextQueueTask = () => state.queue.find((item) => item.status !== "done") || null;
++
++  const syncFromRefresh = ({ ok, source, warning, error }) => {
++    touch();
++
++    if (ok) {
++      state.metrics.refreshSuccesses += 1;
++      state.metrics.lastHealthyAt = new Date().toISOString();
++
++      if (source === "openclaw-live") {
++        state.metrics.fallbackSince = null;
++        if (state.blocker?.code === "REFRESH_FAILURE") {
++          state.blocker = null;
++        }
++        appendEvent(state, { type: "LIVE_REFRESH_OK", detail: "Live feed refresh succeeded." });
++      } else {
++        state.metrics.fallbackSince = state.metrics.fallbackSince || new Date().toISOString();
++        appendEvent(state, { type: "FALLBACK_ACTIVE", detail: warning || "Fallback data in use." });
++      }
++    } else {
++      state.metrics.refreshFailures += 1;
++      state.blocker = {
++        code: "REFRESH_FAILURE",
++        detail: error?.message || "Unknown refresh failure",
++        since: state.blocker?.since || new Date().toISOString()
++      };
++      appendEvent(state, { type: "REFRESH_FAILURE", detail: error?.message || "Unknown refresh failure" });
++    }
++
++    markTaskDone("validator-gate");
++    markTaskDone("blocker-escalation");
++    persistState(state);
++  };
++
++  const runSupervisorTick = () => {
++    if (hasKernelMismatch(state) || state.needsKernelReload) {
++      state = repairKernelState(state, "supervisor_tick_kernel_mismatch");
++    }
++
++    touch();
++    markTaskDone("persisted-state");
++    markTaskDone("next-slice-selector");
++    markTaskDone("event-emission");
++    markTaskDone("product-proof-surface");
++
++    const nextTask = nextQueueTask();
++    state.activeSlice = nextTask
++      ? {
++          ...(state.activeSlice || {}),
++          id: nextTask.id,
++          title: nextTask.title,
++          status: state.activeSlice?.status || "ready"
++        }
++      : {
++          ...(state.activeSlice || {}),
++          id: "phase-review",
++          title: "Phase completion review",
++          status: state.activeSlice?.status || "ready"
++        };
++
++    if (!state.autoRun) {
++      state.phase.status = "PAUSED";
++      state.phase.nextTrigger = "manual_resume";
++      persistState(state);
++      return state;
++    }
++
++    if (state.blocker) {
++      state.phase.status = state.blocker.code === "HARD_BLOCKED" ? "HARD_BLOCKED" : "BLOCKED";
++      state.phase.nextTrigger = state.blocker.code === "HARD_BLOCKED" ? "hard_blocked_manual_fix_required" : "blocker_clear";
++      persistState(state);
++      return state;
++    }
++
++    state.phase.step = state.phase.step || 1;
++    state.phase.owner = state.phase.owner || "BUILDER";
++    state.phase.scheme = SCHEME_ORDER.find((scheme) => scheme === state.phase.scheme) || "ARTIFACTS_REVIEWED";
++    state.phase.status = state.phase.status === "PASS" ? "PASS" : (state.phase.status === "COMPLETE" ? "COMPLETE" : "IN_PROGRESS");
++
++    const advanced = maybeAdvanceWorkflow(state);
++    if (advanced) {
++      persistState(state);
++      return state;
++    }
++
++    if (!nextTask) {
++      if (state.phase.owner === "SUPERVISOR") {
++        state.phase.scheme = "FINAL_VERDICT";
++        state.phase.status = state.phase.status === "PAUSED" ? "PAUSED" : "READY_FOR_PHASE_CLOSE";
++        state.phase.lastProofEvent = state.phase.status === "PAUSED" ? state.phase.lastProofEvent : "QUEUE_EMPTY_REVIEW_READY";
++        state.phase.nextTrigger = state.phase.status === "PAUSED" ? "manual_resume" : "supervisor_closeout";
++        appendEvent(state, { type: "QUEUE_EMPTY_REVIEW_READY", detail: "All orchestration tasks are complete." });
++      }
++      persistState(state);
++      return state;
++    }
++
++    persistState(state);
++    return state;
++  };
++
++  const decorateProject = (project) => {
++    if (!project || project.id !== state.projectId) return project;
++
++    const queue = state.queue || [];
++    const completed = queue.filter((item) => item.status === "done").length;
++    const progress = queue.length ? Math.round((completed / queue.length) * 100) : project.progress || 0;
++
++    return {
++      ...project,
++      status: state.blocker ? "staging" : project.status || "in_motion",
++      phase: state.phase.phaseHuman,
++      progress,
++      activeScheme: {
++        ...(project.activeScheme || {}),
++        name: state.phase.scheme,
++        owner: `Step ${state.phase.step} — ${state.phase.owner}`,
++        elapsed: state.metrics.lastSupervisorTickAt ? new Date(state.metrics.lastSupervisorTickAt).toLocaleTimeString() : "Waiting",
++        sla: state.blocker ? "Blocked" : `${Math.round(pollIntervalMs / 1000)}s supervisor tick`,
++        watchdog: state.blocker ? state.blocker.code : "Execution active"
++      },
++      automationRules: {
++        ...(project.automationRules || {}),
++        completionGate: state.phase.stopTarget,
++        notifications: { channel: "1480062095348207648", trigger: "Scheme completion + next move" },
++        sla: { policy: state.blocker ? "Escalate on blocker" : "Every owner must touch system before speaking" },
++        watchdog: { status: state.blocker ? "BLOCKED" : "ACTIVE" },
++        notes: [
++          `Auto-run: ${state.autoRun ? "enabled" : "disabled"}`,
++          `Automation target: ${state.automationTargetScheme || "Not set"}`,
++          `Last proof: ${state.phase.lastProofEvent}`,
++          `Next trigger: ${state.phase.nextTrigger}`,
++          `Scheme order: ${SCHEME_ORDER.join(" → ")}`
++        ]
++      },
++      workflow: buildWorkflow(state),
++      buildTasks: queueToBuildTasks(queue),
++      proof: state.proofLog || [],
++      orchestration: state
++    };
++  };
++
++  return {
++    getState: () => structuredClone(state),
++    getKernelVersion: () => ORCHESTRATION_KERNEL_VERSION,
++    ensureCurrentKernel() {
++      if (hasKernelMismatch(state) || state.needsKernelReload) {
++        state = repairKernelState(state, "ensure_current_kernel");
++      }
++      return structuredClone(state);
++    },
++    drainNotifications() {
++      const queued = [...(state.notificationQueue || [])].reverse();
++      state.notificationQueue = [];
++      persistState(state);
++      return queued;
++    },
++    setAutoRun(enabled) {
++      state.autoRun = Boolean(enabled);
++      persistState(state);
++      return this.getState();
++    },
++    runSupervisorTick,
++    syncFromRefresh,
++    decorateProject,
++    persist() {
++      persistState(state);
++    }
++  };
++}

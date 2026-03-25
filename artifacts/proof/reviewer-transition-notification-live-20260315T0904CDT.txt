@@ -1,0 +1,21 @@
+{
+  "type": "SCHEME_MOVEMENT",
+  "phase": "Review",
+  "step": 2,
+  "owner": "REVIEWER",
+  "scheme": "DELTA_PROOF",
+  "status": "IN_PROGRESS",
+  "lastProofEvent": "STEP_STARTED:REVIEWER",
+  "nextTrigger": "reviewer_execution",
+  "stepOwner": "REVIEWER",
+  "schemeOwner": "REVIEWER",
+  "ownerModel": "Gemini-3-preview",
+  "fromScheme": "ARTIFACTS_REVIEWED",
+  "toScheme": "DELTA_PROOF",
+  "commandExecuted": "Runtime proof gate advanced",
+  "filesChanged": [],
+  "artifactPath": null,
+  "validationResult": "No validation recorded",
+  "trigger": "builder_pass_artifact_consumed",
+  "timestamp": "2026-03-15T14:07:48.737Z"
+}

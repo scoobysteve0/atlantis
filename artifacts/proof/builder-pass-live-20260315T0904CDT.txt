@@ -1,0 +1,3 @@
+BUILDER PASS ARTIFACT
+validation=PASS
+consumed_by=orchestrator

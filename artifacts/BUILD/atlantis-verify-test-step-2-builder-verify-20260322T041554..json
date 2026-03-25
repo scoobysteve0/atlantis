@@ -1,0 +1,18 @@
+{
+  "owner": "BUILDER",
+  "scheme": "VERIFY",
+  "result": "PASS",
+  "summary": "Integration test artifact",
+  "evidence": {
+    "filePathsChanged": [
+      "test.js"
+    ],
+    "validations": [
+      "test passes"
+    ]
+  },
+  "timestamp": "2026-03-22T04:15:54.377Z",
+  "project_id": "atlantis-verify-test",
+  "phase": "BUILD",
+  "step": "step-2"
+}

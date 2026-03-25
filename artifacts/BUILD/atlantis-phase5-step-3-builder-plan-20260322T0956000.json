@@ -1,0 +1,21 @@
+{
+  "owner": "BUILDER",
+  "scheme": "PLAN",
+  "result": "PASS",
+  "summary": "Step 3 Builder PLAN - advance-gate.js module with owner rotation and scheme progression validation",
+  "evidence": {
+    "filePathsChanged": [
+      "src/core/advance-gate.js",
+      "src/core/task-engine.js"
+    ],
+    "validations": [
+      "16/16 tests pass",
+      "owner rotation enforced",
+      "scheme progression enforced"
+    ]
+  },
+  "timestamp": "2026-03-22T09:56:00-05:00",
+  "project_id": "atlantis-phase5",
+  "phase": "BUILD",
+  "step": "step-3"
+}

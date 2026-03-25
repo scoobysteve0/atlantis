@@ -1,0 +1,20 @@
+{
+  "owner": "BUILDER",
+  "scheme": "PLAN",
+  "result": "PASS",
+  "summary": "Valid artifact for BUILDER PLAN",
+  "evidence": {
+    "filePathsChanged": [
+      "src/core/advance-gate.js",
+      "src/core/task-engine.js"
+    ],
+    "validations": [
+      "owner rotation enforced",
+      "scheme progression enforced"
+    ]
+  },
+  "timestamp": "2026-03-22T18:04:06.219Z",
+  "project_id": "atlantis-phase5",
+  "phase": "BUILD",
+  "step": "step-3"
+}

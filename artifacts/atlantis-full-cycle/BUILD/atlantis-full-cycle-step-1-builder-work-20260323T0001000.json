@@ -1,0 +1,16 @@
+{
+  "project_id": "atlantis-full-cycle",
+  "phase": "BUILD",
+  "step": "step-1",
+  "owner": "BUILDER",
+  "scheme": "WORK",
+  "result": "PASS",
+  "summary": "Test artifact for step 1",
+  "timestamp": "2026-03-23T00:01:00-05:00",
+  "objective": "Cycle test step 1",
+  "evidence": {
+    "filePath": "test",
+    "filePathsChanged": [],
+    "validations": []
+  }
+}

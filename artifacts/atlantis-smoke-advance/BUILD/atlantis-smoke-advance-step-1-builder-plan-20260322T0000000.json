@@ -1,0 +1,16 @@
+{
+  "project_id": "atlantis-smoke-advance",
+  "phase": "BUILD",
+  "step": "step-1",
+  "owner": "BUILDER",
+  "scheme": "PLAN",
+  "result": "PASS",
+  "summary": "Auto-advance test artifact",
+  "timestamp": "2026-03-22T00:00:00-05:00",
+  "objective": "Auto-advance test",
+  "evidence": {
+    "filePath": "test",
+    "filePathsChanged": [],
+    "validations": []
+  }
+}

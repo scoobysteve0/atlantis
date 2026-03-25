@@ -1,0 +1,22 @@
+# Block Resolution — Staged Code Diff
+
+- project: Atlantis Agent Monitoring
+- phase: Build
+- step: Step 1 — Builder
+- scheme: ARTIFACTS_REVIEWED
+- block:
+  - git diff against HEAD returned empty because src/renderer/js/core/orchestration-service.js was untracked
+- resolution:
+  - staged the new file with git add
+  - generated a real cached code diff artifact
+  - revalidated syntax with node --check
+- files_changed:
+  - src/renderer/js/core/orchestration-service.js
+- test_output:
+  - node --check src/renderer/js/core/orchestration-service.js
+- artifacts:
+  - artifacts/proof/orchestration-service-staged-code-diff-20260314T1805CDT.diff
+  - artifacts/proof/block-resolution-staged-diff-20260314T1805CDT.md
+- result:
+  - proof block removed
+  - Builder now has a valid code diff artifact for the active step

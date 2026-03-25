@@ -1,0 +1,14 @@
+{
+  "owner": "BUILDER",
+  "scheme": "WORK",
+  "result": "PASS",
+  "summary": "Integration test",
+  "evidence": {
+    "filePathsChanged": [],
+    "validations": []
+  },
+  "timestamp": "2026-03-22T04:17:25.337Z",
+  "project_id": "audit-integration-test",
+  "phase": "BUILD",
+  "step": "step-2"
+}

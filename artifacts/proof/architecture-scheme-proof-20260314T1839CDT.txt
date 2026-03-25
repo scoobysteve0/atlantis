@@ -1,0 +1,12 @@
+Architecture Scheme proof refresh
+Timestamp: 2026-03-14 18:39 CDT
+
+Core backbone files:
+src/main/index.js
+src/main/preload.js
+src/renderer/js/core/data-service.js
+src/renderer/js/core/orchestration-service.js
+src/renderer/js/core/store.js
+src/renderer/js/main.js
+src/renderer/js/ui/dashboard-ui.js
+src/renderer/js/ui/mission-ui.js

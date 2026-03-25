@@ -1,0 +1,132 @@
+[
+  {
+    "name": "builder-pass",
+    "owner": "REVIEWER",
+    "scheme": "DELTA_PROOF",
+    "status": "IN_PROGRESS",
+    "lastProofEvent": "STEP_STARTED:REVIEWER",
+    "nextTrigger": "reviewer_execution",
+    "phaseNumber": 1,
+    "queuedNotifications": [
+      {
+        "owner": "REVIEWER",
+        "toScheme": "DELTA_PROOF",
+        "trigger": "builder_pass_artifact_detected"
+      }
+    ],
+    "queue": [
+      {
+        "owner": "BUILDER",
+        "status": "done"
+      },
+      {
+        "owner": "REVIEWER",
+        "status": "pending"
+      },
+      {
+        "owner": "AUDITOR",
+        "status": "pending"
+      },
+      {
+        "owner": "SUPERVISOR",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "name": "reviewer-pass",
+    "owner": "AUDITOR",
+    "scheme": "EXECUTION_PROOF",
+    "status": "IN_PROGRESS",
+    "lastProofEvent": "STEP_STARTED:AUDITOR",
+    "nextTrigger": "auditor_execution",
+    "phaseNumber": 1,
+    "queuedNotifications": [
+      {
+        "owner": "AUDITOR",
+        "toScheme": "EXECUTION_PROOF",
+        "trigger": "reviewer_pass_artifact_detected"
+      }
+    ],
+    "queue": [
+      {
+        "owner": "BUILDER",
+        "status": "pending"
+      },
+      {
+        "owner": "REVIEWER",
+        "status": "done"
+      },
+      {
+        "owner": "AUDITOR",
+        "status": "pending"
+      },
+      {
+        "owner": "SUPERVISOR",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "name": "auditor-pass",
+    "owner": "SUPERVISOR",
+    "scheme": "ACCEPTANCE_CHECK",
+    "status": "IN_PROGRESS",
+    "lastProofEvent": "STEP_STARTED:SUPERVISOR",
+    "nextTrigger": "supervisor_execution",
+    "phaseNumber": 1,
+    "queuedNotifications": [
+      {
+        "owner": "SUPERVISOR",
+        "toScheme": "ACCEPTANCE_CHECK",
+        "trigger": "auditor_pass_artifact_detected"
+      }
+    ],
+    "queue": [
+      {
+        "owner": "BUILDER",
+        "status": "pending"
+      },
+      {
+        "owner": "REVIEWER",
+        "status": "pending"
+      },
+      {
+        "owner": "AUDITOR",
+        "status": "done"
+      },
+      {
+        "owner": "SUPERVISOR",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "name": "supervisor-final-pass",
+    "owner": "BUILDER",
+    "scheme": "ARTIFACTS_REVIEWED",
+    "status": "IN_PROGRESS",
+    "lastProofEvent": "STEP_STARTED:BUILDER",
+    "nextTrigger": "builder_execution",
+    "phaseNumber": 2,
+    "queuedNotifications": [],
+    "queue": [
+      {
+        "owner": "BUILDER",
+        "status": "pending"
+      },
+      {
+        "owner": "REVIEWER",
+        "status": "pending"
+      },
+      {
+        "owner": "AUDITOR",
+        "status": "pending"
+      },
+      {
+        "owner": "SUPERVISOR",
+        "status": "done"
+      }
+    ]
+  }
+]

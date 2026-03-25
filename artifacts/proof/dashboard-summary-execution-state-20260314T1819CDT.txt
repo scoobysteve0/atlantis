@@ -1,0 +1,10 @@
+CHANGED FILES
+src/renderer/js/ui/dashboard-ui.js
+
+BUILD/TEST COMMANDS
+node --check src/renderer/js/ui/dashboard-ui.js
+npm run build
+
+PRODUCED ARTIFACTS
+artifacts/proof/dashboard-summary-execution-state-20260314T1819CDT.diff
+dist/mac-arm64/Atlantis.app

@@ -1,0 +1,8 @@
+BUILD COMMAND
+npm run build
+
+BUILD RESULT
+electron-builder --dir completed packaging for darwin arm64
+
+EXPECTED OUTPUT
+appOutDir=dist/mac-arm64

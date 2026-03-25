@@ -1,0 +1,50 @@
+{
+  "version": "atlantis.owner-bindings.v1",
+  "authority": "docs/ATLANTIS_OWNER_MODEL_ASSIGNMENTS.md",
+  "notes": [
+    "Main is orchestrator-only and must not perform Builder/Reviewer/Auditor/Supervisor implementation work.",
+    "Role bindings are execution bindings, not status labels.",
+    "A role may be marked ACTIVE only if its bound session exists, the locked model matches, and work has been dispatched to that session.",
+    "Reviewer, Auditor, and Supervisor model assignments are locked by project documentation unless Commander explicitly changes them.",
+    "Builder model is carried from the current project definition until a separate builder lock file is introduced."
+  ],
+  "orchestrator": {
+    "role": "ORCHESTRATOR",
+    "sessionKey": "agent:main:discord:channel:1480062095348207648",
+    "implementer": false,
+    "model": "commander-managed"
+  },
+  "owners": {
+    "REVIEWER": {
+      "sessionKey": "agent:reviewer:main",
+      "implementer": true,
+      "model": "google/gemini-3.1-pro-preview",
+      "modelLock": "locked",
+      "source": "docs/ATLANTIS_OWNER_MODEL_ASSIGNMENTS.md"
+    },
+    "AUDITOR": {
+      "sessionKey": "agent:auditor:main",
+      "implementer": true,
+      "model": "grok-4-fast-reasoning",
+      "modelLock": "locked",
+      "source": "docs/ATLANTIS_OWNER_MODEL_ASSIGNMENTS.md"
+    },
+    "SUPERVISOR": {
+      "sessionKey": "agent:supervisor:main",
+      "implementer": true,
+      "model": "gpt-5.3-codex",
+      "modelLock": "locked",
+      "source": "docs/ATLANTIS_OWNER_MODEL_ASSIGNMENTS.md"
+    }
+  },
+  "activationRequirements": [
+    "session_exists",
+    "model_matches_binding",
+    "dispatch_succeeds",
+    "expected_artifact_declared"
+  ],
+  "onBindingFailure": {
+    "status": "BLOCKED",
+    "reason": "owner_binding_failure"
+  }
+}

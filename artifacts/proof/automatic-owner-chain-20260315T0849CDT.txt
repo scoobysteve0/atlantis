@@ -1,0 +1,16 @@
+AUTOMATIC OWNER CHAIN PROOF
+OWNER_COMPLETE | owner=BUILDER | scheme= | trigger=
+STEP_STARTED | owner=REVIEWER | scheme=DELTA_PROOF | trigger=builder_pass_artifact_consumed
+SLA_ARMED | owner=REVIEWER | scheme=DELTA_PROOF | trigger=builder_pass_artifact_consumed
+OWNER_EXECUTION_TRIGGERED | owner=REVIEWER | scheme=DELTA_PROOF | trigger=reviewer_execution
+OWNER_COMPLETE | owner=REVIEWER | scheme= | trigger=
+STEP_STARTED | owner=AUDITOR | scheme=EXECUTION_PROOF | trigger=reviewer_pass_artifact_consumed
+SLA_ARMED | owner=AUDITOR | scheme=EXECUTION_PROOF | trigger=reviewer_pass_artifact_consumed
+OWNER_EXECUTION_TRIGGERED | owner=AUDITOR | scheme=EXECUTION_PROOF | trigger=auditor_execution
+OWNER_COMPLETE | owner=AUDITOR | scheme= | trigger=
+STEP_STARTED | owner=SUPERVISOR | scheme=ACCEPTANCE_CHECK | trigger=auditor_pass_artifact_consumed
+SLA_ARMED | owner=SUPERVISOR | scheme=ACCEPTANCE_CHECK | trigger=auditor_pass_artifact_consumed
+OWNER_EXECUTION_TRIGGERED | owner=SUPERVISOR | scheme=ACCEPTANCE_CHECK | trigger=supervisor_execution
+FINAL_OWNER=SUPERVISOR
+FINAL_SCHEME=ACCEPTANCE_CHECK
+FINAL_NEXT_TRIGGER=supervisor_execution

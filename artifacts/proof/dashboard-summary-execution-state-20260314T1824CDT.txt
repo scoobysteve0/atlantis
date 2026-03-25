@@ -1,0 +1,9 @@
+Timestamp: 2026-03-14 18:24 CDT
+
+Commands:
+node --check src/renderer/js/ui/dashboard-ui.js
+npm run pack
+
+Artifacts:
+dist/mac-arm64/Atlantis.app
+artifacts/proof/dashboard-summary-execution-state-20260314T1824CDT.diff

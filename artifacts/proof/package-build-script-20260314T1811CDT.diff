@@ -1,0 +1,33 @@
+diff --git a/package.json b/package.json
+index ef2d790..0f3341c 100644
+--- a/package.json
++++ b/package.json
+@@ -5,6 +5,8 @@
+   "main": "src/main/index.js",
+   "scripts": {
+     "start": "electron .",
++    "build": "electron-builder --dir",
++    "preflight:openclaw": "bash scripts/preflight-openclaw.sh",
+     "pack": "electron-builder --dir",
+     "dist": "electron-builder",
+     "postinstall": "electron-builder install-app-deps"
+@@ -23,7 +25,10 @@
+     },
+     "mac": {
+       "category": "public.app-category.productivity",
+-      "target": ["dmg", "zip"],
++      "target": [
++        "dmg",
++        "zip"
++      ],
+       "hardenedRuntime": true,
+       "gatekeeperAssess": false
+     },
+@@ -37,6 +42,6 @@
+     "electron-builder": "^24.9.1"
+   },
+   "dependencies": {
+-    "electron-is-dev": "^3.0.1"
++    "electron-is-dev": "^2.0.0"
+   }
+ }

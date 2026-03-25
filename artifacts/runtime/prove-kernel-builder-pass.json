@@ -1,0 +1,49 @@
+{
+  "phase": {
+    "phaseNumber": 1,
+    "phaseHuman": "Review",
+    "step": 2,
+    "owner": "REVIEWER",
+    "scheme": "DELTA_PROOF",
+    "status": "IN_PROGRESS",
+    "stopTarget": "REAL_ARTIFACT_REQUIRED_FOR_STEP_ADVANCE",
+    "lastProofEvent": "STEP_STARTED:REVIEWER",
+    "nextTrigger": "reviewer_execution",
+    "stepStartedAt": "2026-03-15T03:58:59.215Z",
+    "slaArmedAt": "2026-03-15T03:58:59.215Z"
+  },
+  "blocker": null,
+  "notification": {
+    "type": "SCHEME_MOVEMENT",
+    "phase": "Review",
+    "step": 2,
+    "owner": "REVIEWER",
+    "scheme": "DELTA_PROOF",
+    "status": "IN_PROGRESS",
+    "lastProofEvent": "STEP_STARTED:REVIEWER",
+    "nextTrigger": "reviewer_execution",
+    "stepOwner": "REVIEWER",
+    "schemeOwner": "REVIEWER",
+    "ownerModel": "Gemini-3-preview",
+    "fromScheme": "ARTIFACTS_REVIEWED",
+    "toScheme": "DELTA_PROOF",
+    "commandExecuted": "Runtime proof gate advanced",
+    "filesChanged": [],
+    "artifactPath": null,
+    "validationResult": "No validation recorded",
+    "trigger": "builder_pass_artifact_detected",
+    "timestamp": "2026-03-15T03:58:59.215Z"
+  },
+  "stepStarted": {
+    "at": "2026-03-15T03:58:59.215Z",
+    "type": "STEP_STARTED",
+    "detail": "REVIEWER",
+    "meta": {
+      "owner": "REVIEWER",
+      "step": 2,
+      "scheme": "DELTA_PROOF",
+      "trigger": "builder_pass_artifact_detected",
+      "timestamp": "2026-03-15T03:58:59.215Z"
+    }
+  }
+}

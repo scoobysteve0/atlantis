@@ -1,0 +1,12 @@
+{
+  "at": "2026-03-15T14:07:48.737Z",
+  "type": "STEP_STARTED",
+  "detail": "REVIEWER",
+  "meta": {
+    "owner": "REVIEWER",
+    "step": 2,
+    "scheme": "DELTA_PROOF",
+    "trigger": "builder_pass_artifact_consumed",
+    "timestamp": "2026-03-15T14:07:48.737Z"
+  }
+}

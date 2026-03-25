@@ -1,0 +1,1805 @@
+{
+  "artifacts": [
+    {
+      "phase": "BUILD",
+      "step": "step-2",
+      "owner": "AUDITOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T04:17:25.335Z",
+      "project_id": "atlantis-audit-test",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/BUILD/atlantis-audit-test-step-2-auditor-verify-20260322T041725..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-2",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T04:15:47.184Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/BUILD/atlantis-phase5-step-2-builder-verify-20260322T041547..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T09:56:00-05:00",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/BUILD/atlantis-phase5-step-3-builder-plan-20260322T0956000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T17:57:20.416Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/BUILD/atlantis-phase5-step-3-builder-plan-20260322T175720..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:02:29.589Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/BUILD/atlantis-phase5-step-3-builder-plan-20260322T180229..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:03:39.663Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/BUILD/atlantis-phase5-step-3-builder-plan-20260322T180339..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:04:06.219Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/BUILD/atlantis-phase5-step-3-builder-plan-20260322T180406..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:04:25.913Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/BUILD/atlantis-phase5-step-3-builder-plan-20260322T180425..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T10:02:00-05:00",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/BUILD/atlantis-phase5-step-3-builder-work-20260322T1002000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-2",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T04:15:54.377Z",
+      "project_id": "atlantis-verify-test",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/BUILD/atlantis-verify-test-step-2-builder-verify-20260322T041554..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-2",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T04:17:25.337Z",
+      "project_id": "audit-integration-test",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/BUILD/audit-integration-test-step-2-builder-work-20260322T041725..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "s1",
+      "owner": "SUPERVISOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T04:17:59.254Z",
+      "project_id": "final-test",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/BUILD/final-test-s1-supervisor-verify-20260322T041759..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-2",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T00:37:12.852Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/artifact-atlantis-phase5-BUILD-step-2-BUILDER-WORK-2026-03-22T00-37-12-853Z.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-1",
+      "owner": "AUDITOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T00:06:00-05:00",
+      "project_id": "atlantis-full-cycle",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-full-cycle/BUILD/atlantis-full-cycle-step-1-auditor-plan-20260323T0006000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-1",
+      "owner": "AUDITOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T00:08:00-05:00",
+      "project_id": "atlantis-full-cycle",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-full-cycle/BUILD/atlantis-full-cycle-step-1-auditor-verify-20260323T0008000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-1",
+      "owner": "AUDITOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T00:07:00-05:00",
+      "project_id": "atlantis-full-cycle",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-full-cycle/BUILD/atlantis-full-cycle-step-1-auditor-work-20260323T0007000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-1",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T00:00:00-05:00",
+      "project_id": "atlantis-full-cycle",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-full-cycle/BUILD/atlantis-full-cycle-step-1-builder-plan-20260323T0000000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-1",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T00:02:00-05:00",
+      "project_id": "atlantis-full-cycle",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-full-cycle/BUILD/atlantis-full-cycle-step-1-builder-verify-20260323T0002000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-1",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T00:01:00-05:00",
+      "project_id": "atlantis-full-cycle",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-full-cycle/BUILD/atlantis-full-cycle-step-1-builder-work-20260323T0001000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-1",
+      "owner": "REVIEWER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T00:03:00-05:00",
+      "project_id": "atlantis-full-cycle",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-full-cycle/BUILD/atlantis-full-cycle-step-1-reviewer-plan-20260323T0003000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-1",
+      "owner": "REVIEWER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T00:05:00-05:00",
+      "project_id": "atlantis-full-cycle",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-full-cycle/BUILD/atlantis-full-cycle-step-1-reviewer-verify-20260323T0005000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-1",
+      "owner": "REVIEWER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T00:04:00-05:00",
+      "project_id": "atlantis-full-cycle",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-full-cycle/BUILD/atlantis-full-cycle-step-1-reviewer-work-20260323T0004000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-1",
+      "owner": "SUPERVISOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T00:09:00-05:00",
+      "project_id": "atlantis-full-cycle",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-full-cycle/BUILD/atlantis-full-cycle-step-1-supervisor-plan-20260323T0009000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-1",
+      "owner": "SUPERVISOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T00:11:00-05:00",
+      "project_id": "atlantis-full-cycle",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-full-cycle/BUILD/atlantis-full-cycle-step-1-supervisor-verify-20260323T0011000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-1",
+      "owner": "SUPERVISOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T00:10:00-05:00",
+      "project_id": "atlantis-full-cycle",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-full-cycle/BUILD/atlantis-full-cycle-step-1-supervisor-work-20260323T0010000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:52.966Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-plan-20260322T181452..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:59.043Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-plan-20260322T181459..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:38.569Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-plan-20260322T181538..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:16:03.049Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-plan-20260322T181603..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T19:06:38.712Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-plan-20260322T190638..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:49.505Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-plan-20260322T211649..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:55.568Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-plan-20260322T211655..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:17:11.001Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-plan-20260322T211711..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T15:52:15.226Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-plan-20260323T155215..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T17:59:05.157Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-plan-20260323T175905..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T19:18:46.848Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-plan-20260323T191846..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-24T03:39:45.663Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-plan-20260324T033945..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:54.966Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-verify-20260322T181454..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:01.043Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-verify-20260322T181501..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:40.569Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-verify-20260322T181540..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:16:05.049Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-verify-20260322T181605..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T19:06:40.712Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-verify-20260322T190640..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:51.505Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-verify-20260322T211651..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:57.568Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-verify-20260322T211657..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:17:13.001Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-verify-20260322T211713..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T15:52:17.226Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-verify-20260323T155217..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T17:59:07.157Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-verify-20260323T175907..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T19:18:48.848Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-verify-20260323T191848..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-24T03:39:47.663Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-verify-20260324T033947..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:53.966Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-work-20260322T181453..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:00.043Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-work-20260322T181500..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:39.569Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-work-20260322T181539..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:16:04.049Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-work-20260322T181604..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T19:06:39.712Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-work-20260322T190639..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:50.505Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-work-20260322T211650..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:56.568Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-work-20260322T211656..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:17:12.001Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-work-20260322T211712..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T15:52:16.226Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-work-20260323T155216..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T17:59:06.157Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-work-20260323T175906..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T19:18:47.848Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-work-20260323T191847..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "AUDITOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-24T03:39:46.663Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-auditor-work-20260324T033946..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T10:00:00-05:00",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260322T1000000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:13:30.610Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260322T181330..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:02.029Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260322T181402..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:17.445Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260322T181417..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:46.965Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260322T181446..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:53.043Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260322T181453..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:32.568Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260322T181532..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:57.048Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260322T181557..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T19:06:32.712Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260322T190632..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:43.505Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260322T211643..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:49.568Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260322T211649..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:17:05.001Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260322T211705..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T15:52:09.225Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260323T155209..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T17:58:59.157Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260323T175859..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T19:18:40.847Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260323T191840..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-24T03:39:39.662Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-plan-20260324T033939..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T10:02:00-05:00",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-verify-20260322T1002000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:48.966Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-verify-20260322T181448..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:55.043Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-verify-20260322T181455..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:34.569Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-verify-20260322T181534..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:59.049Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-verify-20260322T181559..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T19:06:34.712Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-verify-20260322T190634..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:45.505Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-verify-20260322T211645..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:51.568Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-verify-20260322T211651..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:17:07.001Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-verify-20260322T211707..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T15:52:11.226Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-verify-20260323T155211..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T17:59:01.157Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-verify-20260323T175901..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T19:18:42.848Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-verify-20260323T191842..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-24T03:39:41.663Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-verify-20260324T033941..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T10:01:00-05:00",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-work-20260322T1001000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:47.966Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-work-20260322T181447..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:54.043Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-work-20260322T181454..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:33.569Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-work-20260322T181533..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:58.049Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-work-20260322T181558..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T19:06:33.712Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-work-20260322T190633..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:44.505Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-work-20260322T211644..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:50.568Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-work-20260322T211650..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:17:06.001Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-work-20260322T211706..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T15:52:10.226Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-work-20260323T155210..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T17:59:00.157Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-work-20260323T175900..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T19:18:41.848Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-work-20260323T191841..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-24T03:39:40.663Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-builder-work-20260324T033940..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:49.966Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-plan-20260322T181449..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:56.043Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-plan-20260322T181456..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:35.569Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-plan-20260322T181535..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:16:00.049Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-plan-20260322T181600..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T19:06:35.712Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-plan-20260322T190635..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:46.505Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-plan-20260322T211646..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:52.568Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-plan-20260322T211652..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:17:08.001Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-plan-20260322T211708..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T15:52:12.226Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-plan-20260323T155212..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T17:59:02.157Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-plan-20260323T175902..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T19:18:43.848Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-plan-20260323T191843..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-24T03:39:42.663Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-plan-20260324T033942..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:51.966Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-verify-20260322T181451..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:58.043Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-verify-20260322T181458..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:37.569Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-verify-20260322T181537..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:16:02.049Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-verify-20260322T181602..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T19:06:37.712Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-verify-20260322T190637..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:48.505Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-verify-20260322T211648..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:54.568Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-verify-20260322T211654..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:17:10.001Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-verify-20260322T211710..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T15:52:14.226Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-verify-20260323T155214..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T17:59:04.157Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-verify-20260323T175904..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T19:18:45.848Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-verify-20260323T191845..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-24T03:39:44.663Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-verify-20260324T033944..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:50.966Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-work-20260322T181450..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:57.043Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-work-20260322T181457..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:36.569Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-work-20260322T181536..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:16:01.049Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-work-20260322T181601..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T19:06:36.712Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-work-20260322T190636..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:47.505Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-work-20260322T211647..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:53.568Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-work-20260322T211653..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:17:09.001Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-work-20260322T211709..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T15:52:13.226Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-work-20260323T155213..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T17:59:03.157Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-work-20260323T175903..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T19:18:44.848Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-work-20260323T191844..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "REVIEWER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-24T03:39:43.663Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-reviewer-work-20260324T033943..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:55.966Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-plan-20260322T181455..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:02.043Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-plan-20260322T181502..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:41.569Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-plan-20260322T181541..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:16:06.049Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-plan-20260322T181606..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T19:06:41.712Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-plan-20260322T190641..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:52.505Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-plan-20260322T211652..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:58.568Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-plan-20260322T211658..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:17:14.001Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-plan-20260322T211714..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T15:52:18.226Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-plan-20260323T155218..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T17:59:08.157Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-plan-20260323T175908..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T19:18:49.848Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-plan-20260323T191849..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-24T03:39:48.663Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-plan-20260324T033948..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:57.966Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-verify-20260322T181457..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:04.043Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-verify-20260322T181504..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:43.569Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-verify-20260322T181543..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:16:08.049Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-verify-20260322T181608..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T19:06:43.712Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-verify-20260322T190643..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:54.505Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-verify-20260322T211654..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:17:00.568Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-verify-20260322T211700..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:17:16.001Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-verify-20260322T211716..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T15:52:20.226Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-verify-20260323T155220..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T17:59:10.157Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-verify-20260323T175910..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T19:18:51.848Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-verify-20260323T191851..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-24T03:39:50.663Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-verify-20260324T033950..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:14:56.966Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-work-20260322T181456..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:03.043Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-work-20260322T181503..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:15:42.569Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-work-20260322T181542..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T18:16:07.049Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-work-20260322T181607..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T19:06:42.712Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-work-20260322T190642..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:53.505Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-work-20260322T211653..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:16:59.568Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-work-20260322T211659..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-22T21:17:15.001Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-work-20260322T211715..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T15:52:19.226Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-work-20260323T155219..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T17:59:09.157Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-work-20260323T175909..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T19:18:50.848Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-work-20260323T191850..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-3",
+      "owner": "SUPERVISOR",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-24T03:39:49.663Z",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-3-supervisor-work-20260324T033949..json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-6",
+      "owner": "BUILDER",
+      "scheme": "VERIFY",
+      "result": "PASS",
+      "timestamp": "2026-03-23T23:52:00-05:00",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-6-builder-verify-20260323T2352000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-6",
+      "owner": "BUILDER",
+      "scheme": "WORK",
+      "result": "PASS",
+      "timestamp": "2026-03-23T23:52:00-05:00",
+      "project_id": "atlantis-phase5",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-phase5/BUILD/atlantis-phase5-step-6-builder-work-20260323T2352000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-1",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T00:00:00-05:00",
+      "project_id": "atlantis-smoke-advance",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-smoke-advance/BUILD/atlantis-smoke-advance-step-1-builder-plan-20260322T0000000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-1",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-23T00:00:00-05:00",
+      "project_id": "atlantis-smoke-advance",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-smoke-advance/BUILD/atlantis-smoke-advance-step-1-builder-plan-20260323T0000000.json"
+    },
+    {
+      "phase": "BUILD",
+      "step": "step-1",
+      "owner": "BUILDER",
+      "scheme": "PLAN",
+      "result": "PASS",
+      "timestamp": "2026-03-22T00:00:00-05:00",
+      "project_id": "atlantis-smoke-test",
+      "filepath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-smoke-test/test-artifact-20260322T000000.json"
+    }
+  ],
+  "lastUpdated": "2026-03-24T05:49:20.843Z"
+}

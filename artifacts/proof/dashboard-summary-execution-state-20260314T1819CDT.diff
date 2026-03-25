@@ -1,0 +1,709 @@
+diff --git a/src/renderer/js/ui/dashboard-ui.js b/src/renderer/js/ui/dashboard-ui.js
+index 5d0374c..d4db37c 100644
+--- a/src/renderer/js/ui/dashboard-ui.js
++++ b/src/renderer/js/ui/dashboard-ui.js
+@@ -1,17 +1,3 @@
+-const statusToDot = {
+-  primed: "green",
+-  idle: "",
+-  duty: "red",
+-  "working on v3.3": "red"
+-};
+-
+-function formatAgentStatus(status = "idle") {
+-  if (status === "primed") return "Primed";
+-  if (status === "duty") return "Duty";
+-  if (status === "idle") return "Idle";
+-  return status;
+-}
+-
+ function formatLastSynced(isoStamp) {
+   if (!isoStamp) return "Waiting for live data…";
+   const deltaSeconds = Math.max(0, Math.floor((Date.now() - new Date(isoStamp).getTime()) / 1000));
+@@ -27,85 +13,522 @@ function formatDataSource(source = "boot") {
+   return "Booting";
+ }
+ 
+-const projectWaveLabel = {
+-  active: "In Motion",
+-  "in-progress": "In Motion",
+-  planned: "Planned",
+-  future: "Future",
+-  idle: "Idle",
+-  blocked: "Blocked"
++const STATUS_META = {
++  stopped: { label: "Stopped", className: "status-stopped" },
++  staging: { label: "Staging", className: "status-staging" },
++  in_motion: { label: "In Motion", className: "status-in-motion" },
++  completed: { label: "Completed", className: "status-completed" }
+ };
+ 
+-function sortByCompletion(tasks) {
+-  return [...tasks].sort((a, b) => Number(a.completed) - Number(b.completed));
++const HEALTH_META = {
++  healthy: { label: "Healthy", className: "health-green" },
++  monitoring: { label: "Watching", className: "health-yellow" },
++  blocked: { label: "Blocked", className: "health-red" }
++};
++
++function projectStatusMeta(status) {
++  return STATUS_META[status] || { label: status || "Unknown", className: "status-staging" };
++}
++
++function healthMeta(status) {
++  return HEALTH_META[status] || { label: status || "Unknown", className: "health-yellow" };
++}
++
++function renderAgentPills(agents = []) {
++  return agents.map((agent) => `<span class="agent-pill">${agent}</span>`).join("");
++}
++
++function escapeHtml(value = "") {
++  return String(value)
++    .replaceAll("&", "&amp;")
++    .replaceAll("<", "&lt;")
++    .replaceAll(">", "&gt;")
++    .replaceAll('"', "&quot;")
++    .replaceAll("'", "&#39;");
++}
++
++function roleOwnerMap(agents = []) {
++  const mappings = [
++    ["Builder", "Builder"],
++    ["Reviewer", "Reviewer"],
++    ["Auditor", "Auditor"],
++    ["Supervisor", "Supervisor"]
++  ];
++
++  return mappings.reduce((acc, [projectRole, agentRole]) => {
++    const agent = (agents || []).find((item) => (item.roles || []).includes(agentRole));
++    if (agent) {
++      acc[projectRole] = {
++        name: agent.name,
++        model: agent.model,
++        label: `${agent.name} / ${agent.model}`,
++        status: agent.status
++      };
++    }
++    return acc;
++  }, {});
++}
++
++function enrichProjectWithRoster(project, agents = []) {
++  if (!project) return project;
++
++  const owners = roleOwnerMap(agents);
++  const normalizedAssignments = (project.agentAssignments || []).map((assignment) => {
++    const match = owners[assignment.role];
++    return match
++      ? {
++          ...assignment,
++          agent: `${match.name} / ${match.model}`,
++          health: match.status || assignment.health
++        }
++      : assignment;
++  });
++
++  const normalizedWorkflow = (project.workflow || []).map((phase) => ({
++    ...phase,
++    steps: (phase.steps || []).map((step) => ({
++      ...step,
++      roles: (step.roles || []).map((role) => {
++        const match = owners[role.role];
++        return match
++          ? {
++              ...role,
++              owner: match.label,
++              health: role.health || match.status
++            }
++          : role;
++      })
++    }))
++  }));
++
++  const activeOwner = owners.Builder;
++
++  return {
++    ...project,
++    activeScheme: project.activeScheme
++      ? {
++          ...project.activeScheme,
++          owner: activeOwner?.label || project.activeScheme.owner
++        }
++      : project.activeScheme,
++    agentAssignments: normalizedAssignments,
++    workflow: normalizedWorkflow
++  };
++}
++
++function renderOwnerCard(role) {
++  const meta = healthMeta(role.health);
++  return `
++    <article class="workflow-owner-card is-${role.done ? "done" : "active"}">
++      <div class="workflow-owner-top">
++        <strong>${role.role}</strong>
++        <span class="health-pill ${meta.className}">${meta.label}</span>
++      </div>
++      <span class="workflow-owner-name" title="${escapeHtml(role.owner || "")}">${role.owner}</span>
++      <small>${role.timer}</small>
++    </article>
++  `;
++}
++
++function workflowStep(step, index = 0) {
++  return `
++    <article class="workflow-step ${step.complete ? "is-complete" : ""}">
++      <div class="workflow-step-top">
++        <div>
++          <span class="workflow-step-kicker">Step ${index + 1} · ${step.scheme}</span>
++          <h5>${step.name}</h5>
++        </div>
++        <span class="workflow-step-status">${step.complete ? "Complete" : step.status || "In Progress"}</span>
++      </div>
++      <p class="workflow-step-copy">${step.purpose || "No purpose recorded."}</p>
++      <div class="workflow-owner-grid">
++        ${(step.roles || []).map(renderOwnerCard).join("")}
++      </div>
++      <div class="workflow-step-meta-grid">
++        <article class="summary-mini-card"><span>Scheme</span><strong>${step.scheme}</strong></article>
++        <article class="summary-mini-card"><span>Owner Movement</span><strong>${step.ownerNotification || "Not set"}</strong></article>
++        <article class="summary-mini-card"><span>SLA</span><strong>${step.sla || "Not set"}</strong></article>
++        <article class="summary-mini-card"><span>Watchdog</span><strong>${step.watchdog || "Not set"}</strong></article>
++      </div>
++      <div class="section-head-inline compact-head top-gap">
++        <h3 class="section-title">Done When</h3>
++        <span class="section-detail">Completion gate</span>
++      </div>
++      <div class="tag-row">
++        ${(step.doneWhen || []).map((item) => `<span class="meta-tag ${item.includes("Supervisor") ? "restriction-tag" : ""}">${item}</span>`).join("") || '<span class="meta-tag">No done criteria set</span>'}
++      </div>
++    </article>
++  `;
++}
++
++function buildTaskRow(task) {
++  return `
++    <li class="build-task-row ${task.done ? "is-complete" : ""}">
++      <div class="build-task-main">
++        <span class="build-task-check">${task.done ? "✔" : "○"}</span>
++        <div>
++          <strong>${task.title}</strong>
++          <span>${task.detail || ""}</span>
++        </div>
++      </div>
++      <div class="build-task-meta">
++        <span>${task.owner || "Unassigned"}</span>
++        <span>${task.dependsOn || "Ready"}</span>
++      </div>
++    </li>
++  `;
++}
++
++function renderAutomationRules(project) {
++  const rules = project.automationRules || {};
++  const notifications = rules.notifications || {};
++  const sla = rules.sla || {};
++  const watchdog = rules.watchdog || {};
++  return `
++    <div class="workflow-section-block top-gap">
++      <div class="section-head-inline compact-head">
++        <h3 class="section-title">Automation Rules</h3>
++        <span class="section-detail">Standard workflow controls</span>
++      </div>
++      <div class="summary-mini-grid">
++        <article class="summary-mini-card"><span>Completion Rule</span><strong>${rules.completionGate || "Not set"}</strong></article>
++        <article class="summary-mini-card"><span>Owner Movement Notify</span><strong>${notifications.channel || "Not set"}</strong></article>
++        <article class="summary-mini-card"><span>SLA Policy</span><strong>${sla.policy || "Not set"}</strong></article>
++        <article class="summary-mini-card"><span>Watchdog</span><strong>${watchdog.status || "Not set"}</strong></article>
++      </div>
++      <div class="tag-row top-gap">
++        ${(rules.notes || []).map((note) => `<span class="meta-tag restriction-tag">${note}</span>`).join("") || '<span class="meta-tag">No automation notes set</span>'}
++      </div>
++    </div>
++  `;
+ }
+ 
+-function renderTaskList(tasks) {
+-  return sortByCompletion(tasks)
+-    .map((task) => {
+-      const statusClass = task.completed ? "" : task.status === "in-progress" ? "green" : task.status === "blocked" ? "red" : "";
+-      return `
+-        <li class="task-item ${task.completed ? "done" : ""}" data-task-id="${task.id}">
+-          <span class="dot ${statusClass}" title="${task.status}"></span>
+-          <div class="task-content">
+-            <span class="task-text">${task.description}</span>
+-            <span class="task-agent">Assigned: ${task.assignedTo}</span>
++function renderWorkflowSections(project) {
++  const phases = project.workflow || [];
++  const activePhases = phases.filter((phase) => !(phase.complete || false));
++  const completedPhases = phases.filter((phase) => phase.complete || false);
++
++  return `
++    <div class="workflow-section-block">
++      <div class="section-head-inline compact-head">
++        <h3 class="section-title">Active Flow</h3>
++        <span class="section-detail">4-step tracked phase layout</span>
++      </div>
++      <div class="workflow-phase-stack">
++        ${activePhases.map((phase) => `
++          <section class="workflow-phase ${phase.active ? "is-active" : ""}">
++            <div class="workflow-phase-head">
++              <div>
++                <span class="workflow-phase-kicker">Phase</span>
++                <h4>${phase.name}</h4>
++                <p class="workflow-step-copy">${phase.objective || "No phase objective recorded."}</p>
++              </div>
++              <span class="workflow-phase-status">${phase.status}</span>
++            </div>
++            <div class="workflow-step-meta-grid">
++              <article class="summary-mini-card"><span>Current Step</span><strong>${phase.currentStep || "Not set"}</strong></article>
++              <article class="summary-mini-card"><span>Scheme Standard</span><strong>${phase.schemeStandard || "Standard Workflow"}</strong></article>
++              <article class="summary-mini-card"><span>Owner Movement</span><strong>${phase.ownerNotification || project.automationRules?.notifications?.channel || "Not set"}</strong></article>
++              <article class="summary-mini-card"><span>SLA / Watchdog</span><strong>${phase.slaWatchdog || "Tracked"}</strong></article>
++            </div>
++            <div class="workflow-step-list">
++              ${(phase.steps || []).map((step, index) => workflowStep(step, index)).join("") || '<div class="empty-open-project compact-empty"><span>No steps in this phase.</span></div>'}
++            </div>
++          </section>
++        `).join("")}
++      </div>
++    </div>
++
++    ${renderAutomationRules(project)}
++
++    <div class="workflow-section-block top-gap">
++      <div class="section-head-inline compact-head">
++        <h3 class="section-title">Completed</h3>
++        <span class="section-detail">Finished phases and steps</span>
++      </div>
++      <div class="workflow-phase-stack is-completed-stack">
++        ${completedPhases.map((phase) => `
++          <section class="workflow-phase is-complete-phase">
++            <div class="workflow-phase-head">
++              <div>
++                <span class="workflow-phase-kicker">Phase</span>
++                <h4>${phase.name}</h4>
++              </div>
++              <span class="workflow-phase-status">${phase.status}</span>
++            </div>
++            <div class="workflow-step-list">
++              ${(phase.steps || []).filter((step) => step.complete).map((step, index) => workflowStep(step, index)).join("") || '<div class="empty-open-project compact-empty"><span>No completed steps recorded.</span></div>'}
++            </div>
++          </section>
++        `).join("")}
++      </div>
++    </div>
++  `;
++}
++
++function deriveExecutionState(project, activeScheme) {
++  const workflowPhase = (project.workflow || []).find((phase) => phase.active) || project.workflow?.[0] || {};
++  const orchestrationPhase = project.orchestration?.phase || {};
++
++  return {
++    phase: project.phase || workflowPhase.name || orchestrationPhase.phaseHuman || "Not set",
++    step: workflowPhase.currentStep || `Step ${orchestrationPhase.step || 1}`,
++    owner: activeScheme.owner || orchestrationPhase.owner || "Unassigned",
++    scheme: activeScheme.name || orchestrationPhase.scheme || "Not set"
++  };
++}
++
++function renderExecutionStateBar(project, activeScheme, extraLabel = "Execution state") {
++  const execution = deriveExecutionState(project, activeScheme);
++
++  return `
++    <div class="active-scheme-bar compact-scheme-bar">
++      <div><span>Phase</span><strong>${execution.phase}</strong></div>
++      <div><span>Step</span><strong>${execution.step}</strong></div>
++      <div><span>Owner</span><strong>${execution.owner}</strong></div>
++      <div><span>Scheme</span><strong>${execution.scheme}</strong></div>
++      <div><span>View</span><strong>${extraLabel}</strong></div>
++    </div>
++  `;
++}
++
++function renderBuildTaskSections(project, activeScheme) {
++  const activeTasks = (project.buildTasks || []).filter((task) => !task.done);
++  const completedTasks = (project.buildTasks || []).filter((task) => task.done);
++
++  return `
++    <div class="build-task-shell">
++      ${renderExecutionStateBar(project, activeScheme, "Build task queue")}
++
++      <div class="section-head-inline compact-head">
++        <h3 class="section-title">Active Tasks</h3>
++        <span class="section-detail">Agent execution queue</span>
++      </div>
++      <ul class="build-task-list">
++        ${activeTasks.map(buildTaskRow).join("") || '<li class="empty-open-project compact-empty"><span>No active build tasks.</span></li>'}
++      </ul>
++
++      <div class="section-head-inline compact-head top-gap">
++        <h3 class="section-title">Completed Tasks</h3>
++        <span class="section-detail">Finished technical actions</span>
++      </div>
++      <ul class="build-task-list is-completed-stack">
++        ${completedTasks.map(buildTaskRow).join("") || '<li class="empty-open-project compact-empty"><span>No completed tasks yet.</span></li>'}
++      </ul>
++    </div>
++  `;
++}
++
++function renderProofSections(project) {
++  const proof = project.proof || [];
++  const orchestration = project.orchestration || {};
++  const eventLog = orchestration.eventLog || [];
++
++  return `
++    <div class="proof-shell">
++      <div class="summary-mini-grid">
++        <article class="summary-mini-card"><span>Proof Items</span><strong>${proof.length}</strong></article>
++        <article class="summary-mini-card"><span>Last Proof Event</span><strong>${orchestration.phase?.lastProofEvent || "Unknown"}</strong></article>
++        <article class="summary-mini-card"><span>Refresh Successes</span><strong>${orchestration.metrics?.refreshSuccesses ?? 0}</strong></article>
++        <article class="summary-mini-card"><span>Refresh Failures</span><strong>${orchestration.metrics?.refreshFailures ?? 0}</strong></article>
++      </div>
++
++      <div class="proof-grid top-gap">
++        <section class="support-card compact-support-card">
++          <div class="section-head-inline compact-head">
++            <h3 class="section-title">Real Work Proof</h3>
++            <span class="section-detail">Diffs, validations, artifacts</span>
+           </div>
+-        </li>
+-      `;
+-    })
+-    .join("");
++          <div class="proof-card-stack">
++            ${proof.map((item) => `
++              <article class="proof-card proof-${item.status || "done"}">
++                <div class="workflow-step-top">
++                  <div>
++                    <h5>${item.title}</h5>
++                    <span class="workflow-step-kicker">${item.kind || "proof"}</span>
++                  </div>
++                  <span class="workflow-step-status">${item.status || "done"}</span>
++                </div>
++                <p class="workflow-step-copy">${item.summary || "No summary recorded."}</p>
++                <div class="section-head-inline compact-head top-gap"><h3 class="section-title">Changed Files</h3><span class="section-detail">Machine state changed</span></div>
++                <div class="tag-row">${(item.files || []).map((file) => `<span class="meta-tag">${file}</span>`).join("") || '<span class="meta-tag">No files recorded</span>'}</div>
++                <div class="section-head-inline compact-head top-gap"><h3 class="section-title">Validation</h3><span class="section-detail">Executed checks</span></div>
++                <div class="tag-row">${(item.validations || []).map((check) => `<span class="meta-tag team-tag">${check}</span>`).join("") || '<span class="meta-tag">No validation recorded</span>'}</div>
++                <div class="section-head-inline compact-head top-gap"><h3 class="section-title">Artifacts</h3><span class="section-detail">Saved proof files</span></div>
++                <div class="tag-row">${(item.artifacts || []).map((artifact) => `<span class="meta-tag restriction-tag">${artifact}</span>`).join("") || '<span class="meta-tag">No artifacts recorded</span>'}</div>
++              </article>
++            `).join("") || '<div class="empty-open-project compact-empty"><span>No proof items recorded.</span></div>'}
++          </div>
++        </section>
++
++        <section class="support-card compact-support-card">
++          <div class="section-head-inline compact-head">
++            <h3 class="section-title">Proof Events</h3>
++            <span class="section-detail">Runtime evidence trail</span>
++          </div>
++          <div class="proof-event-list">
++            ${eventLog.map((event) => `
++              <article class="proof-event-card">
++                <div class="workflow-step-top">
++                  <div>
++                    <h5>${event.type}</h5>
++                    <span class="workflow-step-kicker">${new Date(event.at).toLocaleString()}</span>
++                  </div>
++                </div>
++                <p class="workflow-step-copy">${event.detail || "No detail."}</p>
++              </article>
++            `).join("") || '<div class="empty-open-project compact-empty"><span>No runtime proof events yet.</span></div>'}
++          </div>
++        </section>
++      </div>
++    </div>
++  `;
++}
++
++function renderProjectOpenView(project, state) {
++  if (!project) {
++    return '<div class="empty-open-project"><strong>Select a project</strong><span>Open a project card to view workflow, schemes, owners, and build tasks.</span></div>';
++  }
++
++  const hydratedProject = enrichProjectWithRoster(project, state.agents || []);
++  const status = projectStatusMeta(hydratedProject.status);
++  const activeScheme = hydratedProject.activeScheme || { name: "No active scheme", owner: "Unassigned", elapsed: "--", sla: "--", watchdog: "Waiting" };
++  const projectAgents = (hydratedProject.agentAssignments || []).map((assignment) => {
++    const meta = healthMeta(assignment.health);
++    return `
++      <article class="project-agent-card">
++        <div class="project-agent-top">
++          <strong>${assignment.agent}</strong>
++          <span class="health-pill ${meta.className}">${meta.label}</span>
++        </div>
++        <span>${assignment.role}</span>
++        <small>${assignment.responsibility || "No responsibility set"}</small>
++      </article>
++    `;
++  }).join("");
++
++  const summaryCards = (hydratedProject.summaryCards || []).map((card) => `
++    <article class="summary-mini-card ${card.tone || "neutral"}">
++      <span>${card.label}</span>
++      <strong>${card.value}</strong>
++    </article>
++  `).join("");
++  const executionState = deriveExecutionState(hydratedProject, activeScheme);
++
++  return `
++    <div class="project-open-shell">
++      <div class="project-page-head">
++        <button class="back-pill" type="button" data-project-close>← Back to Projects</button>
++      </div>
++
++      <div class="project-open-head">
++        <div>
++          <div class="section-head-inline project-open-heading-row">
++            <h3 class="section-title">Open Project</h3>
++            <span class="project-status ${status.className}">${status.label}</span>
++          </div>
++          <h4 class="project-open-name">${hydratedProject.name}</h4>
++          <p class="project-open-copy">${hydratedProject.description || "Project detail view for human workflow and agent execution."}</p>
++        </div>
++        <div class="project-open-metrics">
++          <div class="project-phase-row">
++            <span class="project-phase-label">Current Phase</span>
++            <span class="project-phase-value">${hydratedProject.phase || "Not Set"}</span>
++          </div>
++          <div class="project-progress-row">
++            <div class="project-progress-meta">
++              <span>% done</span>
++              <strong>${hydratedProject.progress ?? 0}%</strong>
++            </div>
++            <div class="project-progress-bar"><span style="width:${Math.max(0, Math.min(100, hydratedProject.progress ?? 0))}%"></span></div>
++          </div>
++        </div>
++      </div>
++
++      <div class="project-open-grid">
++        <section class="project-summary-panel">
++          <div class="section-head-inline">
++            <h3 class="section-title">Schemes</h3>
++            <span class="section-detail">Active implementation slices on this project</span>
++          </div>
++          <div class="scheme-chip-row">${(hydratedProject.schemes || []).map((scheme) => `<span class="scheme-chip">${scheme}</span>`).join("")}</div>
++
++          <div class="section-head-inline top-gap">
++            <h3 class="section-title">Execution State</h3>
++            <span class="section-detail">Current Atlantis run state</span>
++          </div>
++          <div class="summary-mini-grid">
++            <article class="summary-mini-card"><span>Phase</span><strong>${executionState.phase}</strong></article>
++            <article class="summary-mini-card"><span>Step</span><strong>${executionState.step}</strong></article>
++            <article class="summary-mini-card"><span>Owner</span><strong>${executionState.owner}</strong></article>
++            <article class="summary-mini-card"><span>Scheme</span><strong>${executionState.scheme}</strong></article>
++          </div>
++
++          <div class="section-head-inline top-gap">
++            <h3 class="section-title">Assigned Agents</h3>
++            <span class="section-detail">Health + role in project</span>
++          </div>
++          <div class="project-agent-grid">${projectAgents || '<p class="empty-copy">No agents assigned.</p>'}</div>
++
++          <div class="section-head-inline top-gap">
++            <h3 class="section-title">SLA + Watchdogs</h3>
++            <span class="section-detail">Per-scheme timing visibility</span>
++          </div>
++          <div class="summary-mini-grid">${summaryCards}</div>
++        </section>
++
++        <section class="project-detail-panel">
++          <div class="project-subtabs">
++            <button class="project-subtab ${state.selectedProjectTab === "workflow" ? "is-active" : ""}" data-project-tab="workflow" type="button">Workflow</button>
++            <button class="project-subtab ${state.selectedProjectTab === "tasks" ? "is-active" : ""}" data-project-tab="tasks" type="button">Build Tasks</button>
++            <button class="project-subtab ${state.selectedProjectTab === "proof" ? "is-active" : ""}" data-project-tab="proof" type="button">Proof</button>
++          </div>
++
++          ${state.selectedProjectTab === "workflow" ? `
++            ${renderExecutionStateBar(hydratedProject, activeScheme, "Workflow")}
++            <div class="active-scheme-bar">
++              <div><span>Elapsed</span><strong>${activeScheme.elapsed}</strong></div>
++              <div><span>SLA</span><strong>${activeScheme.sla}</strong></div>
++              <div><span>Watchdog</span><strong>${activeScheme.watchdog}</strong></div>
++              <div><span>Notify</span><strong>${hydratedProject.automationRules?.notifications?.channel || "Not set"}</strong></div>
++            </div>
++            ${renderWorkflowSections(hydratedProject)}
++          ` : state.selectedProjectTab === "proof" ? `${renderExecutionStateBar(hydratedProject, activeScheme, "Proof")}${renderProofSections(hydratedProject)}` : renderBuildTaskSections(hydratedProject, activeScheme)}
++        </section>
++      </div>
++    </div>
++  `;
+ }
+ 
+ export function mountDashboard(store) {
+-  const statusList = document.getElementById("agent-status-list");
+   const board = document.getElementById("project-board");
+-  const iterationsList = document.getElementById("iterations-list");
++  const ideasList = document.getElementById("ideas-list");
++  const onHoldList = document.getElementById("on-hold-list");
++  const openView = document.getElementById("project-open-view");
+   const lastSynced = document.getElementById("last-synced");
+   const healthBadge = document.getElementById("data-health");
+   const syncWarning = document.getElementById("sync-warning");
+-  const detail = document.getElementById("project-detail");
+-  const sidebar = document.getElementById("mission-sidebar");
+-  const toggleButton = document.getElementById("mission-sidebar-toggle");
+-  const dashboardGrid = document.querySelector(".dashboard-grid");
+ 
+-  toggleButton.addEventListener("click", () => store.toggleMissionSidebar());
+-
+-  board.addEventListener("click", (event) => {
++  board?.addEventListener("click", (event) => {
+     const card = event.target.closest(".project-card");
+     if (!card) return;
+     store.selectProject(card.dataset.projectId);
+   });
+ 
+-  detail.addEventListener("click", (event) => {
+-    const item = event.target.closest(".task-item");
+-    if (!item) return;
+-
+-    const state = store.getState();
+-    const task = state.tasks.find((t) => t.id === item.dataset.taskId);
+-    if (!task) return;
++  openView?.addEventListener("click", (event) => {
++    const button = event.target.closest("[data-project-tab]");
++    if (button) {
++      store.setSelectedProjectTab(button.dataset.projectTab);
++      return;
++    }
+ 
+-    const nextCompleted = !task.completed;
+-    store.setTaskCompleted(task.id, nextCompleted);
+-    store.setTaskStatus(task.id, nextCompleted ? "complete" : "in-progress");
++    const closeButton = event.target.closest("[data-project-close]");
++    if (closeButton) {
++      store.closeProject();
++    }
+   });
+ 
+   store.subscribe((state) => {
+-    statusList.innerHTML = state.agents
+-      .map((agent) => {
+-        const normalizedStatus = String(agent.status ?? "idle").toLowerCase();
+-        return `
+-        <li class="agent-card">
+-          <div class="agent-meta">
+-            <span class="dot ${statusToDot[normalizedStatus] ?? ""}"></span>
+-            <span class="agent-role">${agent.role}</span>
+-          </div>
+-          <span class="agent-copy">${agent.name} · ${formatAgentStatus(agent.status)}</span>
+-        </li>
+-      `;
+-      })
+-      .join("");
+-
+     if (lastSynced) {
+       lastSynced.textContent = `Last Sync: ${formatLastSynced(state.lastSyncedAt)}`;
+     }
+@@ -119,61 +542,55 @@ export function mountDashboard(store) {
+       syncWarning.classList.toggle("is-hidden", !state.syncWarning);
+     }
+ 
+-    const activeProjects = state.projects.filter((project) => project.active);
+-    board.innerHTML = activeProjects
+-      .map((project) => {
+-        const spotlightClass = ["atlantis", "nebula-sync"].includes(project.id) ? "is-spotlight" : "";
+-        return `
+-        <article class="project-card ${spotlightClass} ${project.id === state.selectedProjectId ? "is-selected" : ""}" data-project-id="${project.id}">
+-          <h4 class="project-name">${project.name}</h4>
+-          <span class="project-wave ${project.active ? "is-active" : "is-inactive"}">${projectWaveLabel[project.status] ?? project.status}</span>
+-        </article>
+-      `;
+-      })
+-      .join("");
+-
+-    const iterations = Array.isArray(state.iterations) ? state.iterations : [];
+-    iterationsList.innerHTML = iterations
+-      .map((iteration) => `
+-        <li>
+-          <div class="iteration-row">
+-            <strong>${iteration.name}</strong>
+-            <span>${projectWaveLabel[iteration.status] ?? iteration.status}</span>
+-          </div>
+-          <small>${iteration.focus ?? "Internal improvement initiative"}</small>
+-        </li>
+-      `)
+-      .join("") || "<li>No iterations queued.</li>";
++    const activeProjects = state.projects.filter((project) => project.active !== false);
++    const selectedProject = state.projects.find((project) => project.id === state.selectedProjectId) || activeProjects[0] || null;
+ 
+-    const selected = state.projects.find((p) => p.id === state.selectedProjectId) ?? activeProjects[0] ?? state.projects[0];
+-    if (!selected) {
+-      detail.innerHTML = "<p class=\"detail-sub\">No projects found in live data.</p>";
+-      return;
++    if (board) {
++      board.innerHTML = activeProjects.map((project) => {
++        const status = projectStatusMeta(project.status);
++        return `
++          <article class="project-card ${project.id === state.selectedProjectId ? "is-selected" : ""}" data-project-id="${project.id}">
++            <div class="project-card-top">
++              <h4 class="project-name">${project.name}</h4>
++              <span class="project-status ${status.className}">${status.label}</span>
++            </div>
++            <div class="project-phase-row">
++              <span class="project-phase-label">Phase</span>
++              <span class="project-phase-value">${project.phase || "Not Set"}</span>
++            </div>
++            <div class="project-progress-row">
++              <div class="project-progress-meta">
++                <span>% done</span>
++                <strong>${project.progress ?? 0}%</strong>
++              </div>
++              <div class="project-progress-bar">
++                <span style="width:${Math.max(0, Math.min(100, project.progress ?? 0))}%"></span>
++              </div>
++            </div>
++            <div class="project-agents">
++              <span class="project-agents-label">Agents involved</span>
++              <div class="agent-pill-row">${renderAgentPills(project.agents || [])}</div>
++            </div>
++          </article>
++        `;
++      }).join("");
+     }
+ 
+-    const selectedTasks = state.tasks.filter((task) => task.projectId === selected.id);
+-    const agentTasks = selectedTasks.filter((task) => task.type === "agent");
+-    const userTasks = selectedTasks.filter((task) => task.type === "user");
++    if (openView) {
++      openView.innerHTML = renderProjectOpenView(selectedProject, state);
++    }
+ 
+-    detail.innerHTML = `
+-      <div class="detail-header">
+-        <h3>${selected.name}</h3>
+-        <span class="detail-sub">Live Task Detail View</span>
+-      </div>
+-      <div class="task-group">
+-        <h4>Agent-Created Tasks</h4>
+-        <ul class="task-list">${renderTaskList(agentTasks)}</ul>
+-      </div>
+-      <div class="task-group">
+-        <h4>User-Created Tasks</h4>
+-        <ul class="task-list">${renderTaskList(userTasks)}</ul>
+-      </div>
+-    `;
++    if (ideasList) {
++      ideasList.innerHTML = (state.ideas || []).map((idea) => `<button class="idea-chip" type="button">${idea.name}</button>`).join("") || '<p class="empty-copy">No ideas queued.</p>';
++    }
+ 
+-    dashboardGrid.classList.toggle("sidebar-collapsed", state.missionSidebarCollapsed);
+-    sidebar.classList.toggle("is-collapsed", state.missionSidebarCollapsed);
+-    toggleButton.textContent = state.missionSidebarCollapsed ? "▶" : "◀";
+-    toggleButton.setAttribute("title", state.missionSidebarCollapsed ? "Expand" : "Collapse");
+-    toggleButton.setAttribute("aria-label", state.missionSidebarCollapsed ? "Expand Agents" : "Collapse Agents");
++    if (onHoldList) {
++      onHoldList.innerHTML = (state.onHold || []).map((item) => `
++        <li class="on-hold-item">
++          <strong>${item.name}</strong>
++          <span>${item.summary || "Waiting for activation."}</span>
++        </li>
++      `).join("") || '<li class="on-hold-item"><strong>Nothing on hold</strong><span>Approved work will appear here.</span></li>';
++    }
+   });
+ }

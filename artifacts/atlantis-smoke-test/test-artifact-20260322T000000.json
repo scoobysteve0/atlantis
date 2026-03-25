@@ -1,0 +1,14 @@
+{
+  "project_id": "atlantis-smoke-test",
+  "phase": "BUILD",
+  "step": "step-1",
+  "owner": "BUILDER",
+  "scheme": "PLAN",
+  "result": "PASS",
+  "timestamp": "2026-03-22T00:00:00-05:00",
+  "objective": "Smoke test artifact",
+  "summary": "Test artifact for bridge validation",
+  "evidence": {
+    "filePath": "/Users/jarvis/.openclaw/workspace/atlantis-electron/artifacts/atlantis-smoke-test/test-artifact-20260322T000000.json"
+  }
+}
