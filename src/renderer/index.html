@@ -1,75 +1,238 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atlantis v3.5 - Projects + Iterations</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
-    <main class="app-shell">
-      <header class="topbar">
-        <h1>Atlantis</h1>
-        <div class="topbar-actions">
-          <button id="settings-button" class="icon-button" type="button" aria-label="Settings" title="Settings">⚙</button>
-          <span class="version-pill">v3.5</span>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlantis v4.0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="brand-mark">▲</div>
+        <div>
+          <h1 class="brand-title">Atlantis</h1>
+          <p class="brand-subtitle">Mission Control Surface</p>
         </div>
-      </header>
+      </div>
+      <div class="topbar-actions">
+        <button class="topbar-button" id="openclaw-settings-button" title="Runtime and harness settings">Runtime</button>
+        <span class="status-pill" id="sync-badge">RUNTIME SYNC</span>
+        <span class="status-pill status-pill-muted" id="version-pill">v4.0</span>
+      </div>
+    </header>
 
-      <nav class="tabs" id="tabs"></nav>
+    <nav class="workspace-tabs" id="tabs"></nav>
 
-      <section class="view panel" id="dashboard-view" aria-label="Projects Workspace">
-        <div class="view-head">
-          <h2>Projects</h2>
-          <div class="sync-pills">
-            <span id="data-health" class="sync-pill">Source: Booting</span>
-            <span id="last-synced" class="sync-pill">Last Sync: Waiting for live data…</span>
+    <!-- ── PROJECTS (Control Plane) ─────────────────────────────────── -->
+    <section class="view panel" id="dashboard-view" aria-label="Projects Control Plane">
+      <div class="cp-layout">
+
+        <!-- Left sidebar: project list -->
+        <aside class="cp-sidebar">
+          <div class="cp-sidebar-head">
+            <span class="cp-sidebar-title">Projects</span>
+            <button id="btn-new-project" class="btn-new-project" title="New project">＋</button>
+          </div>
+          <ul id="cp-project-list" class="cp-project-list"></ul>
+        </aside>
+
+        <!-- Right: command surface -->
+        <div class="cp-main" id="cp-main">
+          <div class="cp-empty">
+            <p>Select a project from the sidebar, or create a new one.</p>
           </div>
         </div>
-        <p id="sync-warning" class="sync-warning is-hidden"></p>
-        <div class="dashboard-grid">
-          <aside class="agent-sidebar" id="mission-sidebar">
-            <div class="sidebar-head">
-              <h3>Agents</h3>
-              <button id="mission-sidebar-toggle" class="icon-button sidebar-toggle" type="button" aria-label="Collapse Agents" title="Collapse">◀</button>
-            </div>
-            <ul id="agent-status-list"></ul>
-          </aside>
 
-          <div class="projects-shell">
-            <section class="projects-active-panel">
-              <h3 class="section-title">Active Projects</h3>
-              <div class="project-grid" id="project-board"></div>
-            </section>
+      </div>
+    </section>
 
-            <section class="ideas-panel iterations-lab">
-              <h3 class="section-title">Iterations <span class="detail-sub">Internal / Self-Driven</span></h3>
-              <ul id="iterations-list" class="ideas-list"></ul>
-            </section>
+    <!-- ── COMMAND BOARD ───────────────────────────────────────────── -->
+    <section class="view panel is-hidden" id="command-board-view" aria-label="Command Board"></section>
 
-            <section class="project-detail" id="project-detail"></section>
-          </div>
+    <!-- New Project modal -->
+    <div class="modal-overlay hidden" id="new-project-modal">
+      <div class="modal-card np-modal">
+        <div class="np-modal-head">
+          <span class="np-modal-title">New Project</span>
+          <button class="modal-close-btn" id="new-project-close">✕</button>
         </div>
-      </section>
 
-      <section class="view panel is-hidden" id="iterations-view" aria-label="Iterations Workspace">
-        <h2>Iterations</h2>
-        <p class="detail-sub">Internal / Self-Driven projects and lessons-learned improvements.</p>
-        <ul id="iterations-tab-list" class="ideas-list"></ul>
-      </section>
-    </main>
+        <div class="np-field">
+          <label class="np-label">Project Name <span class="np-required">*</span></label>
+          <input class="np-input" id="np-name" type="text" placeholder="e.g. Smart Speaker Enclosure">
+        </div>
 
-    <div class="modal-backdrop is-hidden" id="app-modal" role="dialog" aria-modal="true" aria-labelledby="app-modal-title">
-      <div class="modal-panel" id="app-modal-panel">
-        <h3 id="app-modal-title">Status</h3>
-        <p id="app-modal-message">Action complete.</p>
-        <button id="app-modal-close" type="button">Close</button>
+        <div class="np-field">
+          <label class="np-label">Description</label>
+          <textarea class="np-input" id="np-desc" rows="2" placeholder="Short summary of what this project produces"></textarea>
+        </div>
+
+        <div class="np-field">
+          <label class="np-label">Template</label>
+          <select class="np-input" id="np-template">
+            <option value="prototype">Prototype — Fast loop</option>
+            <option value="standard">Project — Full pipeline</option>
+            <option value="website">Website — Fast website loop</option>
+            <option value="analysis">Analysis — Research &amp; report</option>
+          </select>
+          <p class="np-template-desc" id="np-template-desc"></p>
+        </div>
+
+        <div class="np-field">
+          <label class="np-label">Docs / Context Folder</label>
+          <input class="np-input" id="np-docs" type="text" placeholder="/Users/jarvis/.openclaw/workspace/my-project/docs">
+        </div>
+
+        <div class="np-field">
+          <label class="np-label">Planner Discord Channel ID <span class="np-required">*</span></label>
+          <input class="np-input" id="np-planner-channel" type="text" value="1476290311000035348" placeholder="1476290311000035348">
+        </div>
+
+        <div class="np-field">
+          <label class="np-label">Orchestrator Discord Channel ID (optional)</label>
+          <input class="np-input" id="np-orchestrator-channel" type="text" placeholder="1476290311000035348">
+        </div>
+
+        <div class="np-field">
+          <label class="np-label">Phase</label>
+          <input class="np-input" id="np-phase" type="text" value="1" placeholder="1">
+        </div>
+
+        <p class="np-error" id="np-error" style="display:none"></p>
+
+        <div class="np-actions">
+          <button class="btn-secondary" id="np-cancel">Cancel</button>
+          <button class="btn-go" id="np-create">Create Project</button>
+        </div>
       </div>
     </div>
 
-    <script type="module" src="js/main.js"></script>
-  </body>
+    <section class="view panel is-hidden" id="agents-view" aria-label="Agents Workspace">
+      <div class="view-head">
+        <div>
+          <h2>Agents</h2>
+          <p class="detail-sub">Atlantis runtime, node, session, and model status.</p>
+        </div>
+      </div>
+      <section class="agents-page-panel">
+        <div class="agents-page-head">
+          <h3 class="section-title">Agent Monitoring</h3>
+        </div>
+        <ul id="agent-status-list-agents" class="agents-page-list"></ul>
+      </section>
+    </section>
+
+    <section class="view panel is-hidden" id="trading-view" aria-label="Trading Workspace">
+      <h2>Trading</h2>
+      <p class="detail-sub">Trading status and controls surface.</p>
+      <section class="trading-panel" id="trading-panel">
+        <div class="mock-trading-widget">
+  <h3>Mock Trading Status (Dev Only)</h3>
+  <table>
+    <tr>
+      <th>Asset</th>
+      <th>Price</th>
+      <th>Status</th>
+    </tr>
+    <tr>
+      <td>BTC</td>
+      <td>$60,000</td>
+      <td>Active</td>
+    </tr>
+    <tr>
+      <td>ETH</td>
+      <td>$3,000</td>
+      <td>Pending</td>
+    </tr>
+  </table>
+  <p class="detail-sub">Mock data for review clarity. Improves empty state handling.</p>
+  <p class="detail-sub">In case of data absence, shows "No data available" (mock).</p>
+</div>
+      </section>
+    </section>
+
+    <section class="view panel is-hidden" id="iterations-view" aria-label="Iterations Workspace">
+      <h2>Iterations</h2>
+      <p class="detail-sub">Internal / self-driven projects and lessons learned.</p>
+      <div class="iterations-layout">
+        <section class="ideas-panel iterations-lab">
+          <h3 class="section-title">Iterations <span class="detail-sub">Internal / Self-Driven</span></h3>
+          <ul id="iterations-tab-list" class="ideas-list"></ul>
+          <h3 class="section-title" style="margin-top:16px">Mission Log</h3>
+          <ul id="mission-log-list" class="ideas-list"></ul>
+        </section>
+
+        <section class="guardrails-section">
+          <h3 class="section-title">Guardrails</h3>
+          <p class="detail-sub">Task creation with Proof Gate validation.</p>
+          <div class="guardrails-panel">
+            <div class="input-group">
+              <label for="task-name">Task Name</label>
+              <input type="text" id="task-name" placeholder="Enter task name in TEAM-ACTION-SCOPE format">
+              <span id="name-status" class="status-text status-warn"></span>
+            </div>
+            <div class="input-group">
+              <label for="proof-link">Proof Link</label>
+              <input type="text" id="proof-link" placeholder="https://example.com/proof">
+              <span id="proof-status" class="status-text status-warn"></span>
+            </div>
+            <div class="checklist">
+              <h4>Validation Checklist</h4>
+              <ul id="checklist"></ul>
+            </div>
+            <button id="proof-button" type="button" class="primary-btn">Validate Proof Gate</button>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal is-hidden" id="app-modal" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" id="app-modal-close" aria-label="Close">✕</button>
+      <p id="app-modal-message">Saved.</p>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="openclaw-settings-modal">
+    <div class="modal-card np-modal openclaw-modal">
+      <div class="np-modal-head">
+        <span class="np-modal-title">Runtime Harness Connections</span>
+        <button class="modal-close-btn" id="openclaw-settings-close">✕</button>
+      </div>
+
+      <div class="np-field">
+        <label class="np-label">Base URL</label>
+        <input class="np-input" id="openclaw-base-input" type="text" placeholder="http://127.0.0.1:18789">
+      </div>
+
+      <div class="np-field">
+        <label class="np-label">Token</label>
+        <input class="np-input" id="openclaw-token-input" type="password" placeholder="Paste OpenClaw token">
+        <div class="detail-sub" id="openclaw-token-state">Checking saved token…</div>
+      </div>
+
+      <div class="openclaw-status-grid">
+        <div class="runtime-card"><div class="owner-field-label">Bridge</div><div class="owner-field-value" id="openclaw-bridge-mode">—</div></div>
+        <div class="runtime-card"><div class="owner-field-label">Connection</div><div class="owner-field-value" id="openclaw-connection-state">—</div></div>
+        <div class="runtime-card"><div class="owner-field-label">Configured Base</div><div class="owner-field-value" id="openclaw-configured-base">—</div></div>
+        <div class="runtime-card"><div class="owner-field-label">Token Saved</div><div class="owner-field-value" id="openclaw-token-saved">—</div></div>
+      </div>
+
+      <p class="np-template-desc" id="openclaw-settings-message">Use this to manage optional harness connections. Atlantis remains the primary runtime.</p>
+
+      <div class="np-actions">
+        <button class="btn-secondary" id="openclaw-settings-refresh">Refresh</button>
+        <button class="btn-go" id="openclaw-settings-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
 </html>
