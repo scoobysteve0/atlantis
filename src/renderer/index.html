@@ -130,29 +130,9 @@
     <section class="view panel is-hidden" id="trading-view" aria-label="Trading Workspace">
       <h2>Trading</h2>
       <p class="detail-sub">Trading status and controls surface.</p>
-      <section class="trading-panel" id="trading-panel">
-        <div class="mock-trading-widget">
-  <h3>Mock Trading Status (Dev Only)</h3>
-  <table>
-    <tr>
-      <th>Asset</th>
-      <th>Price</th>
-      <th>Status</th>
-    </tr>
-    <tr>
-      <td>BTC</td>
-      <td>$60,000</td>
-      <td>Active</td>
-    </tr>
-    <tr>
-      <td>ETH</td>
-      <td>$3,000</td>
-      <td>Pending</td>
-    </tr>
-  </table>
-  <p class="detail-sub">Mock data for review clarity. Improves empty state handling.</p>
-  <p class="detail-sub">In case of data absence, shows "No data available" (mock).</p>
-</div>
+      <section class="trading-panel">
+        <ul id="trading-status-list" class="trading-list"></ul>
+        <p class="detail-sub" style="margin-top:12px">Live trading feed (dev mode). Data absence shows degraded state clearly.</p>
       </section>
     </section>
 
