@@ -4,7 +4,8 @@
 - **Generated:** `2026-05-08T03:30:00-05:00`
 - **Branch:** `dev/trading-page-workflow-test-20260429`
 - **Base commit:** `93ec5ed0d8d6ec33b86375ec3afc714519818824`
-- **Handoff:** `orchestrator-orchestrator-handoff-1778025681700.md` (READY_FOR_BUILDER, approved)
+- **Handoff:** `orchestrator-orchestrator-handoff-1778649355.md` (READY_FOR_BUILDER, approved, corrected)
+- **Supersedes:** `orchestrator-orchestrator-handoff-1778025681700.md` (stale, Agents-tab scope)
 
 ## Approved implementation paths (governing scope: Trading page)
 - `/Users/jarvis/.openclaw/workspace/atlantis-electron/src/renderer/js/ui/trading-ui.js`
